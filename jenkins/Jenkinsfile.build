@@ -55,7 +55,7 @@ pipeline {
                         targetDomain = "s3://water-visualizations-prod-website/visualizations/water-cycle"
                     }
                     else if ("${params.BUILD_DEST}" == "beta") {
-                        targetDomain = "s3://water-visualizations-beta-website/visualizations/gw-conditions"
+                        targetDomain = "s3://water-visualizations-beta-website/visualizations/water-cycle"
                     }
                     else {
                         targetDomain = "s3://water-visualizations-test-website/visualizations/gw-conditions"
