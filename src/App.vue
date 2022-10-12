@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="box">
     <!-- <WindowSize v-if="checkTypeOfEnv === '-test build-'" /> -->
     <HeaderUSGS />
     <InternetExplorerPage v-if="isInternetExplorer" />
@@ -67,6 +67,7 @@ $Abel: 'Abel', sans-serif;
 $Cairo: 'Cairo', sans-serif;
 $Assistant: 'Assistant', sans-serif;
 
+
 // Type
 html,
 body {
@@ -84,6 +85,28 @@ body {
         font-size: 16px;
       }
   }
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+.box .row.header {
+  flex: 0 1 81px;
+  margin: 0;
+}
+.box .row.buttonContainer {
+  flex: 0 1 1rem;
+  margin: 0;
+}
+.box .row.content {
+  flex: 1 1 auto;
+  margin: 0;
+}
+.box .row.footer {
+  flex: 0 1 25px;
+  margin: 0;
+}
+
 h1{
   font-size: 3.5em;
   font-weight: 300;
