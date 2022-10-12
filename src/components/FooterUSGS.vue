@@ -1,5 +1,5 @@
 <template>
-  <div id="footer">
+  <div id="footer" class="box row footer">
     <footer class="footer">
       <div class="tmp-container">
         <!-- .footer-wrap -->
@@ -7,9 +7,6 @@
         <div class="footer-doi">
           <!-- footer nav links -->
           <ul class="menu nav">
-            <li class="first leaf menu-links menu-level-1">
-              <a href="https://www.usgs.gov/special-topics/water-science-school/science/water-cycle" target="_blank">USGS Water Science School</a>
-            </li>
             <li class="first leaf menu-links menu-level-1">
               <a href="https://www.doi.gov/privacy" target="_blank">DOI Privacy Policy</a>
             </li>
@@ -25,13 +22,6 @@
             <li class="last leaf menu-links menu-level-1">
               <a href="https://answers.usgs.gov/" target="_blank">Contact USGS</a>
             </li>
-          </ul>
-          <!--/ footer nav links -->
-        </div>
-        <!-- /.footer-doi -->
-        <!-- .footer-utl-links -->
-        <!--div class="footer-doi">
-          <ul class="menu nav">
             <li class="first leaf menu-links menu-level-1">
               <a href="https://www.doi.gov/" target="_blank">U.S. Department of the Interior</a>
             </li>
@@ -51,7 +41,7 @@
               <a href="https://www2.usgs.gov/foia" target="_blank">FOIA</a>
             </li>
           </ul>
-        </div -->
+        </div>
         <!-- /.footer-utl-links -->
         <!-- .footer-social-links -->
         <div class="footer-social-links">
@@ -61,7 +51,7 @@
             </li>
             <li class="twitter">
               <a
-                href="https://twitter.com/usgs_water"
+                href="https://twitter.com/usgs_datasci"
                 target="_blank"
                 aria-label="twitter link"
               >
@@ -70,7 +60,7 @@
             </li>
             <li class="facebook">
               <a
-                href="https://facebook.com/USGSWater"
+                href="https://facebook.com/usgeologicalsurvey"
                 target="_blank"
                 aria-label="facebook link"
               >
@@ -88,7 +78,7 @@
             </li>
             <li class="instagram">
               <a
-                href="https://instagram.com/usgs_water"
+                href="https://instagram.com/usgs_streamgages"
                 target="_blank"
                 aria-label="instagram link"
               >
@@ -114,7 +104,6 @@
   footer, #navbar {
     font-family: 'Source Sans Pro',sans-serif;
     margin: 0;
-    position: relative;
   }
 
   *, *:before, *:after {
@@ -125,21 +114,24 @@
 
   #footer {
     display: block;
+    // position: absolute;
+    // bottom: 0px;
+    width: 100%;
   }
 
   .tmp-container {
     margin-right: auto;
     margin-left: auto;
-    padding-top: 2px;
     padding-left: 15px;
     padding-right: 15px;
+    background-color: #c2c4c5;
   }
   .tmp-container a {
     text-decoration: none;
     background: transparent;
   }
   .tmp-container a:-webkit-any-link {
-    // cursor: auto;
+    cursor: auto;
   }
   .tmp-container:before, .tmp-container:after {
     content: " ";
@@ -199,7 +191,7 @@
 
   footer.footer .footer-doi ul.menu li:after {
     content: "|";
-    color: #ffffff;
+    color: #000000;
     float: left;
     padding-top: 5px;
     padding-left: 7px;

@@ -1,5 +1,5 @@
 <template>
-  <div id="header">
+  <div id="header" class="box row header">
     <header
       id="navbar"
       class="header-nav"
@@ -62,9 +62,6 @@
     margin-bottom: 8px;
     border: 0;
     max-width: 100%;
-    height: auto;
-  }
-  .logo-header img {
     height: 65px;
   }
 </style>
