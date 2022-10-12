@@ -1,5 +1,8 @@
 <template>
-  <div id="app" class="box">
+  <div
+    id="app"
+    class="box"
+  >
     <!-- <WindowSize v-if="checkTypeOfEnv === '-test build-'" /> -->
     <HeaderUSGS />
     <InternetExplorerPage v-if="isInternetExplorer" />

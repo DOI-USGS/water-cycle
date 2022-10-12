@@ -1,39 +1,61 @@
 <template>
   <div id="content-container">
-    <div id="button-container" class="box row buttonContainer">
-        <h3>
-            <span>
-              Visit the <a href="https://www.usgs.gov/special-topics/water-science-school/science/water-cycle" target="_blank">USGS Water Science School</a>
-            </span>
-             | 
-            <span>
-              Zoom:
-              <button @click="$refs.zoomer.zoomIn()" class="zoom button"> + </button>
-              <button @click="$refs.zoomer.zoomOut()" class="zoom button"> - </button>
-              | Language: 
-              <button
-                    class="button"
-                    @click="toggleLanguage"
-                    :text="currentLanguageStatus"
-                  >
-                    {{ currentLanguageStatus }}
-              </button>
-            </span> 
-          </h3>
+    <div
+      id="button-container"
+      class="box row buttonContainer"
+    >
+      <h3>
+        <span>
+          Visit the <a
+            href="https://www.usgs.gov/special-topics/water-science-school/science/water-cycle"
+            target="_blank"
+          >USGS Water Science School</a>
+        </span>
+        | 
+        <span>
+          Zoom:
+          <button
+            class="zoom button"
+            @click="$refs.zoomer.zoomIn()"
+          > + </button>
+          <button
+            class="zoom button"
+            @click="$refs.zoomer.zoomOut()"
+          > - </button>
+          | Language: 
+          <button
+            class="button"
+            :text="currentLanguageStatus"
+            @click="toggleLanguage"
+          >
+            {{ currentLanguageStatus }}
+          </button>
+        </span> 
+      </h3>
     </div>
     <v-zoomer
+      id="image-zoomer"
       ref="zoomer"
       :aspect-ratio="imageAspectRatio"
       :max-scale="10"
       :zooming-elastic="false"
-      id = "image-zoomer"
       class="box row content"
     >
       <picture>
-        <source v-bind:srcset="imageSrcWebp" type="image/webp">
-        <source v-bind:srcset="imageSrc" type="image/png">
-          <img v-bind:src="imageSrcWebp" style="object-fit: contain; width: 100%; height: 100%; display: flex;" @load="onImageLoad">
-        </picture>
+        <source
+          :srcset="imageSrcWebp"
+          type="image/webp"
+        >
+        <source
+          :srcset="imageSrc"
+          type="image/png"
+        >
+        <img
+          :src="imageSrcWebp"
+          style="object-fit: contain; width: 100%; height: 100%; display: flex;"
+          @load="onImageLoad"
+        >
+      </picture>
     </v-zoomer>
   </div>
 </template>

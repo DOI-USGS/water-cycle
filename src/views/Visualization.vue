@@ -1,6 +1,6 @@
 <template>
   <div id="visualization">
-    <WaterCyle/>
+    <WaterCyle />
   </div>
 </template>
 
