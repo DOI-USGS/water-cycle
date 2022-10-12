@@ -95,8 +95,9 @@ body {
   margin: 0;
 }
 .box .row.buttonContainer {
-  flex: 0 1 1rem;
+  flex: 0 1 50px;
   margin: 0;
+  margin-bottom: 5px;
 }
 .box .row.content {
   flex: 1 1 auto;
