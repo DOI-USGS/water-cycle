@@ -1,6 +1,6 @@
 <template>
   <div id="content-container">
-    <div id="button-container">
+    <div id="button-container" class="box row buttonContainer">
         <h3>
             <span>
               Visit the <a href="https://www.usgs.gov/special-topics/water-science-school/science/water-cycle" target="_blank">USGS Water Science School</a>
@@ -21,21 +21,20 @@
             </span> 
           </h3>
     </div>
-    <!-- div id = "image-container" -->
-      <v-zoomer
-        ref="zoomer"
-        :aspect-ratio="imageAspectRatio"
-        :max-scale="10"
-        :zooming-elastic="false"
-        id = "image-zoomer"
-      >
-        <picture>
-          <source v-bind:srcset="imageSrcWebp" type="image/webp">
-          <source v-bind:srcset="imageSrc" type="image/png">
-            <img v-bind:src="imageSrcWebp" style="object-fit: contain; width: 100%; height: 100%;" @load="onImageLoad">
-          </picture>
-      </v-zoomer>
-    <!-- /div -->
+    <v-zoomer
+      ref="zoomer"
+      :aspect-ratio="imageAspectRatio"
+      :max-scale="10"
+      :zooming-elastic="false"
+      id = "image-zoomer"
+      class="box row content"
+    >
+      <picture>
+        <source v-bind:srcset="imageSrcWebp" type="image/webp">
+        <source v-bind:srcset="imageSrc" type="image/png">
+          <img v-bind:src="imageSrcWebp" style="object-fit: contain; width: 100%; height: 100%; display: flex;" @load="onImageLoad">
+        </picture>
+    </v-zoomer>
   </div>
 </template>
 
@@ -94,29 +93,10 @@
 </script>
 
 <style scoped lang="scss">
-#content-container {
-  height: 92vh;
-  @media screen and (max-height: 770px) {
-    height: 90vh;
-  }
-  @media screen and (max-width: 700px) {
-    height: 85vh;
-  }
-  @media screen and (max-width: 500px) {
-    height: 90vh;
-  }
-}
-#image-container {
-  // height: 90vh;
-  z-index: 1;
-  display: block;
-}
 #image-zoomer {
   height: 88vh;
-  // z-index: 1;
-  // display: block;
   @media screen and (max-height: 770px) {
-    height: 86vh;
+    height: 80vh;
   }
   @media screen and (max-height: 700px) {
     height: 85vh;
@@ -126,10 +106,8 @@
   }
 }
 #button-container {
-  margin-bottom: 10px;
   padding-left: 15px;
-  // display: block;
-  // height: 5vh;
+  height: 100%;
   z-index: 2;
   --tw-bg-opacity: 1;
   -webkit-touch-callout: none; /* iOS Safari */
@@ -139,12 +117,6 @@
       -ms-user-select: none; /* Internet Explorer/Edge */
           user-select: none; /* Non-prefixed version, currently
                                 supported by Chrome, Edge, Opera and Firefox */
-  // @media screen and (max-height: 770px) {
-  //   height: 6vh;
-  // }
-  // @media screen and (max-width: 700px) {
-  //   height: 12vh;
-  // }
 }
 .button {
     border-radius: 0.25rem;
