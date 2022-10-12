@@ -60,11 +60,9 @@
 
 <style lang="scss">
 // Fonts
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 $Abel: 'Abel', sans-serif;
-$Cairo: 'Cairo', sans-serif;
 $Assistant: 'Assistant', sans-serif;
 
 
