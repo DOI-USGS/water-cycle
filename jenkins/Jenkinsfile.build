@@ -58,7 +58,7 @@ pipeline {
                         targetDomain = "s3://water-visualizations-beta-website/visualizations/water-cycle"
                     }
                     else {
-                        targetDomain = "s3://water-visualizations-test-website/visualizations/gw-conditions"
+                        targetDomain = "s3://water-visualizations-test-website/visualizations/water-cycle"
                     }
                 }
                 sh """
