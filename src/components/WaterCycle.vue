@@ -104,6 +104,9 @@
   @media screen and (max-height: 500px) {
     height: 80vh;
   }
+  @media screen and (max-width: 400px) {
+    height: 65vh;
+  }
 }
 #button-container {
   padding-left: 15px;
