@@ -9,7 +9,7 @@ source("data-src/s3_upload.R")
 list(
   # list input filenames
   tar_target(water_cycle_filenames,
-             c('USGS_WaterCycle_English_ONLINE_20221011', 'USGS_WaterCycle_Spanish_ONLINE_20221011')),
+             c('USGS_WaterCycle_English_ONLINE_20221013', 'USGS_WaterCycle_Spanish_ONLINE_20221013')),
   # track input files
   tar_target(water_cycle_raw_png,
              file.path('in', sprintf('%s.png', water_cycle_filenames)),
