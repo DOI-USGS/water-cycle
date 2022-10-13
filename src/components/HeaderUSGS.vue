@@ -1,5 +1,8 @@
 <template>
-  <div id="header" class="box row header">
+  <div
+    id="header"
+    class="box row header"
+  >
     <header
       id="navbar"
       class="header-nav"

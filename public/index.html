@@ -5,25 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <%= process.env.VUE_APP_TIER !== '' ? '<meta name="robots" content="noindex,nofollow">' : '' %><!-- an empty string in this case means the 'prod' version of the application   -->
-      <!-- Primary Meta Tags -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DHTXLNDNPV"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-DHTXLNDNPV');
+    </script>  
+    <!-- Primary Meta Tags -->
       <title>
         <%= VUE_APP_TIER %>
           <%= VUE_APP_TITLE %>
       </title>
-      <meta name="title" content="">
+      <meta name="title" content="The Water Cycle (zoomable)">
       <meta name="description" content="">
       <!-- Open Graph / Facebook -->
       <meta property="og:type" content="website">
-      <meta property="og:url" content="">
-      <meta property="og:title" content="">
+      <meta property="og:url" content="https://labs.waterdata.usgs.gov/visualizations/water-cycle">
+      <meta property="og:title" content="The Water Cycle (zoomable)">
       <meta property="og:description" content="">
-      <meta property="og:image" content="">
+      <meta property="og:image" content="https://labs.waterdata.usgs.gov/visualizations/data/water-cycle-thumbnail.png">
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:url" content="">
-      <meta property="twitter:title" content="">
+      <meta property="twitter:url" content="https://labs.waterdata.usgs.gov/visualizations/water-cycle">
+      <meta property="twitter:title" content="The Water Cycle (zoomable)">
       <meta property="twitter:description" content="">
-      <meta property="twitter:image" content="">
+      <meta property="twitter:image" content="https://labs.waterdata.usgs.gov/visualizations/data/water-cycle-thumbnail.png">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
 <script type='application/ld+json'>
       { "@context": "http://www.schema.org",
