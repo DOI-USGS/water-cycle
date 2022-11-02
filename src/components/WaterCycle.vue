@@ -13,6 +13,13 @@
         </span>
         | 
         <span>
+          <a
+            v-bind:href="downloadSite"
+            target="_blank"
+          >{{ currentLanguageDownloadText }}</a>
+        </span>
+        | 
+        <span>
           Zoom:
           <button
             class="zoom button"
@@ -70,13 +77,17 @@
             inEnglish: true,
             currentLanguageStatus: null,
             imageSrc: null,
-            imageSrcWebp: null
+            imageSrcWebp: null,
+            downloadSite: null,
+            currentLanguageDownloadText: null,
           }
         },
         mounted () {
           this.currentLanguageStatus = 'cambiar a español';
           this.imageSrc = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
           this.imageSrcWebp = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
+          this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/USGS_WaterCycle_English_PRINT_20221013_508.pdf";
+          this.currentLanguageDownloadText = "Download the diagram";
         },
         methods: {
           onImageLoad(e) {
@@ -94,11 +105,15 @@
               this.currentLanguageStatus = 'cambiar a español'
               this.imageSrc = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
               this.imageSrcWebp = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
+              this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/USGS_WaterCycle_English_PRINT_20221013_508.pdf";
+              this.currentLanguageDownloadText = "Download the diagram";
               // this.$forceUpdate()
             } else {
               this.currentLanguageStatus = 'switch to English'
               this.imageSrc = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png";
               this.imageSrcWebp = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png";
+              this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/USGS_WaterCycle_Spanish_PRINT_20221013_508.pdf";
+              this.currentLanguageDownloadText = "Descargar el diagrama";
               // this.$forceUpdate()
             }
           },
