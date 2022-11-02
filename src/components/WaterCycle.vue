@@ -101,14 +101,6 @@
               this.imageSrcWebp = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png";
               // this.$forceUpdate()
             }
-
-            // Adjust y-axis label placement on mobile
-            if (this.mobileView) {
-              self.yAxis.selectAll("text")
-                .transition()
-                .duration(200)
-                .attr("x", d => self.placeYAxisText(d, this.showUncertainty))
-            }
           },
         },
     }
