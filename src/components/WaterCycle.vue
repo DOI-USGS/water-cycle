@@ -122,18 +122,16 @@
           toggleLanguage() {
             const self = this;
 
-            // Update global value for show Uncertainty
+            // Update global value for whether diagram is shown in English
             this.inEnglish = !this.inEnglish;
             
-            // Toggle on or off uncertainty bars
+            // Update button text and text of download link
             if (this.inEnglish) {
               this.currentLanguageStatus = 'cambiar a español'
               this.currentLanguageDownloadText = "Download the diagram";
-              // this.$forceUpdate()
             } else {
               this.currentLanguageStatus = 'switch to English'
               this.currentLanguageDownloadText = "Descargar el diagrama";
-              // this.$forceUpdate()
             }
           },
         },
