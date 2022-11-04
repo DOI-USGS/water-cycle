@@ -51,6 +51,7 @@
       class="content"
     >
       <picture
+        v-if="loadEnglish"
         v-show="inEnglish"
       >
         <source
@@ -63,11 +64,13 @@
         >
         <img
           :src="imageSrcWebpEnglish"
+          id = "diagramEnglish"
           style="object-fit: contain; width: 100%; height: 100%; display: flex;"
           @load="onImageLoad"
         >
       </picture>
       <picture
+        v-if="loadSpanish"
         v-show="!inEnglish"
       >
         <source
@@ -80,6 +83,7 @@
         >
         <img
           :src="imageSrcWebpSpanish"
+          id = "diagramSpanish"
           style="object-fit: contain; width: 100%; height: 100%; display: flex;"
           @load="onImageLoad"
         >
@@ -95,6 +99,8 @@
           return {
             zoomed: false,
             imageAspectRatio: 1,
+            loadEnglish: true,
+            loadSpanish: false,
             inEnglish: true,
             currentLanguageStatus: null,
             imageSrcEnglish: null,
@@ -118,6 +124,16 @@
           onImageLoad(e) {
             const img = e.target
             this.imageAspectRatio = img.naturalWidth / img.naturalHeight
+            console.log(img.id + " just loaded")
+
+            // This function is first called on page load, **after** the English diagram is loaded
+            // Now that the English version is loaded, we trigger the loading of the Spanish diagram 
+            // by setting `loadSpanish` to `true`. `loadSpanish` sets the v-if on the picture element 
+            // for the Spanish diagram.
+            //
+            // This function is also called after the Spanish image is loaded, in which case this
+            // statement has no effect/ is redundant.
+            this.loadSpanish = true;
           },
           toggleLanguage() {
             const self = this;
