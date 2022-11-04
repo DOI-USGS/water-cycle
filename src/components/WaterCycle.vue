@@ -156,7 +156,7 @@ $diagramBlue: #016699;
 .button {
     border-radius: 0.25rem;
     margin-top: 5px;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
     padding: 2.5px 5px 2.5px 5px;
     max-width: 24rem;
     background-color: white;
@@ -182,7 +182,7 @@ $diagramBlue: #016699;
   }
   .notButton {
     margin-top: 7.5px;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
   a {
     color: $diagramBlue;
