@@ -145,9 +145,11 @@
             if (this.inEnglish) {
               this.currentLanguageStatus = 'cambiar a español'
               this.currentLanguageDownloadText = "Download the diagram";
+              this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/USGS_WaterCycle_English_PRINT_20221013_508.pdf";
             } else {
               this.currentLanguageStatus = 'switch to English'
               this.currentLanguageDownloadText = "Descargar el diagrama";
+              this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/USGS_WaterCycle_Spanish_PRINT_20221013_508.pdf";
             }
           },
         },
