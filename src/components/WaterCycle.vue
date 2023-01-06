@@ -50,17 +50,40 @@
       :zooming-elastic="false"
       class="content"
     >
-      <picture>
+      <picture
+        v-if="loadEnglish"
+        v-show="inEnglish"
+      >
         <source
-          :srcset="imageSrcWebp"
+          :srcset="imageSrcWebpEnglish"
           type="image/webp"
         >
         <source
-          :srcset="imageSrc"
+          :srcset="imageSrcEnglish"
           type="image/png"
         >
         <img
-          :src="imageSrcWebp"
+          :src="imageSrcWebpEnglish"
+          id = "diagramEnglish"
+          style="object-fit: contain; width: 100%; height: 100%; display: flex;"
+          @load="onImageLoad"
+        >
+      </picture>
+      <picture
+        v-if="loadSpanish"
+        v-show="!inEnglish"
+      >
+        <source
+          :srcset="imageSrcWebpSpanish"
+          type="image/webp"
+        >
+        <source
+          :srcset="imageSrcSpanish"
+          type="image/png"
+        >
+        <img
+          :src="imageSrcWebpSpanish"
+          id = "diagramSpanish"
           style="object-fit: contain; width: 100%; height: 100%; display: flex;"
           @load="onImageLoad"
         >
@@ -76,47 +99,57 @@
           return {
             zoomed: false,
             imageAspectRatio: 1,
+            loadEnglish: true,
+            loadSpanish: false,
             inEnglish: true,
             currentLanguageStatus: null,
-            imageSrc: null,
-            imageSrcWebp: null,
+            imageSrcEnglish: null,
+            imageSrcWebpEnglish: null,
+            imageSrcSpanish: null,
+            imageSrcWebpSpanish: null,
             downloadSite: null,
             currentLanguageDownloadText: null,
           }
         },
         mounted () {
-          this.currentLanguageStatus = 'cambiar a español';
-          this.imageSrc = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
-          this.imageSrcWebp = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
           this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/USGS_WaterCycle_English_PRINT_20221013_508.pdf";
           this.currentLanguageDownloadText = "Download the diagram";
+          this.currentLanguageStatus = 'cambiar a español';
+          this.imageSrcEnglish = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
+          this.imageSrcWebpEnglish = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
+          this.imageSrcSpanish = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png";
+          this.imageSrcWebpSpanish = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png";
         },
         methods: {
           onImageLoad(e) {
             const img = e.target
             this.imageAspectRatio = img.naturalWidth / img.naturalHeight
+            console.log(img.id + " just loaded")
+
+            // This function is first called on page load, **after** the English diagram is loaded
+            // Now that the English version is loaded, we trigger the loading of the Spanish diagram 
+            // by setting `loadSpanish` to `true`. `loadSpanish` sets the v-if on the picture element 
+            // for the Spanish diagram.
+            //
+            // This function is also called after the Spanish image is loaded, in which case this
+            // statement has no effect/ is redundant.
+            this.loadSpanish = true;
           },
           toggleLanguage() {
             const self = this;
 
-            // Update global value for show Uncertainty
+            // Update global value for whether diagram is shown in English
             this.inEnglish = !this.inEnglish;
             
-            // Toggle on or off uncertainty bars
+            // Update button text and text of download link
             if (this.inEnglish) {
               this.currentLanguageStatus = 'cambiar a español'
-              this.imageSrc = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
-              this.imageSrcWebp = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
-              this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/USGS_WaterCycle_English_PRINT_20221013_508.pdf";
               this.currentLanguageDownloadText = "Download the diagram";
-              // this.$forceUpdate()
+              this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/USGS_WaterCycle_English_PRINT_20221013_508.pdf";
             } else {
               this.currentLanguageStatus = 'switch to English'
-              this.imageSrc = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png";
-              this.imageSrcWebp = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png";
-              this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/USGS_WaterCycle_Spanish_PRINT_20221013_508.pdf";
               this.currentLanguageDownloadText = "Descargar el diagrama";
-              // this.$forceUpdate()
+              this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/USGS_WaterCycle_Spanish_PRINT_20221013_508.pdf";
             }
           },
         },
