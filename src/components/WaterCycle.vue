@@ -89,12 +89,18 @@
         >
       </picture>
     </v-zoomer>
+    <br>
+    <hr>
+    <authorship />
   </div>
 </template>
 
 <script>
     export default {
         name: "WaterCyle",
+        components: {
+          authorship: () => import( /* webpackPreload: true */ /*webpackChunkName: "section"*/ "./../components/Authorship")
+        },
         data () {
           return {
             zoomed: false,
@@ -182,7 +188,7 @@ $diagramBlue: #016699;
   margin-left: 0.5rem;
 }
 #button-container {
-  padding-left: 0.5vw;
+  padding-left: 0.25em;
   display: flex;
   flex-wrap: wrap;
 }

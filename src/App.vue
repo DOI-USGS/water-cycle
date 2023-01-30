@@ -148,7 +148,12 @@ h3{
 p, text {
   font-family: $Assistant;
   font-size: 1em;
-  line-height: 0.8em;
+  @media screen and (max-width: 700px) {
+      font-size: 0.9em;
+  } 
+  @media screen and (max-height: 500px) {
+      font-size: 0.9em;
+  } 
 }
 a { 
   color: black;
