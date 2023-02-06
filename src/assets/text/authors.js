@@ -37,12 +37,8 @@ export default {
         profile_link: null,
         role: 'designer',
         contribution: '(she/her), a former Vizlab team member, contributed key graphic design work during the initial design and planning stages'
-      }
-    ],
-    // do not delete section. delete any or all individuals as needed. modify content as needed
-    // currently only 'fullName', 'firstName', 'initials', 'profile_link', and 'contribution' are used
-    additionalAuthors: [
-      {
+      },
+            {
         firstName: 'Rachel',
         lastName: 'Volentine',
         fullName: 'Rachel Volentine',
@@ -96,5 +92,9 @@ export default {
         role: 'contributor',
         contribution: '(she/her) contributed to product planning and provided oversight'
       }
+    ],
+    // do not delete section. delete any or all individuals as needed. modify content as needed
+    // currently only 'fullName', 'firstName', 'initials', 'profile_link', and 'contribution' are used
+    additionalAuthors: [
       ]
 };
