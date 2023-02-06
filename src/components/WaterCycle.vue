@@ -41,6 +41,8 @@
           @click="$refs.zoomer.zoomOut()"
         > - </button>
       </h3>
+      <h3 class = "optionsBar notButton"> | </h3>
+      <sidebar class="optionsBar"/>
     </div>
     <v-zoomer
       id="image-zoomer"
@@ -89,9 +91,6 @@
         >
       </picture>
     </v-zoomer>
-    <br>
-    <hr>
-    <authorship />
   </div>
 </template>
 
@@ -99,7 +98,7 @@
     export default {
         name: "WaterCyle",
         components: {
-          authorship: () => import( /* webpackPreload: true */ /*webpackChunkName: "section"*/ "./../components/Authorship")
+          sidebar: () => import( /* webpackPreload: true */ /*webpackChunkName: "section"*/ "./../components/Sidebar")
         },
         data () {
           return {
