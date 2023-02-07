@@ -43,8 +43,8 @@ export default {
     methods:{
         setDimensions(){
             const sidebar = this.$el;
-            const button = this.$el.querySelector(".reveal")
-            const buttonDimensions = button.getBoundingClientRect();
+            const buttonDiv = this.$el.querySelector(".titleAndExit")
+            const buttonDimensions = buttonDiv.getBoundingClientRect();
             sidebar.style.height = `${buttonDimensions.height}px`;
             sidebar.style.width = `${buttonDimensions.width}px`;
             sidebar.classList.remove("opacity");
@@ -103,6 +103,9 @@ $diagramBlue: #016699;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+    @media screen and (max-width: 600px) {
+      border: 1px solid #949494;
+    }
   }
   .button:hover {
     background-color: $diagramBlue;

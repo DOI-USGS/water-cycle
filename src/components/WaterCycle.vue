@@ -203,6 +203,9 @@ $diagramBlue: #016699;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+    @media screen and (max-width: 600px) {
+      border: 1px solid #949494;
+    }
   }
   .button:hover {
     background-color: $diagramBlue;
