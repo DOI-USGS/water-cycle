@@ -12,6 +12,13 @@
       <h3 class="optionsBar notButton"> | </h3>
       <h3 class="optionsBar notButton">
         <a
+          href="https://labs.waterdata.usgs.gov/visualizations/pools-and-fluxes/index.html#/"
+          target="_blank"
+        >Explore the size of pools and fluxes</a>
+      </h3>
+      <h3 class="optionsBar notButton"> | </h3>
+      <h3 class="optionsBar notButton">
+        <a
           v-bind:href="downloadSite"
           target="_blank"
         >
