@@ -41,6 +41,8 @@
           @click="$refs.zoomer.zoomOut()"
         > - </button>
       </h3>
+      <h3 class = "optionsBar notButton"> | </h3>
+      <sidebar class="optionsBar"/>
     </div>
     <v-zoomer
       id="image-zoomer"
@@ -95,6 +97,9 @@
 <script>
     export default {
         name: "WaterCyle",
+        components: {
+          sidebar: () => import( /* webpackPreload: true */ /*webpackChunkName: "section"*/ "./../components/Sidebar")
+        },
         data () {
           return {
             zoomed: false,
@@ -182,7 +187,7 @@ $diagramBlue: #016699;
   margin-left: 0.5rem;
 }
 #button-container {
-  padding-left: 0.5vw;
+  padding-left: 0.25em;
   display: flex;
   flex-wrap: wrap;
 }
