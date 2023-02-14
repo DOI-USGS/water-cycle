@@ -12,6 +12,13 @@
       <h3 class="optionsBar notButton"> | </h3>
       <h3 class="optionsBar notButton">
         <a
+          href="https://labs.waterdata.usgs.gov/visualizations/pools-and-fluxes/index.html#/"
+          target="_blank"
+        >Explore the size of pools and fluxes</a>
+      </h3>
+      <h3 class="optionsBar notButton"> | </h3>
+      <h3 class="optionsBar notButton">
+        <a
           v-bind:href="downloadSite"
           target="_blank"
         >
@@ -203,6 +210,9 @@ $diagramBlue: #016699;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+    @media screen and (max-width: 600px) {
+      border: 1px solid #949494;
+    }
   }
   .button:hover {
     background-color: $diagramBlue;
