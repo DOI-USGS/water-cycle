@@ -7,9 +7,9 @@ tar_option_set(packages = c('readxl', 'aws.s3', 'magick', 'tools'))
 source("data-src/s3_upload.R")
 
 list(
-  # list input filenames
+  # list input filenames - MUST follow format `'USGS_WaterCycle_{language}_ONLINE_{YYYYMMDD}.png'`
   tar_target(water_cycle_filenames,
-             c('USGS_WaterCycle_English_ONLINE_20230302_NoSeams', 'USGS_WaterCycle_Spanish_ONLINE_20230302_NoSeams')),
+             c('USGS_WaterCycle_English_ONLINE_20230302', 'USGS_WaterCycle_Spanish_ONLINE_20230302')),
   # track input files
   tar_target(water_cycle_raw_png,
              file.path('in', sprintf('%s.png', water_cycle_filenames)),
