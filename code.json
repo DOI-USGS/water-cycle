@@ -4,7 +4,7 @@
     "organization": "U.S. Geological Survey",
     "description": "water-cycle",
     "version": "main",
-    "status": "Development",
+    "status": "Production",
     "permissions": {
       "usageType": "openSource",
       "licenses": [
@@ -19,10 +19,11 @@
     "disclaimerURL": "https://github.com/USGS-VIZLAB/water-cycle/blob/main/DISCLAIMER.md",
     "repositoryURL": "https://github.com/USGS-VIZLAB/water-cycle.git",
     "vcs": "git",
-    "laborHours": -1,
+    "laborHours": 20,
     "tags": [
       "R",
-      "USGS"
+      "USGS",
+      "Vizlab"
     ],
     "languages": [
       "R",
@@ -30,11 +31,11 @@
       "JavaScript"
     ],
     "contact": {
-      "name": "hcorson-dosch-usgs",
-      "email": "FILL ME IN"
+      "name": "Hayley Corson-Dosch",
+      "email": "hcorson-dosch@usgs.gov"
     },
     "date": {
-      "metadataLastUpdated": "2023-04-07"
+      "metadataLastUpdated": "2023-05-05"
     }
   },
   {
