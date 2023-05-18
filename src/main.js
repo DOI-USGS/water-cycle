@@ -30,7 +30,7 @@ const vueImgConfig = {
   altAsTitle: true
 }
 
-Vue.component("font-awesome-icon", FontAwesomeIcon);
+Vue.component("FontAwesomeIcon", FontAwesomeIcon);
 Vue.prototype.$gsap = gsap;
 Vue.use(VueZoomer)
 

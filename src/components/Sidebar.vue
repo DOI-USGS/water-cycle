@@ -24,7 +24,7 @@
       <div class="messageArea">
         <div class="message">
           <slot name="sidebarMessage">
-            <authorship class="hidden"/>
+            <authorship class="hidden" />
           </slot>
         </div>
       </div>
