@@ -9,23 +9,29 @@
           target="_blank"
         >Visit the Water Science School</a>
       </h3>
-      <h3 class="optionsBar notButton"> | </h3>
+      <h3 class="optionsBar notButton">
+        |
+      </h3>
       <h3 class="optionsBar notButton">
         <a
           href="https://labs.waterdata.usgs.gov/visualizations/pools-and-fluxes/index.html#/"
           target="_blank"
         >Explore the size of pools and fluxes</a>
       </h3>
-      <h3 class="optionsBar notButton"> | </h3>
+      <h3 class="optionsBar notButton">
+        |
+      </h3>
       <h3 class="optionsBar notButton">
         <a
-          v-bind:href="downloadSite"
+          :href="downloadSite"
           target="_blank"
         >
           {{ currentLanguageDownloadText }}
         </a>
       </h3>
-      <h3 class="optionsBar notButton"> | </h3>
+      <h3 class="optionsBar notButton">
+        |
+      </h3>
       <h3 class="optionsBar">
         Language: 
         <button
@@ -36,20 +42,28 @@
           {{ currentLanguageStatus }}
         </button>
       </h3>
-      <h3 class="optionsBar notButton"> | </h3>
+      <h3 class="optionsBar notButton">
+        |
+      </h3>
       <h3 class="optionsBar">
         Zoom:
         <button
           class="zoom button"
           @click="$refs.zoomer.zoomIn()"
-        > + </button>
+        >
+          +
+        </button>
         <button
           class="zoom button out"
           @click="$refs.zoomer.zoomOut()"
-        > - </button>
+        >
+          -
+        </button>
       </h3>
-      <h3 class = "optionsBar notButton"> | </h3>
-      <sidebar class="optionsBar"/>
+      <h3 class="optionsBar notButton">
+        |
+      </h3>
+      <sidebar class="optionsBar" />
     </div>
     <v-zoomer
       id="image-zoomer"
@@ -72,8 +86,8 @@
           type="image/png"
         >
         <img
+          id="diagramEnglish"
           :src="imageSrcWebpEnglish"
-          id = "diagramEnglish"
           style="object-fit: contain; width: 100%; height: 100%; display: flex;"
           @load="onImageLoad"
         >
@@ -91,8 +105,8 @@
           type="image/png"
         >
         <img
+          id="diagramSpanish"
           :src="imageSrcWebpSpanish"
-          id = "diagramSpanish"
           style="object-fit: contain; width: 100%; height: 100%; display: flex;"
           @load="onImageLoad"
         >

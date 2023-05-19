@@ -1,8 +1,14 @@
 <template>
-  <div id="author-container" v-if="showAuthors">
+  <div
+    v-if="showAuthors"
+    id="author-container"
+  >
     <p>
       The design of the USGS water cycle diagram was led by the  
-      <a href="https://labs.waterdata.usgs.gov/visualizations/vizlab-home/index.html#/" target="_blank">USGS Vizlab</a>
+      <a
+        href="https://labs.waterdata.usgs.gov/visualizations/vizlab-home/index.html#/"
+        target="_blank"
+      >USGS Vizlab</a>
       , in colaboration with the Web Communications Branch and other USGS scientists.
       <br>
       <br>
@@ -10,52 +16,86 @@
         Contributors included 
         <span
           v-for="(author, index) in primaryAuthors" 
-          :key="`${author.initials}-attribution`"
           :id="`initial-${author.initials}`"
+          :key="`${author.initials}-attribution`"
           :class="'author first'"
         >
-          <a v-bind:href="author.profile_link" target="_blank" v-text="author.fullName"></a>
+          <a
+            :href="author.profile_link"
+            target="_blank"
+            v-text="author.fullName"
+          />
           <span v-if="index != Object.keys(primaryAuthors).length - 1 && Object.keys(primaryAuthors).length > 2">, </span>
           <span v-if="index == Object.keys(primaryAuthors).length - 2"> and </span>
         </span>.
       </span>
-      <span id="additional-author-statement" v-if="showAdditionalAuthors">
+      <span
+        v-if="showAdditionalAuthors"
+        id="additional-author-statement"
+      >
         <span
           v-for="(author, index) in additionalAuthors" 
-          :key="`${author.initials}-attribution`"
           :id="`author-${author.initials}`"
+          :key="`${author.initials}-attribution`"
           :class="'author'"
         >
-          <a v-bind:href="author.profile_link" Water Data for the Nation blog v-text="author.fullName"></a>
+          <a
+            :href="author.profile_link"
+            Water
+            Data
+            for
+            the
+            Nation
+            blog
+            v-text="author.fullName"
+          />
           <span v-if="index != Object.keys(additionalAuthors).length - 1 && Object.keys(additionalAuthors).length > 2">, </span>
           <span v-if="index == Object.keys(additionalAuthors).length - 2"> and </span>
         </span>
         <span>
-        also contributed to the site.
+          also contributed to the site.
         </span>
       </span>
       To learn more about the team and the design process, read the Water Data for the Nation blog post 
-      <a class="blog_title" href="https://waterdata.usgs.gov/blog/water-cycle-release/" target="_blank">A New Take on the Water Cycle</a>
+      <a
+        class="blog_title"
+        href="https://waterdata.usgs.gov/blog/water-cycle-release/"
+        target="_blank"
+      >A New Take on the Water Cycle</a>
       .
-      <span id="contribution-statements" v-if="showContributionStatements">
+      <span
+        v-if="showContributionStatements"
+        id="contribution-statements"
+      >
         <span id="primary-author-contribution">
           <span
             v-for="author in primaryAuthors" 
-            :key="`${author.initials}-contribution`"
             :id="`author-${author.initials}`"
+            :key="`${author.initials}-contribution`"
             :class="'author'"
           >
-            <a v-bind:href="author.profile_link" target="_blank" v-text="author.fullName"></a> <span v-text="author.contribution"></span>. 
+            <a
+              :href="author.profile_link"
+              target="_blank"
+              v-text="author.fullName"
+            /> <span v-text="author.contribution" />. 
           </span>
         </span>
-        <span id="additional-author-contribution"  v-if="showAditionalContributionStatement">
+        <span
+          v-if="showAditionalContributionStatement"
+          id="additional-author-contribution"
+        >
           <span
             v-for="author in additionalAuthors" 
-            :key="`${author.initials}-contribution`"
             :id="`author-${author.initials}`"
+            :key="`${author.initials}-contribution`"
             :class="'author'"
           >
-            <a v-bind:href="author.profile_link" target="_blank" v-text="author.fullName"></a> <span v-text="author.contribution"></span>. 
+            <a
+              :href="author.profile_link"
+              target="_blank"
+              v-text="author.fullName"
+            /> <span v-text="author.contribution" />. 
           </span>
         </span>
       </span>
@@ -67,7 +107,7 @@
 import { isMobile } from 'mobile-device-detect';
 import authors from "@/assets/text/authors";
 export default {
-  name: "authorship",
+  name: "Authorship",
     components: {
     },
     props: {

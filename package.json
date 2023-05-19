@@ -3,14 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --mode test_tier",
-    "serve-test": "NODE_ENV=development vue-cli-service serve --mode test_tier",
-    "serve-beta": "NODE_ENV=development vue-cli-service serve --mode beta_tier",
-    "serve-prod": "vue-cli-service serve --mode prod_tier",
-    "build": "vue-cli-service build --mode prod_tier",
-    "build-test": "NODE_ENV=production vue-cli-service build --mode test_tier",
-    "build-beta": "NODE_ENV=production vue-cli-service build --mode beta_tier",
-    "build-prod": "NODE_ENV=production vue-cli-service build --mode prod_tier",
+    "serve": "env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve --mode test_tier",
+    "serve-test": "env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=development vue-cli-service serve --mode test_tier",
+    "serve-beta": "env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=development vue-cli-service serve --mode beta_tier",
+    "serve-prod": "env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve --mode prod_tier",
+    "build": "env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build --mode prod_tier",
+    "build-test": "env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=production vue-cli-service build --mode test_tier",
+    "build-beta": "env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=production vue-cli-service build --mode beta_tier",
+    "build-prod": "env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=production vue-cli-service build --mode prod_tier",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -28,7 +28,7 @@
     "mobile-device-detect": "^0.4.3",
     "uswds": "^2.13.3",
     "v-img": "^0.2.0",
-    "vue": "2.6.12",
+    "vue": "^2.6.12",
     "vue-analytics": "^5.22.1",
     "vue-browser-detect-plugin": "^0.1.18",
     "vue-carousel": "^0.18.0",
@@ -38,18 +38,18 @@
     "vue-zoomer": "^0.3.10",
     "vuetify": "^2.6.6",
     "vuex": "^3.5.1",
-    "webpack": "^4.42.0"
+    "webpack": "^4.46.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.17",
     "@vue/cli-plugin-eslint": "^4.5.17",
     "@vue/cli-service": "^4.5.17",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.0.0",
-    "eslint-plugin-vue": "^6.2.2",
-    "node-sass": "^4.14.1",
+    "eslint": "^7.7.0",
+    "eslint-plugin-vue": "^7.0.0-alpha.0",
+    "sass": "^1.62.1",
     "sass-loader": "^9.0.3",
     "vue-svg-loader": "0.16.0",
-    "vue-template-compiler": "2.6.12"
+    "vue-template-compiler": "^2.6.14"
   }
 }
