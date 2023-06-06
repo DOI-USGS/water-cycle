@@ -5,25 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <%= process.env.VUE_APP_TIER !== '' ? '<meta name="robots" content="noindex,nofollow">' : '' %><!-- an empty string in this case means the 'prod' version of the application   -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DHTXLNDNPV"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-DHTXLNDNPV');
-    </script>  
-    <!-- VIZLAB DATA STREAM Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QV1JK700W8"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-QV1JK700W8');
-  </script>
-  <!-- End gtag -->
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KPDP9KP');</script>
+    <!-- End Google Tag Manager -->
     <!-- Primary Meta Tags -->
       <title>
         <%= VUE_APP_TIER %>
@@ -44,7 +32,7 @@
       <meta property="twitter:description" content="">
       <meta property="twitter:image" content="https://labs.waterdata.usgs.gov/visualizations/thumbnails/water-cycle-thumbnail.png">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-<script type='application/ld+json'>
+    <script type='application/ld+json'>
       { "@context": "http://www.schema.org",
         "@type": "WebSite", "name": "The Water Cycle",
         "url": "https://labs.waterdata.usgs.gov/visualizations/water-cycle",
@@ -64,6 +52,10 @@
     </script>
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPDP9KP"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <noscript>
       <strong>We're sorry but this application doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
