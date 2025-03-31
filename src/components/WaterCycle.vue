@@ -63,7 +63,7 @@
       <h3 class="optionsBar notButton">
         |
       </h3>
-      <sidebar class="optionsBar" />
+      <Sidebar class="optionsBar" />
     </div>
     <v-zoomer
       id="image-zoomer"
@@ -115,71 +115,59 @@
   </div>
 </template>
 
-<script>
-    export default {
-        name: "WaterCyle",
-        components: {
-          sidebar: () => import( /* webpackPreload: true */ /*webpackChunkName: "section"*/ "./../components/Sidebar")
-        },
-        data () {
-          return {
-            zoomed: false,
-            imageAspectRatio: 1,
-            loadEnglish: true,
-            loadSpanish: false,
-            inEnglish: true,
-            currentLanguageStatus: null,
-            imageSrcEnglish: null,
-            imageSrcWebpEnglish: null,
-            imageSrcSpanish: null,
-            imageSrcWebpSpanish: null,
-            downloadSite: null,
-            currentLanguageDownloadText: null,
-          }
-        },
-        mounted () {
-          this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf";
-          this.currentLanguageDownloadText = "Download the diagram";
-          this.currentLanguageStatus = 'cambiar a español';
-          this.imageSrcEnglish = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
-          this.imageSrcWebpEnglish = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
-          this.imageSrcSpanish = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png";
-          this.imageSrcWebpSpanish = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png";
-        },
-        methods: {
-          onImageLoad(e) {
-            const img = e.target
-            this.imageAspectRatio = img.naturalWidth / img.naturalHeight
-            console.log(img.id + " just loaded")
+<script setup>
+import { ref, onMounted } from 'vue'
+import Sidebar from './../components/Sidebar.vue'
 
-            // This function is first called on page load, **after** the English diagram is loaded
-            // Now that the English version is loaded, we trigger the loading of the Spanish diagram 
-            // by setting `loadSpanish` to `true`. `loadSpanish` sets the v-if on the picture element 
-            // for the Spanish diagram.
-            //
-            // This function is also called after the Spanish image is loaded, in which case this
-            // statement has no effect/ is redundant.
-            this.loadSpanish = true;
-          },
-          toggleLanguage() {
-            const self = this;
+// reactive state
+const zoomed = ref(false)
+const imageAspectRatio = ref(1)
+const loadEnglish = ref(true)
+const loadSpanish = ref(false)
+const inEnglish = ref(true)
+const currentLanguageStatus = ref(null)
+const imageSrcEnglish = ref(null)
+const imageSrcWebpEnglish = ref(null)
+const imageSrcSpanish = ref(null)
+const imageSrcWebpSpanish = ref(null)
+const downloadSite = ref(null)
+const currentLanguageDownloadText = ref(null)
 
-            // Update global value for whether diagram is shown in English
-            this.inEnglish = !this.inEnglish;
-            
-            // Update button text and text of download link
-            if (this.inEnglish) {
-              this.currentLanguageStatus = 'cambiar a español'
-              this.currentLanguageDownloadText = "Download the diagram";
-              this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf";
-            } else {
-              this.currentLanguageStatus = 'switch to English'
-              this.currentLanguageDownloadText = "Descargar el diagrama";
-              this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_spanish.pdf";
-            }
-          },
-        },
-    }
+onMounted(() => {
+  downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf'
+  currentLanguageDownloadText.value = 'Download the diagram'
+  currentLanguageStatus.value = 'cambiar a español'
+
+  imageSrcEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png'
+  imageSrcWebpEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png'
+  imageSrcSpanish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png'
+  imageSrcWebpSpanish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png'
+})
+
+// image load handler
+function onImageLoad(e) {
+  const img = e.target
+  imageAspectRatio.value = img.naturalWidth / img.naturalHeight
+  console.log(img.id + ' just loaded')
+
+  // load spanish diagram after english image is ready
+  loadSpanish.value = true
+}
+
+// toggle language
+function toggleLanguage() {
+  inEnglish.value = !inEnglish.value
+
+  if (inEnglish.value) {
+    currentLanguageStatus.value = 'cambiar a español'
+    currentLanguageDownloadText.value = 'Download the diagram'
+    downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf'
+  } else {
+    currentLanguageStatus.value = 'switch to English'
+    currentLanguageDownloadText.value = 'Descargar el diagrama'
+    downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_spanish.pdf'
+  }
+}
 </script>
 
 <style scoped lang="scss">

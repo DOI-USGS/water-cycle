@@ -114,8 +114,8 @@ export default {
     },
     data() {
       return {
-        publicPath: process.env.BASE_URL, // allows the application to find the files when on different deployment roots
-        appTitle: process.env.VUE_APP_TITLE, // Pull in title of page from Vue environment (set in .env)
+        publicPath: import.meta.env.BASE_URL, // allows the application to find the files when on different deployment roots
+        appTitle: import.meta.env.VUE_APP_TITLE, // Pull in title of page from Vue environment (set in .env)
         mobileView: isMobile, // test for mobile
         primaryAuthors: authors.primaryAuthors,
         additionalAuthors: authors.additionalAuthors,

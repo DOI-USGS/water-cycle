@@ -31,44 +31,47 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-    name: "SidebarTwo",
-    components: {
-        authorship: () => import( /* webpackPreload: true */ /*webpackChunkName: "section"*/ "./../components/Authorship")
-    },
-    mounted(){
-        window.addEventListener("load", () => this.setDimensions());
-    },
-    methods:{
-        setDimensions(){
-            const sidebar = this.$el;
-            const buttonDiv = this.$el.querySelector(".titleAndExit")
-            const buttonDimensions = buttonDiv.getBoundingClientRect();
-            sidebar.style.height = `${buttonDimensions.height}px`;
-            sidebar.style.width = `${buttonDimensions.width}px`;
-            sidebar.classList.remove("opacity");
-        },
-        toggle(){
-            const exit = this.$el.querySelector(".exit");
-            const sidebarButton = this.$el.querySelector(".reveal")
-            const authorText = this.$el.querySelector("#author-container")
-            exit.classList.toggle("hidden");
-            authorText.classList.toggle("hidden");
-            sidebarButton.classList.toggle("button");
-            if(this.$el.classList.contains("expanded")){ 
-                this.$el.classList.remove("expanded");
-                this.$el.classList.add("collapsed");
-                this.setDimensions();
-            }else{
-                this.$el.classList.remove("collapsed");
-                this.$el.classList.add("expanded");
-                this.$el.style.width = "auto";
-                this.$el.style.height = "auto";
-            }   
-        }
-    }
+<script setup>
+import { onMounted, ref } from 'vue'
+import Authorship from "./../components/Authorship.vue"
+
+const sidebarRef = ref(null)
+
+const setDimensions = () => {
+  const sidebar = sidebarRef.value
+  const buttonDiv = sidebar.querySelector('.titleAndExit')
+  const buttonDimensions = buttonDiv.getBoundingClientRect()
+  sidebar.style.height = `${buttonDimensions.height}px`
+  sidebar.style.width = `${buttonDimensions.width}px`
+  sidebar.classList.remove('opacity')
 }
+
+const toggle = () => {
+  const sidebar = sidebarRef.value
+  const exit = sidebar.querySelector('.exit')
+  const sidebarButton = sidebar.querySelector('.reveal')
+  const authorText = sidebar.querySelector('#author-container')
+
+  exit.classList.toggle('hidden')
+  authorText.classList.toggle('hidden')
+  sidebarButton.classList.toggle('button')
+
+  if (sidebar.classList.contains('expanded')) {
+    sidebar.classList.remove('expanded')
+    sidebar.classList.add('collapsed')
+    setDimensions()
+  } else {
+    sidebar.classList.remove('collapsed')
+    sidebar.classList.add('expanded')
+    sidebar.style.width = 'auto'
+    sidebar.style.height = 'auto'
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('load', () => setDimensions())
+})
+
 </script>
 <style lang="scss" scoped>
 $diagramBlue: #016699;
