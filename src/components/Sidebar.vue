@@ -32,14 +32,18 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, nextTick } from 'vue'
 import Authorship from "./../components/Authorship.vue"
 
 const sidebarRef = ref(null)
 
 const setDimensions = () => {
   const sidebar = sidebarRef.value
+  if (!sidebar) return
+
   const buttonDiv = sidebar.querySelector('.titleAndExit')
+  if (!buttonDiv) return
+
   const buttonDimensions = buttonDiv.getBoundingClientRect()
   sidebar.style.height = `${buttonDimensions.height}px`
   sidebar.style.width = `${buttonDimensions.width}px`
@@ -48,28 +52,36 @@ const setDimensions = () => {
 
 const toggle = () => {
   const sidebar = sidebarRef.value
+  if (!sidebar) return
+
   const exit = sidebar.querySelector('.exit')
   const sidebarButton = sidebar.querySelector('.reveal')
   const authorText = sidebar.querySelector('#author-container')
 
-  exit.classList.toggle('hidden')
-  authorText.classList.toggle('hidden')
-  sidebarButton.classList.toggle('button')
+  if (exit && sidebarButton && authorText) {
+    exit.classList.toggle('hidden')
+    authorText.classList.toggle('hidden')
+    sidebarButton.classList.toggle('button')
 
-  if (sidebar.classList.contains('expanded')) {
-    sidebar.classList.remove('expanded')
-    sidebar.classList.add('collapsed')
-    setDimensions()
-  } else {
-    sidebar.classList.remove('collapsed')
-    sidebar.classList.add('expanded')
-    sidebar.style.width = 'auto'
-    sidebar.style.height = 'auto'
+    if (sidebar.classList.contains('expanded')) {
+      sidebar.classList.remove('expanded')
+      sidebar.classList.add('collapsed')
+      setDimensions()
+    } else {
+      sidebar.classList.remove('collapsed')
+      sidebar.classList.add('expanded')
+      sidebar.style.width = 'auto'
+      sidebar.style.height = 'auto'
+    }
   }
 }
 
 onMounted(() => {
-  window.addEventListener('load', () => setDimensions())
+  window.addEventListener('load', () => {
+    nextTick(() => {
+      setDimensions()
+    })
+  })
 })
 
 </script>
