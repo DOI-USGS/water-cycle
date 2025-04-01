@@ -100,21 +100,35 @@ const zoom = ref(1)
 const zoomContainer = ref(null)
 const imageWrapper = ref(null)
 const imageAspectRatio = ref(1)
+const transformOrigin = ref('center center')
 
 const zoomStyle = computed(() => ({
   transform: `scale(${zoom.value})`,
-  transformOrigin: 'center center',
+  transformOrigin: transformOrigin.value,
   transition: 'transform 0.1s ease-out'
 }))
 
-const MIN_ZOOM = 1
-const MAX_ZOOM = 5
-const ZOOM_STEP = 0.1
-
+// center zoom on cursor
 const handleWheel = (e) => {
-  const delta = e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP
-  zoom.value = Math.min(Math.max(zoom.value + delta, MIN_ZOOM), MAX_ZOOM)
+  const rect = e.currentTarget.getBoundingClientRect()
+  const offsetX = e.clientX - rect.left
+  const offsetY = e.clientY - rect.top
+
+  const percentX = (offsetX / rect.width) * 100
+  const percentY = (offsetY / rect.height) * 100
+
+  transformOrigin.value = `${percentX}% ${percentY}%`
+
+  const delta = e.deltaY > 0 ? -0.1 : 0.1
+  zoom.value = Math.min(Math.max(zoom.value + delta, 1), 5)
+
+  // reset zoom center when at 1
+  if (zoom.value === 1) {
+  transformOrigin.value = 'center center'
 }
+
+}
+
 
 
 const loadEnglish = ref(true)
