@@ -108,7 +108,7 @@ const availableLanguages = [
   {
     code: 'en',
     name: 'English',
-    toggleText: 'Cambiar a español',
+    label: 'English', // for the translated name
     downloadText: 'Download the diagram',
     downloadLink: 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf',
     imagePng: 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png',
@@ -117,11 +117,20 @@ const availableLanguages = [
   {
     code: 'es',
     name: 'Español',
-    toggleText: 'Switch to English',
+    label: 'Español',
     downloadText: 'Descargar el diagrama',
     downloadLink: 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_spanish.pdf',
     imagePng: 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png',
     imageWebp: 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.webp',
+  },
+  {
+    code: 'fr',
+    name: 'French',
+    label: 'Français',
+    downloadText: 'Télécharger le diagramme',
+    downloadLink: 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/USGS_WaterCycle_Poster_French_2.pdf',
+    imagePng: 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/images/USGS_WaterCycle_Online_French_2.png',
+    imageWebp: 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/images/USGS_WaterCycle_Online_French_2.png',
   }
 ]
 
