@@ -138,7 +138,6 @@ function onImageLoad(e) {
 // toggle language
 function toggleLanguage() {
   currentLangIndex.value = (currentLangIndex.value + 1) % availableLanguages.length
-  imageLoaded.value = false
 }
 
 </script>
