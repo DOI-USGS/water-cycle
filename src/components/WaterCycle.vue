@@ -2,6 +2,7 @@
   <div id="content-container">
     <div
       id="button-container"
+      v-if="currentLang"
     >
       <h3 class="optionsBar notButton">
         <a
@@ -21,12 +22,9 @@
       <h3 class="optionsBar notButton">
         |
       </h3>
-      <h3 class="optionsBar notButton">
-        <a
-          :href="downloadSite"
-          target="_blank"
-        >
-          {{ currentLanguageDownloadText }}
+      <h3 class="optionsBar notButton" v-if="currentLang" >
+        <a :href="currentLang.downloadLink" target="_blank">
+          {{ currentLang.downloadText }}
         </a>
       </h3>
       <h3 class="optionsBar notButton">
@@ -34,12 +32,10 @@
       </h3>
       <h3 class="optionsBar">
         Language: 
-        <button
-          class="button"
-          @click="toggleLanguage"
-        >
-          {{ currentLanguageStatus }}
+        <button class="button" @click="toggleLanguage">
+          {{ currentLang.toggleText }}
         </button>
+
       </h3>
       <h3 class="optionsBar notButton">
         |
@@ -65,34 +61,25 @@
         :style="zoomStyle"
         class="image-wrapper"
       >
-        <picture v-if="loadEnglish" v-show="inEnglish">
-          <source :srcset="imageSrcWebpEnglish" type="image/webp" />
-          <source :srcset="imageSrcEnglish" type="image/png" />
-          <img
-            id="diagramEnglish"
-            :src="imageSrcWebpEnglish"
-            @load="onImageLoad"
-            style="width: 100%; height: auto;"
-          />
-        </picture>
+      <picture v-if="currentLang">
+        <source :srcset="currentLang.imageWebp" type="image/webp" />
+        <source :srcset="currentLang.imagePng" type="image/png" />
+        <img
+          :src="currentLang.imageWebp"
+          :alt="currentLang.name + ' water cycle diagram'"
+          @load="onImageLoad"
+          style="width: 100%; height: auto;"
+          draggable="false"
+        />
+      </picture>
 
-        <picture v-if="loadSpanish" v-show="!inEnglish">
-          <source :srcset="imageSrcWebpSpanish" type="image/webp" />
-          <source :srcset="imageSrcSpanish" type="image/png" />
-          <img
-            id="diagramSpanish"
-            :src="imageSrcWebpSpanish"
-            @load="onImageLoad"
-            style="width: 100%; height: auto;"
-          />
-        </picture>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import Sidebar from './../components/Sidebar.vue'
 
 // zooom logic
@@ -116,52 +103,44 @@ const handleWheel = (e) => {
   zoom.value = Math.min(Math.max(zoom.value + delta, MIN_ZOOM), MAX_ZOOM)
 }
 
+// handling languages
+const availableLanguages = [
+  {
+    code: 'en',
+    name: 'English',
+    toggleText: 'Cambiar a español',
+    downloadText: 'Download the diagram',
+    downloadLink: 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf',
+    imagePng: 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png',
+    imageWebp: 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.webp',
+  },
+  {
+    code: 'es',
+    name: 'Español',
+    toggleText: 'Switch to English',
+    downloadText: 'Descargar el diagrama',
+    downloadLink: 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_spanish.pdf',
+    imagePng: 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png',
+    imageWebp: 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.webp',
+  }
+]
 
-const loadEnglish = ref(true)
-const loadSpanish = ref(false)
-const inEnglish = ref(true)
-const currentLanguageStatus = ref(null)
-const imageSrcEnglish = ref(null)
-const imageSrcWebpEnglish = ref(null)
-const imageSrcSpanish = ref(null)
-const imageSrcWebpSpanish = ref(null)
-const downloadSite = ref(null)
-const currentLanguageDownloadText = ref(null)
-
-onMounted(() => {
-  downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf'
-  currentLanguageDownloadText.value = 'Download the diagram'
-  currentLanguageStatus.value = 'cambiar a español'
-
-  imageSrcEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png'
-  imageSrcWebpEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.webp'
-  imageSrcSpanish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png'
-  imageSrcWebpSpanish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.webp'
-})
+const currentLangIndex = ref(0)
+const currentLang = computed(() => availableLanguages[currentLangIndex.value])
 
 // image load handler
 function onImageLoad(e) {
   const img = e.target
   imageAspectRatio.value = img.naturalWidth / img.naturalHeight
-
-  // load spanish diagram after english image is ready
-  loadSpanish.value = true
 }
+
 
 // toggle language
 function toggleLanguage() {
-  inEnglish.value = !inEnglish.value
-
-  if (inEnglish.value) {
-    currentLanguageStatus.value = 'cambiar a español'
-    currentLanguageDownloadText.value = 'Download the diagram'
-    downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf'
-  } else {
-    currentLanguageStatus.value = 'switch to English'
-    currentLanguageDownloadText.value = 'Descargar el diagrama'
-    downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_spanish.pdf'
-  }
+  currentLangIndex.value = (currentLangIndex.value + 1) % availableLanguages.length
+  imageLoaded.value = false
 }
+
 </script>
 
 <style scoped lang="scss">
