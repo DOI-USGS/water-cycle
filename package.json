@@ -22,8 +22,7 @@
     "pinia": "^3.0.1",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0",
-    "vue-uswds": "^1.14.0",
-    "vue-zoomer": "^0.3.10"
+    "vue-uswds": "^1.14.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",

@@ -36,7 +36,6 @@
         Language: 
         <button
           class="button"
-          :text="currentLanguageStatus"
           @click="toggleLanguage"
         >
           {{ currentLanguageStatus }}
@@ -47,81 +46,77 @@
       </h3>
       <h3 class="optionsBar">
         Zoom:
-        <button
-          class="zoom button"
-          @click="$refs.zoomer.zoomIn()"
-        >
-          +
-        </button>
-        <button
-          class="zoom button out"
-          @click="$refs.zoomer.zoomOut()"
-        >
-          -
-        </button>
+        <button class="zoom button" @click="zoom.value = Math.min(zoom.value + 0.1, 5)">+</button>
+        <button class="zoom button out" @click="zoom.value = Math.max(zoom.value - 0.1, 1)">-</button>
       </h3>
       <h3 class="optionsBar notButton">
         |
       </h3>
       <Sidebar class="optionsBar" />
     </div>
-    <v-zoomer
+    <div
       id="image-zoomer"
-      ref="zoomer"
-      :aspect-ratio="imageAspectRatio"
-      :max-scale="10"
-      :zooming-elastic="false"
+      ref="zoomContainer"
       class="content"
+      @wheel.prevent="handleWheel"
     >
-      <picture
-        v-if="loadEnglish"
-        v-show="inEnglish"
+      <div
+        ref="imageWrapper"
+        :style="zoomStyle"
+        class="image-wrapper"
       >
-        <source
-          :srcset="imageSrcWebpEnglish"
-          type="image/webp"
-        >
-        <source
-          :srcset="imageSrcEnglish"
-          type="image/png"
-        >
-        <img
-          id="diagramEnglish"
-          :src="imageSrcWebpEnglish"
-          style="object-fit: contain; width: 100%; height: 100%; display: flex;"
-          @load="onImageLoad"
-        >
-      </picture>
-      <picture
-        v-if="loadSpanish"
-        v-show="!inEnglish"
-      >
-        <source
-          :srcset="imageSrcWebpSpanish"
-          type="image/webp"
-        >
-        <source
-          :srcset="imageSrcSpanish"
-          type="image/png"
-        >
-        <img
-          id="diagramSpanish"
-          :src="imageSrcWebpSpanish"
-          style="object-fit: contain; width: 100%; height: 100%; display: flex;"
-          @load="onImageLoad"
-        >
-      </picture>
-    </v-zoomer>
+        <picture v-if="loadEnglish" v-show="inEnglish">
+          <source :srcset="imageSrcWebpEnglish" type="image/webp" />
+          <source :srcset="imageSrcEnglish" type="image/png" />
+          <img
+            id="diagramEnglish"
+            :src="imageSrcWebpEnglish"
+            @load="onImageLoad"
+            style="width: 100%; height: auto;"
+          />
+        </picture>
+
+        <picture v-if="loadSpanish" v-show="!inEnglish">
+          <source :srcset="imageSrcWebpSpanish" type="image/webp" />
+          <source :srcset="imageSrcSpanish" type="image/png" />
+          <img
+            id="diagramSpanish"
+            :src="imageSrcWebpSpanish"
+            @load="onImageLoad"
+            style="width: 100%; height: auto;"
+          />
+        </picture>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import Sidebar from './../components/Sidebar.vue'
 
-// reactive state
-const zoomed = ref(false)
+// zooom logic
+const zoom = ref(1)
+const zoomContainer = ref(null)
+const imageWrapper = ref(null)
 const imageAspectRatio = ref(1)
+
+const zoomStyle = computed(() => ({
+  transform: `scale(${zoom.value})`,
+  transformOrigin: 'center center',
+  transition: 'transform 0.1s ease-out'
+}))
+
+const MIN_ZOOM = 1
+const MAX_ZOOM = 5
+const ZOOM_STEP = 0.1
+
+const handleWheel = (e) => {
+  const delta = e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP
+  zoom.value = Math.min(Math.max(zoom.value + delta, MIN_ZOOM), MAX_ZOOM)
+}
+
+
 const loadEnglish = ref(true)
 const loadSpanish = ref(false)
 const inEnglish = ref(true)
@@ -139,16 +134,15 @@ onMounted(() => {
   currentLanguageStatus.value = 'cambiar a español'
 
   imageSrcEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png'
-  imageSrcWebpEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png'
+  imageSrcWebpEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.webp'
   imageSrcSpanish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png'
-  imageSrcWebpSpanish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png'
+  imageSrcWebpSpanish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.webp'
 })
 
 // image load handler
 function onImageLoad(e) {
   const img = e.target
   imageAspectRatio.value = img.naturalWidth / img.naturalHeight
-  console.log(img.id + ' just loaded')
 
   // load spanish diagram after english image is ready
   loadSpanish.value = true
@@ -175,6 +169,11 @@ $diagramBlue: #016699;
 
 #image-zoomer {
   height: 88vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   @media screen and (max-height: 900px) {
     height: 84vh;
   }
@@ -190,6 +189,9 @@ $diagramBlue: #016699;
   @media screen and (max-width: 400px) {
     height: 65vh;
   }
+}
+.image-wrapper {
+  display: inline-block;
 }
 .optionsBar {
   padding: 0.1em 0 0.1em 0;
