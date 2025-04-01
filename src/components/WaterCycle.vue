@@ -65,6 +65,9 @@
         :style="zoomStyle"
         class="image-wrapper"
         @mousedown="handleMouseDown"
+        @touchstart.passive="handleTouchStart"
+        @touchmove.prevent="handleTouchMove"
+        @touchend="handleTouchend"
       >
         <picture v-if="loadEnglish" v-show="inEnglish">
           <source :srcset="imageSrcWebpEnglish" type="image/webp" />
@@ -108,6 +111,11 @@ const transformOrigin = ref('center center')
 const pan = ref({ x: 0, y: 0 })
 const isDragging = ref(false)
 const dragStart = ref({ x: 0, y: 0 })
+
+// mobile pinch zoom tracking
+const initialPinchDistance = ref(null)
+const initialZoom = ref(zoom.value)
+
 
 // zooming with drag to pan when zoomed in
 const zoomStyle = computed(() => ({
@@ -185,6 +193,37 @@ function clampPan(panX, panY) {
     x: Math.max(Math.min(panX, maxX), -maxX),
     y: Math.max(Math.min(panY, maxY), -maxY)
   }
+}
+
+// on mobile calculate distance between fingers on screen
+function getTouchDistance(touches) {
+  const dx = touches[0].clientX - touches[1].clientX
+  const dy = touches[0].clientY - touches[1].clientY
+  return Math.sqrt(dx * dx + dy * dy)
+}
+
+// use touchpoints to drive zoom
+const handleTouchStart = (e) => {
+  if (e.touches.length === 2) {
+    initialPinchDistance.value = getTouchDistance(e.touches)
+    initialZoom.value = zoom.value
+  }
+}
+
+const handleTouchMove = (e) => {
+  if (e.touches.length === 2 && initialPinchDistance.value) {
+    e.preventDefault() // prevent scrolling
+    const newDistance = getTouchDistance(e.touches)
+    const scaleChange = newDistance / initialPinchDistance.value
+    zoom.value = Math.min(Math.max(initialZoom.value * scaleChange, 1), 5)
+
+    // clamp pan after zoom
+    pan.value = clampPan(pan.value.x, pan.value.y)
+  }
+}
+
+const handleTouchEnd = () => {
+  initialPinchDistance.value = null
 }
 
 
