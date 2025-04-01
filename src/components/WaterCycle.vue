@@ -67,7 +67,7 @@
         @mousedown="handleMouseDown"
         @touchstart.passive="handleTouchStart"
         @touchmove.prevent="handleTouchMove"
-        @touchend="handleTouchend"
+        @touchend="handleTouchEnd"
       >
         <picture v-if="loadEnglish" v-show="inEnglish">
           <source :srcset="imageSrcWebpEnglish" type="image/webp" />
@@ -166,7 +166,6 @@ const handleMouseMove = (e) => {
   const rawY = e.clientY - dragStart.value.y
   pan.value = clampPan(rawX, rawY)
 }
-
 
 const handleMouseUp = () => {
   isDragging.value = false
