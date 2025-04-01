@@ -40,5 +40,29 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss">
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+.box .row.header {
+  flex: 0 1 81px;
+  margin: 0;
+}
+.box .row.buttonContainer {
+  flex: 0 1 50px;
+  margin: 0;
+  margin-bottom: 5px;
+}
+.box .row.content {
+  flex: 1 1 auto;
+  margin: 0;
+}
+.box .row.footer {
+  flex: 0 1 25px;
+  margin: 0;
+}
+
 </style>
