@@ -134,7 +134,7 @@ const handleWheel = (e) => {
 
   // reset zoom center when at 1
   if (zoom.value === 1) {
-    pan.value = { x: 0, y: 0 }
+    pan.value = clampPan(pan.value.x, pan.value.y)
     transformOrigin.value = 'center center'
   }
 }
@@ -154,17 +154,39 @@ const handleMouseDown = (e) => {
 
 const handleMouseMove = (e) => {
   if (!isDragging.value) return
-  pan.value = {
-    x: e.clientX - dragStart.value.x,
-    y: e.clientY - dragStart.value.y
-  }
+  const rawX = e.clientX - dragStart.value.x
+  const rawY = e.clientY - dragStart.value.y
+  pan.value = clampPan(rawX, rawY)
 }
+
 
 const handleMouseUp = () => {
   isDragging.value = false
   window.removeEventListener('mousemove', handleMouseMove)
   window.removeEventListener('mouseup', handleMouseUp)
 }
+
+// dont' scroll beyond the edges of the diagram...
+function clampPan(panX, panY) {
+  if (!zoomContainer.value || !imageWrapper.value) return { x: panX, y: panY }
+
+  const container = zoomContainer.value.getBoundingClientRect()
+  const image = imageWrapper.value.getBoundingClientRect()
+
+  const scale = zoom.value
+
+  const scaledWidth = image.width * scale
+  const scaledHeight = image.height * scale
+
+  const maxX = Math.max((scaledWidth - container.width) / 2, 0)
+  const maxY = Math.max((scaledHeight - container.height) / 2, 0)
+
+  return {
+    x: Math.max(Math.min(panX, maxX), -maxX),
+    y: Math.max(Math.min(panY, maxY), -maxY)
+  }
+}
+
 
 // handling languages and buttons
 const loadEnglish = ref(true)
