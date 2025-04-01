@@ -64,6 +64,7 @@
         ref="imageWrapper"
         :style="zoomStyle"
         class="image-wrapper"
+        @mousedown="handleMouseDown"
       >
         <picture v-if="loadEnglish" v-show="inEnglish">
           <source :srcset="imageSrcWebpEnglish" type="image/webp" />
@@ -73,6 +74,7 @@
             :src="imageSrcWebpEnglish"
             @load="onImageLoad"
             style="width: 100%; height: auto;"
+            draggable="false"
           />
         </picture>
 
@@ -92,7 +94,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import Sidebar from './../components/Sidebar.vue'
 
 // zooom logic
@@ -102,11 +104,20 @@ const imageWrapper = ref(null)
 const imageAspectRatio = ref(1)
 const transformOrigin = ref('center center')
 
+// drag to pan
+const pan = ref({ x: 0, y: 0 })
+const isDragging = ref(false)
+const dragStart = ref({ x: 0, y: 0 })
+
+// zooming with drag to pan when zoomed in
 const zoomStyle = computed(() => ({
-  transform: `scale(${zoom.value})`,
+  transform: `translate(${pan.value.x}px, ${pan.value.y}px) scale(${zoom.value})`,
   transformOrigin: transformOrigin.value,
-  transition: 'transform 0.1s ease-out'
+  transition: isDragging.value ? 'none' : 'transform 0.1s ease-out',
+  cursor: zoom.value > 1 ? (isDragging.value ? 'grabbing' : 'grab') : 'default',
+  userSelect: 'none',
 }))
+
 
 // center zoom on cursor
 const handleWheel = (e) => {
@@ -116,7 +127,6 @@ const handleWheel = (e) => {
 
   const percentX = (offsetX / rect.width) * 100
   const percentY = (offsetY / rect.height) * 100
-
   transformOrigin.value = `${percentX}% ${percentY}%`
 
   const delta = e.deltaY > 0 ? -0.1 : 0.1
@@ -124,13 +134,39 @@ const handleWheel = (e) => {
 
   // reset zoom center when at 1
   if (zoom.value === 1) {
-  transformOrigin.value = 'center center'
+    pan.value = { x: 0, y: 0 }
+    transformOrigin.value = 'center center'
+  }
 }
 
+// mouse event handlers to allow pan effect
+const handleMouseDown = (e) => {
+  if (zoom.value <= 1) return
+  isDragging.value = true
+  dragStart.value = {
+    x: e.clientX - pan.value.x,
+    y: e.clientY - pan.value.y
+  }
+  // listeners for mouseup
+  window.addEventListener('mousemove', handleMouseMove)
+  window.addEventListener('mouseup', handleMouseUp)
 }
 
+const handleMouseMove = (e) => {
+  if (!isDragging.value) return
+  pan.value = {
+    x: e.clientX - dragStart.value.x,
+    y: e.clientY - dragStart.value.y
+  }
+}
 
+const handleMouseUp = () => {
+  isDragging.value = false
+  window.removeEventListener('mousemove', handleMouseMove)
+  window.removeEventListener('mouseup', handleMouseUp)
+}
 
+// handling languages and buttons
 const loadEnglish = ref(true)
 const loadSpanish = ref(false)
 const inEnglish = ref(true)
