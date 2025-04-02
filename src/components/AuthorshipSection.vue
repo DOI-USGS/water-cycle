@@ -9,7 +9,7 @@
         href="https://labs.waterdata.usgs.gov/visualizations/vizlab-home/index.html#/"
         target="_blank"
       >USGS Vizlab</a>
-      , in colaboration with the Web Communications Branch and other USGS scientists.
+      , in collaboration with the Web Communications Branch and other USGS scientists.
       <br>
       <br>
       <span id="primary-author-statment">
@@ -21,8 +21,13 @@
           :class="'author first'"
         >
           <a
+            v-if="author.profile_link"
             :href="author.profile_link"
             target="_blank"
+            v-text="author.fullName"
+          />
+          <span
+            v-if="!author.profile_link"
             v-text="author.fullName"
           />
           <span v-if="index != Object.keys(primaryAuthors).length - 1 && Object.keys(primaryAuthors).length > 2">, </span>

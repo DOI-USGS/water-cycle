@@ -62,7 +62,14 @@
       <h3 class="optionsBar notButton">
         |
       </h3>
-      <Sidebar class="optionsBar" />
+      <ExpandingSidebar class="optionsBar" >
+        <template #sidebarTitle>
+          Contributors
+        </template>
+        <template #sidebarMessage>
+          <AuthorshipSection class="hidden" />
+        </template>
+      </ExpandingSidebar>
     </div>
     <div
       id="image-zoomer"
@@ -121,7 +128,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import Sidebar from './ExpandingSidebar.vue'
+import ExpandingSidebar from './ExpandingSidebar.vue'
+import AuthorshipSection from './AuthorshipSection.vue'
 
 // zooom logic
 const zoom = ref(1)
@@ -194,7 +202,9 @@ function toggleLanguage() {
 
 <style scoped lang="scss">
 $diagramBlue: #016699;
-
+#content-container h3 {
+  font-weight: 300;
+}
 #image-zoomer {
   height: 88vh;
   overflow: hidden;
