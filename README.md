@@ -1,10 +1,10 @@
-# {app_long_title}
+# The Water Cycle
 
-> _A newer version of the software may be available. See https://code.usgs.gov/wma/vizlab/{app_title}/-/releases to view all releases._
+> _A newer version of the software may be available. See https://github.com/DOI-USGS/water-cycle/releases to view all releases._
 
 This repo uses Vue3 to build a website that allows users to zoom and pan the USGS water cycle diagram. See more versions of the water cycle at: [https://usgs.gov/water-cycle](https://usgs.gov/water-cycle)
 
-**The data visualization website can be viewed at [https://water.usgs.gov/vizlab/{app_title}](https://water.usgs.gov/vizlab/{app_title}).**
+**The data visualization website can be viewed at [https://water.usgs.gov/vizlab/water-cycle](https://water.usgs.gov/vizlab/water-cycle).**
 
 ## Building the website locally
 
@@ -19,6 +19,6 @@ Corson-Dosch, H.R., Nell, C.S., Volentine, R.E., Archer, A.A., Bechtel, E., Bruc
 Corson-Dosch, H., and Nell, C. 2022. The zoomable water cycle. 
 
 ## Additional information
-* We welcome contributions from the community. See the [guidelines for contributing](https://github.com/DOI-USGS/{app_title}/) to this repository on GitHub.
-* [Disclaimer](https://code.usgs.gov/wma/vizlab/{app_title}/-/blob/main/DISCLAIMER.md)
-* [License](https://code.usgs.gov/wma/vizlab/{app_title}/-/blob/main/LICENSE.md)
+* We welcome contributions from the community. See the [guidelines for contributing](https://github.com/DOI-USGS/water-cycle/) to this repository on GitHub.
+* [Disclaimer](https://github.com/DOI-USGS/water-cycle/blob/main/DISCLAIMER.md)
+* [License](https://github.com/DOI-USGS/water-cycle/blob/main/LICENSE.md)

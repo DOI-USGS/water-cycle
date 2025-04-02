@@ -2,22 +2,22 @@
   {
     "name": "water-cycle",
     "organization": "U.S. Geological Survey",
-    "description": "water-cycle",
-    "version": "main",
+    "description": "A zoomable water cycle diagram translated in multiple languages",
+    "version": "1.4.1",
     "status": "Production",
     "permissions": {
       "usageType": "openSource",
       "licenses": [
         {
           "name": "Public Domain, CC0-1.0",
-          "URL": "https://github.com/USGS-VIZLAB/water-cycle/blob/main/LICENSE.md"
+          "URL": "https://github.com/DOI-USGS/water-cycle/blob/main/LICENSE.md"
         }
       ]
     },
-    "homepageURL": "https://github.com/USGS-VIZLAB/water-cycle/",
-    "downloadURL": "https://github.com/USGS-VIZLAB/water-cycle/archive/refs/heads/main.zip",
-    "disclaimerURL": "https://github.com/USGS-VIZLAB/water-cycle/blob/main/DISCLAIMER.md",
-    "repositoryURL": "https://github.com/USGS-VIZLAB/water-cycle.git",
+    "homepageURL": "https://water.usgs.gov/vizlab/water-cycle/",
+    "downloadURL": "https://github.com/DOI-USGS/water-cycle/archive/refs/heads/main.zip",
+    "disclaimerURL": "https://github.com/DOI-USGS/water-cycle/blob/main/DISCLAIMER.md",
+    "repositoryURL": "https://github.com/DOI-USGS/water-cycle.git",
     "vcs": "git",
     "laborHours": 20,
     "tags": [
@@ -35,7 +35,7 @@
       "email": "hcorson-dosch@usgs.gov"
     },
     "date": {
-      "metadataLastUpdated": "2023-05-05"
+      "metadataLastUpdated": "2025-04-02"
     }
   }
 ]

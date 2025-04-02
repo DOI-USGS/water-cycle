@@ -1,7 +1,7 @@
 {
   "name": "water-cycle",
   "version": "1.0.0",
-  "description": "Website template using Vue3 and Vite",
+  "description": "A zoomable water cycle diagram translated in multiple languages",
   "main": "index.html",
   "author": "USGS Vizlab",
   "license": "Public Domain, CC0-1.0",
