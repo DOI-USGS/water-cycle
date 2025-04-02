@@ -55,11 +55,9 @@ const toggle = () => {
 
   const exit = sidebar.querySelector('.exit')
   const sidebarButton = sidebar.querySelector('.reveal')
-  const authorText = sidebar.querySelector('#author-container')
 
-  if (exit && sidebarButton && authorText) {
+  if (exit && sidebarButton) {
     exit.classList.toggle('hidden')
-    authorText.classList.toggle('hidden')
     sidebarButton.classList.toggle('button')
 
     if (sidebar.classList.contains('expanded')) {
