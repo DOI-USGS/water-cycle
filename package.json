@@ -1,6 +1,6 @@
 {
   "name": "water-cycle",
-  "version": "1.0.0",
+  "version": "1.4.1",
   "description": "A zoomable water cycle diagram translated in multiple languages",
   "main": "index.html",
   "author": "USGS Vizlab",
