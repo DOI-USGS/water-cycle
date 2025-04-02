@@ -46,8 +46,18 @@
       </h3>
       <h3 class="optionsBar">
         Zoom:
-        <button class="zoom button" @click="zoom.value = Math.min(zoom.value + 0.1, 5)">+</button>
-        <button class="zoom button out" @click="zoom.value = Math.max(zoom.value - 0.1, 1)">-</button>
+        <button
+          class="zoom button"
+          @click="zoom.value = Math.min(zoom.value + 0.1, 5)"
+        >
+          +
+        </button>
+        <button
+          class="zoom button out"
+          @click="zoom.value = Math.max(zoom.value - 0.1, 1)"
+        >
+          -
+        </button>
       </h3>
       <h3 class="optionsBar notButton">
         |
@@ -65,26 +75,44 @@
         :style="zoomStyle"
         class="image-wrapper"
       >
-        <picture v-if="loadEnglish" v-show="inEnglish">
-          <source :srcset="imageSrcWebpEnglish" type="image/webp" />
-          <source :srcset="imageSrcEnglish" type="image/png" />
+        <picture
+          v-if="loadEnglish"
+          v-show="inEnglish"
+        >
+          <source
+            :srcset="imageSrcWebpEnglish"
+            type="image/webp"
+          >
+          <source
+            :srcset="imageSrcEnglish"
+            type="image/png"
+          >
           <img
             id="diagramEnglish"
             :src="imageSrcWebpEnglish"
-            @load="onImageLoad"
             style="width: 100%; height: auto;"
-          />
+            @load="onImageLoad"
+          >
         </picture>
 
-        <picture v-if="loadSpanish" v-show="!inEnglish">
-          <source :srcset="imageSrcWebpSpanish" type="image/webp" />
-          <source :srcset="imageSrcSpanish" type="image/png" />
+        <picture
+          v-if="loadSpanish"
+          v-show="!inEnglish"
+        >
+          <source
+            :srcset="imageSrcWebpSpanish"
+            type="image/webp"
+          >
+          <source
+            :srcset="imageSrcSpanish"
+            type="image/png"
+          >
           <img
             id="diagramSpanish"
             :src="imageSrcWebpSpanish"
-            @load="onImageLoad"
             style="width: 100%; height: auto;"
-          />
+            @load="onImageLoad"
+          >
         </picture>
       </div>
     </div>
@@ -93,7 +121,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import Sidebar from './../components/Sidebar.vue'
+import Sidebar from './ExpandingSidebar.vue'
 
 // zooom logic
 const zoom = ref(1)

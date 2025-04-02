@@ -33,7 +33,7 @@
 </template>
 <script setup>
 import { onMounted, ref, nextTick } from 'vue'
-import Authorship from "./../components/Authorship.vue"
+import Authorship from "./AuthorshipSection.vue"
 
 const sidebarRef = ref(null)
 
