@@ -202,7 +202,7 @@ const handleWheel = (e) => {
 
 // mouse event handlers to allow pan effect
 const handleMouseDown = (e) => {
-  if (zoom.value <= 1) return
+  //if (zoom.value <= 1) return // only pan when zoomed in
   isDragging.value = true
   dragStart.value = {
     x: e.clientX - pan.value.x,
