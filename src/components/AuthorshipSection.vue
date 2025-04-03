@@ -9,7 +9,7 @@
         href="https://labs.waterdata.usgs.gov/visualizations/vizlab-home/index.html#/"
         target="_blank"
       >USGS Vizlab</a>
-      , in colaboration with the Web Communications Branch and other USGS scientists.
+      , in collaboration with the Web Communications Branch and other USGS scientists.
       <br>
       <br>
       <span id="primary-author-statment">
@@ -21,8 +21,13 @@
           :class="'author first'"
         >
           <a
+            v-if="author.profile_link"
             :href="author.profile_link"
             target="_blank"
+            v-text="author.fullName"
+          />
+          <span
+            v-if="!author.profile_link"
             v-text="author.fullName"
           />
           <span v-if="index != Object.keys(primaryAuthors).length - 1 && Object.keys(primaryAuthors).length > 2">, </span>
@@ -107,7 +112,7 @@
 import { isMobile } from 'mobile-device-detect';
 import authors from "@/assets/text/authors";
 export default {
-  name: "Authorship",
+  name: "AuthorshipSection",
     components: {
     },
     props: {
@@ -115,7 +120,6 @@ export default {
     data() {
       return {
         publicPath: import.meta.env.BASE_URL, // allows the application to find the files when on different deployment roots
-        appTitle: import.meta.env.VUE_APP_TITLE, // Pull in title of page from Vue environment (set in .env)
         mobileView: isMobile, // test for mobile
         primaryAuthors: authors.primaryAuthors,
         additionalAuthors: authors.additionalAuthors,
@@ -126,7 +130,6 @@ export default {
       }
     },
     mounted(){   
-      console.log(this.appTitle)
       this.showAuthors = this.primaryAuthors.length > 0 ? true: false; // Show author statements for any authors
       this.showAdditionalAuthors =  this.additionalAuthors.length > 0 ? true : false; // Show author statements for additional authors if any are listed
       this.showAditionalContributionStatement = this.additionalAuthors.length > 0 ? true : false; // Show contributions statements for additional authors if any are listed AND showContributionStatements is true

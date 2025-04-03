@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar collapsed opacity">
+  <div ref="sidebarRef" class="sidebar collapsed opacity">
     <div class="sidebarContent">
       <div class="titleAndExit">
         <h3>
@@ -8,7 +8,7 @@
             @click="toggle"
           >
             <slot name="sidebarTitle">
-              Contributors
+              Reveal
             </slot>
           </button>
         </h3>
@@ -24,7 +24,7 @@
       <div class="messageArea">
         <div class="message">
           <slot name="sidebarMessage">
-            <authorship class="hidden" />
+            Message
           </slot>
         </div>
       </div>
@@ -33,7 +33,6 @@
 </template>
 <script setup>
 import { onMounted, ref, nextTick } from 'vue'
-import Authorship from "./../components/Authorship.vue"
 
 const sidebarRef = ref(null)
 
@@ -56,11 +55,9 @@ const toggle = () => {
 
   const exit = sidebar.querySelector('.exit')
   const sidebarButton = sidebar.querySelector('.reveal')
-  const authorText = sidebar.querySelector('#author-container')
 
-  if (exit && sidebarButton && authorText) {
+  if (exit && sidebarButton) {
     exit.classList.toggle('hidden')
-    authorText.classList.toggle('hidden')
     sidebarButton.classList.toggle('button')
 
     if (sidebar.classList.contains('expanded')) {
@@ -87,6 +84,12 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 $diagramBlue: #016699;
+button, input, select, textarea {
+    background-color: transparent;
+    border-style: none;
+    cursor: pointer;
+    color: inherit;
+}
 .sidebar{
     display: flex;
     flex-direction: row;
