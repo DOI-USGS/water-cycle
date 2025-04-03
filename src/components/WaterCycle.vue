@@ -398,6 +398,7 @@ $diagramBlue: #016699;
     padding: 2.5px 5px 2.5px 5px;
     max-width: 24rem;
     background-color: white;
+    color: var(--color-text);
     border: 0.5px solid #949494;
     border-radius: 0.25rem;
     -webkit-user-select: none; /* Safari */
@@ -412,7 +413,7 @@ $diagramBlue: #016699;
     color: white;
     @media screen and (max-width: 600px) {
       background-color: white;
-      color: black;
+      color: var(--color-text);
     }
   }
   .button.zoom {
