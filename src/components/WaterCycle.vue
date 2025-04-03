@@ -150,6 +150,11 @@ const dragStart = ref({ x: 0, y: 0 })
 // mobile pinch zoom tracking
 const initialPinchDistance = ref(null)
 const initialZoom = ref(zoom.value)
+const touchMidpoint = ref({ x: 0, y: 0 })
+
+// mbile single finer drag
+const isTouchDragging = ref(false)
+const touchStart = ref({ x: 0, y: 0 })
 
 
 // zooming with drag to pan when zoomed in
@@ -244,10 +249,10 @@ function getTouchMidpoint(touches) {
   }
 }
 
-const touchMidpoint = ref({ x: 0, y: 0 })
-
 // use touchpoints to drive zoom
 const handleTouchStart = (e) => {
+
+  // if two fingers, pinch zoom
   if (e.touches.length === 2) {
     initialPinchDistance.value = getTouchDistance(e.touches)
     initialZoom.value = zoom.value
@@ -262,10 +267,19 @@ const handleTouchStart = (e) => {
     const percentY = (offsetY / rect.height) * 100
 
     transformOrigin.value = `${percentX}% ${percentY}%`
+
+     // if just one finger, allow drag effect
+  } else if (e.touches.length === 1 && zoom.value > 1) {
+    isTouchDragging.value = true
+    touchStart.value = {
+      x: e.touches[0].clientX - pan.value.x,
+      y: e.touches[0].clientY - pan.value.y
+    }
   }
 }
 
 const handleTouchMove = (e) => {
+  // if two fingers, pinch zoom
   if (e.touches.length === 2 && initialPinchDistance.value) {
     e.preventDefault() // prevent scrolling
     const newDistance = getTouchDistance(e.touches)
@@ -274,6 +288,12 @@ const handleTouchMove = (e) => {
 
     // clamp pan after zoom
     pan.value = clampPan(pan.value.x, pan.value.y)
+
+    // if just one finger, allow drag effect
+  } else if (e.touches.length === 1 && isTouchDragging.value) {
+    const x = e.touches[0].clientX - touchStart.value.x
+    const y = e.touches[0].clientY - touchStart.value.y
+    pan.value = clampPan(x, y)
   }
 }
 
