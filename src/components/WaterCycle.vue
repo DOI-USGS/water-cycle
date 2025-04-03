@@ -159,10 +159,14 @@ const touchStart = ref({ x: 0, y: 0 })
 // button zoom
 function zoomIn() {
   zoom.value = Math.min(zoom.value + 0.1, 5)
+  pan.value = clampPan(pan.value.x, pan.value.y)
+
 }
 
 function zoomOut() {
   zoom.value = Math.max(zoom.value - 0.1, 0.5)
+  pan.value = clampPan(pan.value.x, pan.value.y)
+
 }
 
 
