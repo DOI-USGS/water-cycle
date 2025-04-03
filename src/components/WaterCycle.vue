@@ -299,6 +299,7 @@ const handleTouchMove = (e) => {
 
 const handleTouchEnd = () => {
   initialPinchDistance.value = null
+  isTouchDragging.value = false
 }
 
 
