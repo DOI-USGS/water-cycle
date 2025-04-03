@@ -36,7 +36,6 @@
         Language: 
         <button
           class="button"
-          :text="currentLanguageStatus"
           @click="toggleLanguage"
         >
           {{ currentLanguageStatus }}
@@ -49,13 +48,13 @@
         Zoom:
         <button
           class="zoom button"
-          @click="$refs.zoomer.zoomIn()"
+          @click="zoom.value = Math.min(zoom.value + 0.1, 5)"
         >
           +
         </button>
         <button
           class="zoom button out"
-          @click="$refs.zoomer.zoomOut()"
+          @click="zoom.value = Math.max(zoom.value - 0.1, 1)"
         >
           -
         </button>
@@ -63,130 +62,156 @@
       <h3 class="optionsBar notButton">
         |
       </h3>
-      <sidebar class="optionsBar" />
+      <ExpandingSidebar class="optionsBar" >
+        <template #sidebarTitle>
+          Contributors
+        </template>
+        <template #sidebarMessage>
+          <AuthorshipSection class="hidden" />
+        </template>
+      </ExpandingSidebar>
     </div>
-    <v-zoomer
+    <div
       id="image-zoomer"
-      ref="zoomer"
-      :aspect-ratio="imageAspectRatio"
-      :max-scale="10"
-      :zooming-elastic="false"
+      ref="zoomContainer"
       class="content"
+      @wheel.prevent="handleWheel"
     >
-      <picture
-        v-if="loadEnglish"
-        v-show="inEnglish"
+      <div
+        ref="imageWrapper"
+        :style="zoomStyle"
+        class="image-wrapper"
       >
-        <source
-          :srcset="imageSrcWebpEnglish"
-          type="image/webp"
+        <picture
+          v-if="loadEnglish"
+          v-show="inEnglish"
         >
-        <source
-          :srcset="imageSrcEnglish"
-          type="image/png"
+          <source
+            :srcset="imageSrcWebpEnglish"
+            type="image/webp"
+          >
+          <source
+            :srcset="imageSrcEnglish"
+            type="image/png"
+          >
+          <img
+            id="diagramEnglish"
+            :src="imageSrcWebpEnglish"
+            style="width: 100%; height: auto;"
+            @load="onImageLoad"
+          >
+        </picture>
+
+        <picture
+          v-if="loadSpanish"
+          v-show="!inEnglish"
         >
-        <img
-          id="diagramEnglish"
-          :src="imageSrcWebpEnglish"
-          style="object-fit: contain; width: 100%; height: 100%; display: flex;"
-          @load="onImageLoad"
-        >
-      </picture>
-      <picture
-        v-if="loadSpanish"
-        v-show="!inEnglish"
-      >
-        <source
-          :srcset="imageSrcWebpSpanish"
-          type="image/webp"
-        >
-        <source
-          :srcset="imageSrcSpanish"
-          type="image/png"
-        >
-        <img
-          id="diagramSpanish"
-          :src="imageSrcWebpSpanish"
-          style="object-fit: contain; width: 100%; height: 100%; display: flex;"
-          @load="onImageLoad"
-        >
-      </picture>
-    </v-zoomer>
+          <source
+            :srcset="imageSrcWebpSpanish"
+            type="image/webp"
+          >
+          <source
+            :srcset="imageSrcSpanish"
+            type="image/png"
+          >
+          <img
+            id="diagramSpanish"
+            :src="imageSrcWebpSpanish"
+            style="width: 100%; height: auto;"
+            @load="onImageLoad"
+          >
+        </picture>
+      </div>
+    </div>
   </div>
 </template>
 
-<script>
-    export default {
-        name: "WaterCyle",
-        components: {
-          sidebar: () => import( /* webpackPreload: true */ /*webpackChunkName: "section"*/ "./../components/Sidebar")
-        },
-        data () {
-          return {
-            zoomed: false,
-            imageAspectRatio: 1,
-            loadEnglish: true,
-            loadSpanish: false,
-            inEnglish: true,
-            currentLanguageStatus: null,
-            imageSrcEnglish: null,
-            imageSrcWebpEnglish: null,
-            imageSrcSpanish: null,
-            imageSrcWebpSpanish: null,
-            downloadSite: null,
-            currentLanguageDownloadText: null,
-          }
-        },
-        mounted () {
-          this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf";
-          this.currentLanguageDownloadText = "Download the diagram";
-          this.currentLanguageStatus = 'cambiar a español';
-          this.imageSrcEnglish = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
-          this.imageSrcWebpEnglish = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png";
-          this.imageSrcSpanish = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png";
-          this.imageSrcWebpSpanish = "https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png";
-        },
-        methods: {
-          onImageLoad(e) {
-            const img = e.target
-            this.imageAspectRatio = img.naturalWidth / img.naturalHeight
-            console.log(img.id + " just loaded")
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import ExpandingSidebar from './ExpandingSidebar.vue'
+import AuthorshipSection from './AuthorshipSection.vue'
 
-            // This function is first called on page load, **after** the English diagram is loaded
-            // Now that the English version is loaded, we trigger the loading of the Spanish diagram 
-            // by setting `loadSpanish` to `true`. `loadSpanish` sets the v-if on the picture element 
-            // for the Spanish diagram.
-            //
-            // This function is also called after the Spanish image is loaded, in which case this
-            // statement has no effect/ is redundant.
-            this.loadSpanish = true;
-          },
-          toggleLanguage() {
-            const self = this;
+// zooom logic
+const zoom = ref(1)
+const zoomContainer = ref(null)
+const imageWrapper = ref(null)
+const imageAspectRatio = ref(1)
 
-            // Update global value for whether diagram is shown in English
-            this.inEnglish = !this.inEnglish;
-            
-            // Update button text and text of download link
-            if (this.inEnglish) {
-              this.currentLanguageStatus = 'cambiar a español'
-              this.currentLanguageDownloadText = "Download the diagram";
-              this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf";
-            } else {
-              this.currentLanguageStatus = 'switch to English'
-              this.currentLanguageDownloadText = "Descargar el diagrama";
-              this.downloadSite = "https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_spanish.pdf";
-            }
-          },
-        },
-    }
+const zoomStyle = computed(() => ({
+  transform: `scale(${zoom.value})`,
+  transformOrigin: 'center center',
+  transition: 'transform 0.1s ease-out'
+}))
+
+const MIN_ZOOM = 1
+const MAX_ZOOM = 5
+const ZOOM_STEP = 0.1
+
+const handleWheel = (e) => {
+  const delta = e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP
+  zoom.value = Math.min(Math.max(zoom.value + delta, MIN_ZOOM), MAX_ZOOM)
+}
+
+
+const loadEnglish = ref(true)
+const loadSpanish = ref(false)
+const inEnglish = ref(true)
+const currentLanguageStatus = ref(null)
+const imageSrcEnglish = ref(null)
+const imageSrcWebpEnglish = ref(null)
+const imageSrcSpanish = ref(null)
+const imageSrcWebpSpanish = ref(null)
+const downloadSite = ref(null)
+const currentLanguageDownloadText = ref(null)
+
+onMounted(() => {
+  downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf'
+  currentLanguageDownloadText.value = 'Download the diagram'
+  currentLanguageStatus.value = 'cambiar a español'
+
+  imageSrcEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png'
+  imageSrcWebpEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.webp'
+  imageSrcSpanish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png'
+  imageSrcWebpSpanish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.webp'
+})
+
+// image load handler
+function onImageLoad(e) {
+  const img = e.target
+  imageAspectRatio.value = img.naturalWidth / img.naturalHeight
+
+  // load spanish diagram after english image is ready
+  loadSpanish.value = true
+}
+
+// toggle language
+function toggleLanguage() {
+  inEnglish.value = !inEnglish.value
+
+  if (inEnglish.value) {
+    currentLanguageStatus.value = 'cambiar a español'
+    currentLanguageDownloadText.value = 'Download the diagram'
+    downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf'
+  } else {
+    currentLanguageStatus.value = 'switch to English'
+    currentLanguageDownloadText.value = 'Descargar el diagrama'
+    downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_spanish.pdf'
+  }
+}
 </script>
 
 <style scoped lang="scss">
 $diagramBlue: #016699;
-
+#content-container h3 {
+  font-weight: 300;
+}
 #image-zoomer {
   height: 88vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   @media screen and (max-height: 900px) {
     height: 84vh;
   }
@@ -202,6 +227,9 @@ $diagramBlue: #016699;
   @media screen and (max-width: 400px) {
     height: 65vh;
   }
+}
+.image-wrapper {
+  display: inline-block;
 }
 .optionsBar {
   padding: 0.1em 0 0.1em 0;

@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar collapsed opacity">
+  <div ref="sidebarRef" class="sidebar collapsed opacity">
     <div class="sidebarContent">
       <div class="titleAndExit">
         <h3>
@@ -8,7 +8,7 @@
             @click="toggle"
           >
             <slot name="sidebarTitle">
-              Contributors
+              Reveal
             </slot>
           </button>
         </h3>
@@ -24,54 +24,72 @@
       <div class="messageArea">
         <div class="message">
           <slot name="sidebarMessage">
-            <authorship class="hidden" />
+            Message
           </slot>
         </div>
       </div>
     </div>
   </div>
 </template>
-<script>
-export default {
-    name: "SidebarTwo",
-    components: {
-        authorship: () => import( /* webpackPreload: true */ /*webpackChunkName: "section"*/ "./../components/Authorship")
-    },
-    mounted(){
-        window.addEventListener("load", () => this.setDimensions());
-    },
-    methods:{
-        setDimensions(){
-            const sidebar = this.$el;
-            const buttonDiv = this.$el.querySelector(".titleAndExit")
-            const buttonDimensions = buttonDiv.getBoundingClientRect();
-            sidebar.style.height = `${buttonDimensions.height}px`;
-            sidebar.style.width = `${buttonDimensions.width}px`;
-            sidebar.classList.remove("opacity");
-        },
-        toggle(){
-            const exit = this.$el.querySelector(".exit");
-            const sidebarButton = this.$el.querySelector(".reveal")
-            const authorText = this.$el.querySelector("#author-container")
-            exit.classList.toggle("hidden");
-            authorText.classList.toggle("hidden");
-            sidebarButton.classList.toggle("button");
-            if(this.$el.classList.contains("expanded")){ 
-                this.$el.classList.remove("expanded");
-                this.$el.classList.add("collapsed");
-                this.setDimensions();
-            }else{
-                this.$el.classList.remove("collapsed");
-                this.$el.classList.add("expanded");
-                this.$el.style.width = "auto";
-                this.$el.style.height = "auto";
-            }   
-        }
-    }
+<script setup>
+import { onMounted, ref, nextTick } from 'vue'
+
+const sidebarRef = ref(null)
+
+const setDimensions = () => {
+  const sidebar = sidebarRef.value
+  if (!sidebar) return
+
+  const buttonDiv = sidebar.querySelector('.titleAndExit')
+  if (!buttonDiv) return
+
+  const buttonDimensions = buttonDiv.getBoundingClientRect()
+  sidebar.style.height = `${buttonDimensions.height}px`
+  sidebar.style.width = `${buttonDimensions.width}px`
+  sidebar.classList.remove('opacity')
 }
+
+const toggle = () => {
+  const sidebar = sidebarRef.value
+  if (!sidebar) return
+
+  const exit = sidebar.querySelector('.exit')
+  const sidebarButton = sidebar.querySelector('.reveal')
+
+  if (exit && sidebarButton) {
+    exit.classList.toggle('hidden')
+    sidebarButton.classList.toggle('button')
+
+    if (sidebar.classList.contains('expanded')) {
+      sidebar.classList.remove('expanded')
+      sidebar.classList.add('collapsed')
+      setDimensions()
+    } else {
+      sidebar.classList.remove('collapsed')
+      sidebar.classList.add('expanded')
+      sidebar.style.width = 'auto'
+      sidebar.style.height = 'auto'
+    }
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('load', () => {
+    nextTick(() => {
+      setDimensions()
+    })
+  })
+})
+
 </script>
 <style lang="scss" scoped>
 $diagramBlue: #016699;
+button, input, select, textarea {
+    background-color: transparent;
+    border-style: none;
+    cursor: pointer;
+    color: inherit;
+}
 .sidebar{
     display: flex;
     flex-direction: row;

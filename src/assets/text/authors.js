@@ -40,9 +40,9 @@ export default {
       },
             {
         firstName: 'Rachel',
-        lastName: 'Volentine',
-        fullName: 'Rachel Volentine',
-        initials: 'RV',
+        lastName: 'Bryan',
+        fullName: 'Rachel Bryan',
+        initials: 'RB',
         profile_link: null,
         role: 'contributor',
         contribution: '(she/her) led usability testing'
@@ -79,7 +79,7 @@ export default {
         lastName: 'Riggs',
         fullName: 'Charlotte Riggs',
         initials: 'CR',
-        profile_link: null,
+        profile_link: 'https://www.usgs.gov/staff-profiles/charlotte-riggs',
         role: 'contributor',
         contribution: '(she/her) contributed to usability testing, communications, and Water Science School web development and provided oversight and coordination'
       },
