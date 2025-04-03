@@ -220,8 +220,8 @@ function clampPan(panX, panY) {
   const scaledWidth = image.width * scale
   const scaledHeight = image.height * scale
 
-  const maxX = Math.max((scaledWidth - container.width) / 2, 0)
-  const maxY = Math.max((scaledHeight - container.height) / 2, 0)
+  const maxX = 500//Math.max((scaledWidth - container.width) / 2, 0)
+  const maxY = 500//Math.max((scaledHeight - container.height) / 2, 0)
 
   return {
     x: Math.max(Math.min(panX, maxX), -maxX),
@@ -236,11 +236,32 @@ function getTouchDistance(touches) {
   return Math.sqrt(dx * dx + dy * dy)
 }
 
+// get the midpoint between finger touches
+function getTouchMidpoint(touches) {
+  return {
+    x: (touches[0].clientX + touches[1].clientX) / 2,
+    y: (touches[0].clientY + touches[1].clientY) / 2
+  }
+}
+
+const touchMidpoint = ref({ x: 0, y: 0 })
+
 // use touchpoints to drive zoom
 const handleTouchStart = (e) => {
   if (e.touches.length === 2) {
     initialPinchDistance.value = getTouchDistance(e.touches)
     initialZoom.value = zoom.value
+
+    // calculate midpoint relative to container
+    const rect = zoomContainer.value.getBoundingClientRect()
+    const midpoint = getTouchMidpoint(e.touches)
+    const offsetX = midpoint.x - rect.left
+    const offsetY = midpoint.y - rect.top
+
+    const percentX = (offsetX / rect.width) * 100
+    const percentY = (offsetY / rect.height) * 100
+
+    transformOrigin.value = `${percentX}% ${percentY}%`
   }
 }
 
