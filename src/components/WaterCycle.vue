@@ -48,13 +48,13 @@
         Zoom:
         <button
           class="zoom button"
-          @click="zoom.value = Math.min(zoom.value + 0.1, 5)"
+          @click="zoomIn"
         >
           +
         </button>
         <button
           class="zoom button out"
-          @click="zoom.value = Math.max(zoom.value - 0.1, 1)"
+          @click="zoomOut"
         >
           -
         </button>
@@ -155,6 +155,15 @@ const touchMidpoint = ref({ x: 0, y: 0 })
 // mbile single finer drag
 const isTouchDragging = ref(false)
 const touchStart = ref({ x: 0, y: 0 })
+
+// button zoom
+function zoomIn() {
+  zoom.value = Math.min(zoom.value + 0.1, 5)
+}
+
+function zoomOut() {
+  zoom.value = Math.max(zoom.value - 0.1, 0.5)
+}
 
 
 // zooming with drag to pan when zoomed in
