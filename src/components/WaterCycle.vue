@@ -369,6 +369,13 @@ $diagramBlue: #016699;
 #content-container h3 {
   font-weight: 300;
 }
+
+#content-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 #image-zoomer {
   height: 88vh;
   overflow: hidden;

@@ -6,6 +6,15 @@
 #app {
   /* height: calc(100vh + 87px); 87 is the height of the USGS header */
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+#main-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 /* css styles specific to page content exclusive of header and footer*/
