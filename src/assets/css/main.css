@@ -3,18 +3,16 @@
 @import './custom.css'; /* USGS Viz ID Stylesheet */
 
 /* whole page except header fit within viewport - no scrolling */
-#app {
-  /* height: calc(100vh + 87px); 87 is the height of the USGS header */
-  margin: 0 auto;
+#app, main-content {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 #main-content {
-  flex: 1 1 auto;
-  overflow-y: auto;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 /* css styles specific to page content exclusive of header and footer*/

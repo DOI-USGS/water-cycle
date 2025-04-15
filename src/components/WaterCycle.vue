@@ -101,7 +101,7 @@
           <img
             id="diagramEnglish"
             :src="imageSrcWebpEnglish"
-            style="width: 100%; height: auto;"
+            style="width: 100%; max-height: 100%; height: auto;"
             draggable="false"
           />
         </picture>
@@ -121,7 +121,7 @@
           <img
             id="diagramSpanish"
             :src="imageSrcWebpSpanish"
-            style="width: 100%; height: auto;"
+            style="width: 100%; max-height: 100%; height: auto;"
             @load="onImageLoad"
           >
         </picture>
@@ -238,8 +238,8 @@ function clampPan(panX, panY) {
   const scaledWidth = image.width * scale
   const scaledHeight = image.height * scale
 
-  const maxX = 500//Math.max((scaledWidth - container.width) / 2, 0)
-  const maxY = 500//Math.max((scaledHeight - container.height) / 2, 0)
+  const maxX = Math.max((scaledWidth - container.width) / 2, 0)
+  const maxY = Math.max((scaledHeight - container.height) / 2, 0)
 
   return {
     x: Math.max(Math.min(panX, maxX), -maxX),
@@ -374,6 +374,7 @@ $diagramBlue: #016699;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  height: 100%;
 }
 
 #image-zoomer {
