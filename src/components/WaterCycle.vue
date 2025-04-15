@@ -377,11 +377,11 @@ $diagramBlue: #016699;
 }
 
 #image-zoomer {
-  height: 88vh;
-  overflow: hidden;
   display: flex;
+  flex-grow: 1;
+  overflow: auto;
   justify-content: center;
-  align-items: center;
+  padding-bottom: 3rem;
 
   @media screen and (max-height: 900px) {
     height: 84vh;
@@ -401,6 +401,7 @@ $diagramBlue: #016699;
 }
 .image-wrapper {
   display: inline-block;
+  min-height: 100%;
 }
 .optionsBar {
   padding: 0.1em 0 0.1em 0;
