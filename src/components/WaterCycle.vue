@@ -48,13 +48,13 @@
         Zoom:
         <button
           class="zoom button"
-          @click="zoom.value = Math.min(zoom.value + 0.1, 5)"
+          @click="zoomIn"
         >
           +
         </button>
         <button
           class="zoom button out"
-          @click="zoom.value = Math.max(zoom.value - 0.1, 1)"
+          @click="zoomOut"
         >
           -
         </button>
@@ -81,6 +81,10 @@
         ref="imageWrapper"
         :style="zoomStyle"
         class="image-wrapper"
+        @mousedown="handleMouseDown"
+        @touchstart.passive="handleTouchStart"
+        @touchmove.prevent="handleTouchMove"
+        @touchend="handleTouchEnd"
       >
         <picture
           v-if="loadEnglish"
@@ -97,9 +101,9 @@
           <img
             id="diagramEnglish"
             :src="imageSrcWebpEnglish"
-            style="width: 100%; height: auto;"
-            @load="onImageLoad"
-          >
+            style="width: 100%; max-height: 100%; height: auto;"
+            draggable="false"
+          />
         </picture>
 
         <picture
@@ -117,7 +121,7 @@
           <img
             id="diagramSpanish"
             :src="imageSrcWebpSpanish"
-            style="width: 100%; height: auto;"
+            style="width: 100%; max-height: 100%; height: auto;"
             @load="onImageLoad"
           >
         </picture>
@@ -136,23 +140,183 @@ const zoom = ref(1)
 const zoomContainer = ref(null)
 const imageWrapper = ref(null)
 const imageAspectRatio = ref(1)
+const transformOrigin = ref('center center')
 
-const zoomStyle = computed(() => ({
-  transform: `scale(${zoom.value})`,
-  transformOrigin: 'center center',
-  transition: 'transform 0.1s ease-out'
-}))
+// drag to pan
+const pan = ref({ x: 0, y: 0 })
+const isDragging = ref(false)
+const dragStart = ref({ x: 0, y: 0 })
 
-const MIN_ZOOM = 1
-const MAX_ZOOM = 5
-const ZOOM_STEP = 0.1
+// mobile pinch zoom tracking
+const initialPinchDistance = ref(null)
+const initialZoom = ref(zoom.value)
+const touchMidpoint = ref({ x: 0, y: 0 })
 
-const handleWheel = (e) => {
-  const delta = e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP
-  zoom.value = Math.min(Math.max(zoom.value + delta, MIN_ZOOM), MAX_ZOOM)
+// mbile single finer drag
+const isTouchDragging = ref(false)
+const touchStart = ref({ x: 0, y: 0 })
+
+// button zoom
+function zoomIn() {
+  zoom.value = Math.min(zoom.value + 0.1, 5)
+  pan.value = clampPan(pan.value.x, pan.value.y)
+
+}
+
+function zoomOut() {
+  zoom.value = Math.max(zoom.value - 0.1, 0.5)
+  pan.value = clampPan(pan.value.x, pan.value.y)
+
 }
 
 
+// zooming with drag to pan when zoomed in
+const zoomStyle = computed(() => ({
+  transform: `translate(${pan.value.x}px, ${pan.value.y}px) scale(${zoom.value})`,
+  transformOrigin: transformOrigin.value,
+  transition: isDragging.value ? 'none' : 'transform 0.1s ease-out',
+  cursor: zoom.value > 1 ? (isDragging.value ? 'grabbing' : 'grab') : 'default',
+  userSelect: 'none',
+}))
+
+
+// center zoom on cursor
+const handleWheel = (e) => {
+  const rect = e.currentTarget.getBoundingClientRect()
+  const offsetX = e.clientX - rect.left
+  const offsetY = e.clientY - rect.top
+
+  const percentX = (offsetX / rect.width) * 100
+  const percentY = (offsetY / rect.height) * 100
+  transformOrigin.value = `${percentX}% ${percentY}%`
+
+  const delta = e.deltaY > 0 ? -0.1 : 0.1
+  zoom.value = Math.min(Math.max(zoom.value + delta, 1), 5)
+
+  // reset zoom center when at 1
+  if (zoom.value === 1) {
+    pan.value = clampPan(pan.value.x, pan.value.y)
+    transformOrigin.value = 'center center'
+  }
+}
+
+// mouse event handlers to allow pan effect
+const handleMouseDown = (e) => {
+  //if (zoom.value <= 1) return // only pan when zoomed in
+  isDragging.value = true
+  dragStart.value = {
+    x: e.clientX - pan.value.x,
+    y: e.clientY - pan.value.y
+  }
+  // listeners for mouseup
+  window.addEventListener('mousemove', handleMouseMove)
+  window.addEventListener('mouseup', handleMouseUp)
+}
+
+const handleMouseMove = (e) => {
+  if (!isDragging.value) return
+  const rawX = e.clientX - dragStart.value.x
+  const rawY = e.clientY - dragStart.value.y
+  pan.value = clampPan(rawX, rawY)
+}
+
+const handleMouseUp = () => {
+  isDragging.value = false
+  window.removeEventListener('mousemove', handleMouseMove)
+  window.removeEventListener('mouseup', handleMouseUp)
+}
+
+// dont' scroll beyond the edges of the diagram...
+function clampPan(panX, panY) {
+  if (!zoomContainer.value || !imageWrapper.value) return { x: panX, y: panY }
+
+  const container = zoomContainer.value.getBoundingClientRect()
+  const image = imageWrapper.value.getBoundingClientRect()
+
+  const scale = zoom.value
+
+  const scaledWidth = image.width * scale
+  const scaledHeight = image.height * scale
+
+  const maxX = Math.max((scaledWidth - container.width) / 2, 0)
+  const maxY = Math.max((scaledHeight - container.height) / 2, 0)
+
+  return {
+    x: Math.max(Math.min(panX, maxX), -maxX),
+    y: Math.max(Math.min(panY, maxY), -maxY)
+  }
+}
+
+// on mobile calculate distance between fingers on screen
+function getTouchDistance(touches) {
+  const dx = touches[0].clientX - touches[1].clientX
+  const dy = touches[0].clientY - touches[1].clientY
+  return Math.sqrt(dx * dx + dy * dy)
+}
+
+// get the midpoint between finger touches
+function getTouchMidpoint(touches) {
+  return {
+    x: (touches[0].clientX + touches[1].clientX) / 2,
+    y: (touches[0].clientY + touches[1].clientY) / 2
+  }
+}
+
+// use touchpoints to drive zoom
+const handleTouchStart = (e) => {
+
+  // if two fingers, pinch zoom
+  if (e.touches.length === 2) {
+    initialPinchDistance.value = getTouchDistance(e.touches)
+    initialZoom.value = zoom.value
+
+    // calculate midpoint relative to container
+    const rect = zoomContainer.value.getBoundingClientRect()
+    const midpoint = getTouchMidpoint(e.touches)
+    const offsetX = midpoint.x - rect.left
+    const offsetY = midpoint.y - rect.top
+
+    const percentX = (offsetX / rect.width) * 100
+    const percentY = (offsetY / rect.height) * 100
+
+    transformOrigin.value = `${percentX}% ${percentY}%`
+
+     // if just one finger, allow drag effect
+  } else if (e.touches.length === 1 && zoom.value > 1) {
+    isTouchDragging.value = true
+    touchStart.value = {
+      x: e.touches[0].clientX - pan.value.x,
+      y: e.touches[0].clientY - pan.value.y
+    }
+  }
+}
+
+const handleTouchMove = (e) => {
+  // if two fingers, pinch zoom
+  if (e.touches.length === 2 && initialPinchDistance.value) {
+    e.preventDefault() // prevent scrolling
+    const newDistance = getTouchDistance(e.touches)
+    const scaleChange = newDistance / initialPinchDistance.value
+    zoom.value = Math.min(Math.max(initialZoom.value * scaleChange, 1), 5)
+
+    // clamp pan after zoom
+    pan.value = clampPan(pan.value.x, pan.value.y)
+
+    // if just one finger, allow drag effect
+  } else if (e.touches.length === 1 && isTouchDragging.value) {
+    const x = e.touches[0].clientX - touchStart.value.x
+    const y = e.touches[0].clientY - touchStart.value.y
+    pan.value = clampPan(x, y)
+  }
+}
+
+const handleTouchEnd = () => {
+  initialPinchDistance.value = null
+  isTouchDragging.value = false
+}
+
+
+// handling languages and buttons
 const loadEnglish = ref(true)
 const loadSpanish = ref(false)
 const inEnglish = ref(true)
@@ -205,12 +369,20 @@ $diagramBlue: #016699;
 #content-container h3 {
   font-weight: 300;
 }
-#image-zoomer {
-  height: 88vh;
-  overflow: hidden;
+
+#content-container {
   display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+}
+
+#image-zoomer {
+  display: flex;
+  flex-grow: 1;
+  overflow: auto;
   justify-content: center;
-  align-items: center;
+  padding-bottom: 3rem;
 
   @media screen and (max-height: 900px) {
     height: 84vh;
@@ -230,6 +402,7 @@ $diagramBlue: #016699;
 }
 .image-wrapper {
   display: inline-block;
+  min-height: 100%;
 }
 .optionsBar {
   padding: 0.1em 0 0.1em 0;
@@ -247,6 +420,7 @@ $diagramBlue: #016699;
     padding: 2.5px 5px 2.5px 5px;
     max-width: 24rem;
     background-color: white;
+    color: var(--color-text);
     border: 0.5px solid #949494;
     border-radius: 0.25rem;
     -webkit-user-select: none; /* Safari */
@@ -261,7 +435,7 @@ $diagramBlue: #016699;
     color: white;
     @media screen and (max-width: 600px) {
       background-color: white;
-      color: black;
+      color: var(--color-text);
     }
   }
   .button.zoom {
