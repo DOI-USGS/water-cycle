@@ -22,8 +22,8 @@
 
 <style scoped lang="scss">
   .usa-prose {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #9c3d10;
+    color: #ffffff;
     padding-bottom: 0.3em;
     padding-top: 0.3em;
     p {
@@ -34,7 +34,7 @@
     }
     a {
       font-size: 20px;
-      color: blue;
+      color: #5594e7;
     }
   }
 </style>
