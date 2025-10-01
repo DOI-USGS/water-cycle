@@ -1,6 +1,7 @@
 <template>
   <div>
     <WindowSize v-if="typeOfEnv === '-test build-'" />
+    <ShutdownBanner/>
     <HeaderUSWDSBanner v-if="typeOfEnv !== '-test build-'" />
     <HeaderUSGS />
     <WorkInProgressWarning v-if="typeOfEnv !== ''" />
@@ -20,6 +21,7 @@
   import PreFooterCodeLinks from "@/components/PreFooterCodeLinks.vue";
   import FooterUSGS from '@/components/FooterUSGS.vue';
   import { useWindowSizeStore } from '@/stores/WindowSizeStore';
+  import ShutdownBanner from "./components/ShutdownBanner.vue";
 
   const windowSizeStore = useWindowSizeStore();
   const typeOfEnv = import.meta.env.VITE_APP_TIER;
