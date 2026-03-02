@@ -4,63 +4,16 @@
     id="author-container"
   >
     <p>
-      The design of the USGS water cycle diagram was led by the  
+      The design of the USGS water cycle diagram was done by the  
       <a
         href="https://labs.waterdata.usgs.gov/visualizations/vizlab-home/index.html#/"
         target="_blank"
-      >USGS Vizlab</a>
-      , in collaboration with the Web Communications Branch and other USGS scientists.
+      >USGS Vizlab</a>, in collaboration with the USGS Water Mission Area Web Communications Branch and subject matter expertise from USGS scientists.
       <br>
       <br>
-      <span id="primary-author-statment">
-        Contributors included 
-        <span
-          v-for="(author, index) in primaryAuthors" 
-          :id="`initial-${author.initials}`"
-          :key="`${author.initials}-attribution`"
-          :class="'author first'"
-        >
-          <a
-            v-if="author.profile_link"
-            :href="author.profile_link"
-            target="_blank"
-            v-text="author.fullName"
-          />
-          <span
-            v-if="!author.profile_link"
-            v-text="author.fullName"
-          />
-          <span v-if="index != Object.keys(primaryAuthors).length - 1 && Object.keys(primaryAuthors).length > 2">, </span>
-          <span v-if="index == Object.keys(primaryAuthors).length - 2"> and </span>
-        </span>.
-      </span>
-      <span
-        v-if="showAdditionalAuthors"
-        id="additional-author-statement"
-      >
-        <span
-          v-for="(author, index) in additionalAuthors" 
-          :id="`author-${author.initials}`"
-          :key="`${author.initials}-attribution`"
-          :class="'author'"
-        >
-          <a
-            :href="author.profile_link"
-            Water
-            Data
-            for
-            the
-            Nation
-            blog
-            v-text="author.fullName"
-          />
-          <span v-if="index != Object.keys(additionalAuthors).length - 1 && Object.keys(additionalAuthors).length > 2">, </span>
-          <span v-if="index == Object.keys(additionalAuthors).length - 2"> and </span>
-        </span>
-        <span>
-          also contributed to the site.
-        </span>
-      </span>
+      Cite as: Corson-Dosch, H., Nell, C., Volentine, R., Archer, A., Bechtel, E., Bruce, J., Felts, N., Gross, T., Lopez-Trujilio, D., Riggs, C., and Read, E. October 13, 2022. The Water Cycle. U.S. Geological Survey General Information Product 221.
+      <br/>
+      <br/>
       To learn more about the team and the design process, read the Water Data for the Nation blog post 
       <a
         class="blog_title"
