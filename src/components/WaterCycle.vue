@@ -7,7 +7,10 @@
         <a
           href="https://www.usgs.gov/special-topics/water-science-school/science/water-cycle"
           target="_blank"
-        >Visit the Water Science School</a>
+          rel="noopener noreferrer"
+        >
+          Visit the Water Science School
+        </a>
       </h3>
       <h3 class="optionsBar notButton">
         |
@@ -16,7 +19,10 @@
         <a
           href="https://labs.waterdata.usgs.gov/visualizations/pools-and-fluxes/index.html#/"
           target="_blank"
-        >Explore the size of pools and fluxes</a>
+          rel="noopener noreferrer"
+        >
+          Explore the size of pools and fluxes
+        </a>
       </h3>
       <h3 class="optionsBar notButton">
         |
@@ -25,8 +31,12 @@
         <a
           :href="downloadSite"
           target="_blank"
+          rel="noopener noreferrer"
         >
           {{ currentLanguageDownloadText }}
+          <span class="only">
+            {{ inEnglish ? 'opens in new tab' : 'se abre en una nueva pestana' }}
+          </span>
         </a>
       </h3>
       <h3 class="optionsBar notButton">
