@@ -8,13 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  
 Here we track upcoming changes.
  
-### Added
-- Added a change log
- 
-### Changed
- 
+## [1.6.0] - 2026-03-01
+
 ### Fixed
- 
+- Added alt text. 
+- Included expandable text description that duplicates inaccessible text on the image
+- 
+
 ## [1.4.1] - 2024-03-01
  
 ### Changed
