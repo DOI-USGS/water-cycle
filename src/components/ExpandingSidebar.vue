@@ -32,7 +32,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, nextTick } from 'vue'
+import { onMounted, onUnmounted, ref, nextTick } from 'vue'
 
 const sidebarRef = ref(null)
 
@@ -71,12 +71,25 @@ const toggle = () => {
   }
 }
 
-onMounted(() => {
-  window.addEventListener('load', () => {
-    nextTick(() => {
-      setDimensions()
-    })
+const handleWindowLoad = () => {
+  nextTick(() => {
+    setDimensions()
   })
+}
+
+onMounted(() => {
+  handleWindowLoad()
+
+  if (document.readyState !== 'complete') {
+    window.addEventListener('load', handleWindowLoad, { once: true })
+  }
+
+  window.addEventListener('resize', setDimensions)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', setDimensions)
+  window.removeEventListener('load', handleWindowLoad)
 })
 
 </script>

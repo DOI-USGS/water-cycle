@@ -68,6 +68,29 @@
             </option>
           </select>
         </li>
+        <li class="control-item">
+          <span>More info:</span>
+        </li>
+        <li class="control-item">
+          <ExpandingSidebar>
+            <template #sidebarTitle>
+              Contributors
+            </template>
+            <template #sidebarMessage>
+              <AuthorshipSection class="hidden" />
+            </template>
+          </ExpandingSidebar>
+        </li>
+        <li class="control-item">
+          <button
+            class="button control-action"
+            :aria-controls="descriptionPanelId"
+            :aria-expanded="isDescriptionOpen ? 'true' : 'false'"
+            @click="toggleDescription"
+          >
+            {{ activeLongDescription.summaryLabel }}
+          </button>
+        </li>
       </ul>
     </nav>
     <section
@@ -109,33 +132,6 @@
         </li>
       </ul>
     </section>
-    <nav
-      id="button-container"
-      :aria-label="controlsNavLabel"
-    >
-      <ul class="control-list">
-        <li class="control-item">
-          <ExpandingSidebar>
-            <template #sidebarTitle>
-              Contributors
-            </template>
-            <template #sidebarMessage>
-              <AuthorshipSection class="hidden" />
-            </template>
-          </ExpandingSidebar>
-        </li>
-        <li class="control-item">
-          <button
-            class="button control-action"
-            :aria-controls="descriptionPanelId"
-            :aria-expanded="isDescriptionOpen ? 'true' : 'false'"
-            @click="toggleDescription"
-          >
-            {{ activeLongDescription.summaryLabel }}
-          </button>
-        </li>
-      </ul>
-    </nav>
     <section
       v-if="isDescriptionOpen"
       :id="descriptionPanelId"
@@ -272,7 +268,6 @@ const activeLongDescription = computed(() => (inEnglish.value ? englishLongDescr
 const isDescriptionOpen = ref(false)
 const descriptionPanelId = 'long-description-panel'
 const quickControlsNavLabel = computed(() => (inEnglish.value ? 'Primary diagram controls' : 'Controles principales del diagrama'))
-const controlsNavLabel = computed(() => (inEnglish.value ? 'Additional diagram controls' : 'Controles adicionales del diagrama'))
 const relatedResourcesHeadingId = 'related-resources-heading'
 const relatedResourcesHeading = computed(() => (inEnglish.value ? 'Related resources' : 'Recursos relacionados'))
 const waterScienceSchoolLabel = computed(() => (inEnglish.value ? 'USGS Water Science School' : 'La Escuela de Ciencias del Agua'))
@@ -354,10 +349,6 @@ function toggleDescription() {
 .diagram-image {
   width: 100%;
   height: auto;
-}
-#button-container {
-  padding: 0 1.5rem;
-  margin-top: 0.35rem;
 }
 #quick-controls {
   padding: 0 1.5rem;
