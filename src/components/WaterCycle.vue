@@ -168,7 +168,6 @@ import diagramDescription from '@/assets/text/diagramDescription.json'
 const zoom = ref(1)
 const descriptionDialogRef = ref(null)
 const contributorsDialogRef = ref(null)
-const lastInfoTriggerRef = ref(null)
 
 const zoomStyle = computed(() => ({
   transform: `scale(${zoom.value})`,
@@ -274,6 +273,8 @@ function handleDialogKeydown(element) {
     return
   }
 
+  if (element.key !== 'Tab') return
+
   // list of tabbed elements
   const focusable = getFocusableElements(dialog)
   if (focusable.length === 0) {
@@ -288,8 +289,20 @@ function handleDialogKeydown(element) {
   const activeElement = document.activeElement
   const focusInsideDialog = dialog.contains(activeElement)
 
-  // on last element lop back to the first element when tabbed
-  if (activeElement === last) {
+  if (!focusInsideDialog) {
+    element.preventDefault()
+    first.focus()
+    return
+  }
+
+  if (element.shiftKey && activeElement === first) {
+    element.preventDefault()
+    last.focus()
+    return
+  }
+
+  // on last element loop back to the first element when tabbed
+  if (!element.shiftKey && activeElement === last) {
     element.preventDefault()
     first.focus()
   }
@@ -308,14 +321,14 @@ watch(activeInfoPanel, async (panel) => {
   document.removeEventListener('keydown', handleDialogKeydown, true)
 
   if (panel) {
-    await nextTick()
-    focusActiveDialog()
-    document.addEventListener('keydown', handleDialogKeydown, true)
+    await nextTick() // wait for dialog to be added to DOM
+    focusActiveDialog() // move focus to dialog
+    document.addEventListener('keydown', handleDialogKeydown, true) // listen to keys
     return
   }
 
   await nextTick()
-  lastInfoTriggerRef.value?.focus()
+  document.getElementById('description-toggle')?.focus()
 })
 
 onBeforeUnmount(() => {
@@ -323,10 +336,11 @@ onBeforeUnmount(() => {
 })
 
 function onEnglishImageLoad() {
-  // Load Spanish diagram after English image is ready.
+  // Load Spanish diagram in background after English image is ready.
   loadSpanish.value = true
 }
 
+// switch the app language state and downloadable file
 function setLanguage(languageCode) {
   selectedLanguage.value = languageCode
   inEnglish.value = languageCode === 'en'
@@ -340,23 +354,12 @@ function setLanguage(languageCode) {
   }
 }
 
-function setInfoTrigger(event) {
-  if (event?.currentTarget instanceof HTMLElement) {
-    lastInfoTriggerRef.value = event.currentTarget
-    return
-  }
-  if (document.activeElement instanceof HTMLElement) {
-    lastInfoTriggerRef.value = document.activeElement
-  }
-}
-
-function toggleDescription(event) {
-  setInfoTrigger(event)
+// toggle dialogs
+function toggleDescription() {
   activeInfoPanel.value = isDescriptionOpen.value ? null : 'description'
 }
 
-function toggleContributors(event) {
-  setInfoTrigger(event)
+function toggleContributors() {
   activeInfoPanel.value = isContributorsOpen.value ? null : 'contributors'
 }
 

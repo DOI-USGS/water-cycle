@@ -82,10 +82,11 @@
       </li>
       <li class="control-item">
         <button
+          id="description-toggle"
           class="button control-action"
           :aria-controls="descriptionPanelId"
           :aria-expanded="isDescriptionOpen ? 'true' : 'false'"
-          @click="emit('toggle-description', $event)"
+          @click="emit('toggle-description')"
         >
           {{ descriptionSummaryLabel }}
         </button>
@@ -95,7 +96,7 @@
           class="button control-action"
           :aria-controls="contributorsPanelId"
           :aria-expanded="isContributorsOpen ? 'true' : 'false'"
-          @click="emit('toggle-contributors', $event)"
+          @click="emit('toggle-contributors')"
         >
           {{ contributorsLabel }}
         </button>
