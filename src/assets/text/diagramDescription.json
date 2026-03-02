@@ -36,6 +36,37 @@
   },
   "es": {
     "summaryLabel": "Leer la descripcion extensa del diagrama",
-    "sections": []
+    "sections": [
+      {
+        "heading": "Introducción",
+        "paragraphs": [
+          "El ciclo del agua describe dónde se encuentra el agua en la Tierra y cómo se mueve. El agua se almacena en la atmósfera, en la superficie terrestre y debajo del suelo. Puede ser un líquido, un sólido o un gas. El agua líquida puede ser dulce, salada o una mezcla (salobre). El agua se mueve entre los lugares donde está almacenada. El agua se mueve a grandes escalas y a muy pequeñas escalas. El agua se mueve de forma natural y debido a las acciones humanas. El uso humano del agua afecta dónde se almacena el agua, cómo se mueve y qué tan limpia es."
+        ]
+      },
+      {
+        "heading": "Reservas",
+        "paragraphs": [
+          "Las reservas almacenan agua. El 96% de toda el agua se almacena en los océanos y es salina. En la tierra, el agua salada se almacena en lagos salinos. El agua dulce se almacena en forma líquida en lagos de agua dulce, embalses artificiales, ríos y humedales. El agua se almacena en forma sólida, congelada, en capas de hielo y glaciares, y en mantos de nieve en elevaciones altas o cerca de los polos de la Tierra. El vapor de agua es un gas y se almacena como humedad atmosférica sobre el océano y la tierra. En el suelo, el agua congelada se almacena como permafrost y el agua líquida se almacena como humedad del suelo. Más profundo bajo tierra, el agua líquida se almacena en acuíferos subterráneos, dentro de las grietas y poros en la roca."
+        ]
+      },
+      {
+        "heading": "Flujos",
+        "paragraphs": [
+          "Los flujos mueven el agua entre las reservas. A medida que se mueve, el agua puede cambiar de forma entre líquido, sólido y gas. La circulación mezcla el agua en los océanos y transporta el vapor de agua en la atmósfera. El agua se mueve entre la atmósfera y la superficie a través de la evaporación, la evapotranspiración y la precipitación. El agua se mueve a través de la superficie a través del deshielo, la escorrentía y el flujo de ríos. El agua se mueve hacia el subsuelo a través de la infiltración y la recarga de agua subterránea. Bajo tierra, el agua subterránea fluye dentro de los acuíferos. Puede regresar a la superficie a través de la descarga natural de agua subterránea a los ríos, al océano y de los manantiales."
+        ]
+      },
+      {
+        "heading": "Uso humano y disponibilidad de agua ",
+        "paragraphs": [
+          "Alteramos el ciclo del agua. Redirigimos ríos. Construimos represas para almacenar agua. Drenamos el agua de los humedales para el desarrollo. Utilizamos el agua de ríos, lagos, embalses y acuíferos subterráneos. Utilizamos esa agua para abastecer nuestros hogares y comunidades. La utilizamos para el riego agrícola y el pastoreo de ganado. La utilizamos en actividades industriales como la generación de energía termoeléctrica, la minería y la acuicultura. La cantidad de agua que está disponible depende de cuánta agua hay en cada reserva (cantidad de agua). También depende de cuándo y qué tan rápido se mueve el agua (temporización del agua), cuánta agua usamos (uso del agua) y qué tan limpia es el agua (calidad del agua)."
+        ]
+      },
+      {
+        "heading": "Calidad del agua",
+        "paragraphs": [
+          "Afectamos la calidad del agua. En áreas agrícolas y urbanas, el riego y la precipitación transportan fertilizantes y pesticidas a los ríos y aguas subterráneas. Las centrales eléctricas y las fábricas devuelven el agua caliente y contaminada a los ríos. La escorrentía transporta a los ríos y los lagos productos químicos, sedimentos y aguas residuales. Aguas abajo de estas fuentes, el agua contaminada puede causar la proliferación de algas nocivas, propagar enfermedades y causar daño a hábitats. El cambio climático está alterando el ciclo del agua. Está afectando la calidad, la cantidad, la temporización y el uso del agua. Está provocando la acidificación de los océanos, el aumento del nivel del mar y un clima más extremo. Al comprender estos impactos, podemos trabajar para usar el agua de manera sostenible."
+        ]
+      }
+    ]
   }
 }
