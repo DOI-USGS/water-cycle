@@ -1,98 +1,111 @@
 <template>
-  <div>
-    <nav
-      id="quick-controls"
-      :aria-label="quickControlsNavLabel"
+  <section
+    id="quick-controls"
+    :aria-labelledby="quickControlsHeadingId"
+  >
+    <h2
+      :id="quickControlsHeadingId"
+      class="only"
     >
-      <ul class="control-list no-separators">
-        <li class="control-item control-action zoom-controls">
-          <span>{{ zoomLabel }}</span>
-          <button
-            class="button control-action"
-            :aria-label="zoomInLabel"
-            @click="emit('zoom-in')"
+      {{ quickControlsSectionLabel }}
+    </h2>
+    <ul
+      class="control-list no-separators"
+      role="toolbar"
+      :aria-label="quickControlsToolbarLabel"
+      aria-orientation="horizontal"
+    >
+      <li class="control-item">
+        <span class="control-prefix">{{ zoomLabel }}</span>
+        <button
+          class="button control-action control-small"
+          :aria-label="zoomInLabel"
+          @click="emit('zoom-in')"
+        >
+          +
+        </button>
+        <button
+          class="button control-action control-small"
+          :aria-label="zoomOutLabel"
+          @click="emit('zoom-out')"
+        >
+          -
+        </button>
+      </li>
+      <li class="control-item">
+        <span class="control-prefix">{{ downloadLabel }}</span>
+        <a
+          class="button control-action download-button"
+          :href="downloadSite"
+          target="_blank"
+          rel="noopener noreferrer"
+          :aria-label="downloadAriaLabel"
+          :title="currentLanguageDownloadText"
+        >
+          <FontAwesomeIcon
+            :icon="['fas', 'download']"
+            class="control-icon"
+            aria-hidden="true"
+          />
+        </a>
+      </li>
+      <li class="control-item">
+        <span class="control-prefix">{{ languageLabel }}</span>
+        <label
+          for="language-select"
+          class="only"
+        >
+          {{ languageSelectLabel }}
+        </label>
+        <select
+          id="language-select"
+          v-model="languageValue"
+          class="button"
+          :aria-label="languageSelectLabel"
+        >
+          <option
+            value="en"
+            lang="en"
           >
-            +
-          </button>
-          <button
-            class="button control-action"
-            :aria-label="zoomOutLabel"
-            @click="emit('zoom-out')"
+            English
+          </option>
+          <option
+            value="es"
+            lang="es"
           >
-            -
-          </button>
-        </li>
-        <li class="control-item">
-          <span>{{ downloadLabel }}</span>
-          <a
-            class="button control-action download-button icon-only"
-            :href="downloadSite"
-            target="_blank"
-            rel="noopener noreferrer"
-            :aria-label="downloadAriaLabel"
-            :title="currentLanguageDownloadText"
-          >
-            <FontAwesomeIcon
-              :icon="['fas', 'download']"
-              class="control-icon"
-              aria-hidden="true"
-            />
-          </a>
-        </li>
-        <li class="control-item">
-          <span>{{ languageLabel }}</span>
-          <label
-            for="language-select"
-            class="only"
-          >
-            {{ languageSelectLabel }}
-          </label>
-          <select
-            id="language-select"
-            v-model="languageValue"
-            class="button"
-            :aria-label="languageSelectLabel"
-          >
-            <option value="en">
-              English
-            </option>
-            <option value="es">
-              Espanol
-            </option>
-          </select>
-        </li>
-        <li class="control-item">
-          <span>{{ moreInfoLabel }}</span>
-        </li>
-        <li class="control-item">
-          <ExpandingSidebar>
-            <template #sidebarTitle>
-              {{ contributorsLabel }}
-            </template>
-            <template #sidebarMessage>
-              <AuthorshipSection class="hidden" />
-            </template>
-          </ExpandingSidebar>
-        </li>
-        <li class="control-item">
-          <button
-            class="button control-action"
-            :aria-controls="descriptionPanelId"
-            :aria-expanded="isDescriptionOpen ? 'true' : 'false'"
-            @click="emit('toggle-description')"
-          >
-            {{ descriptionSummaryLabel }}
-          </button>
-        </li>
-      </ul>
-    </nav>
-  </div>
+            Espanol
+          </option>
+        </select>
+      </li>
+      <li class="control-item">
+        <span class="control-prefix">{{ moreInfoLabel }}</span>
+      </li>
+      <li class="control-item">
+        <button
+          class="button control-action"
+          :aria-controls="descriptionPanelId"
+          :aria-expanded="isDescriptionOpen ? 'true' : 'false'"
+          @click="emit('toggle-description', $event)"
+        >
+          {{ descriptionSummaryLabel }}
+        </button>
+      </li>
+      <li class="control-item">
+        <button
+          class="button control-action"
+          :aria-controls="contributorsPanelId"
+          :aria-expanded="isContributorsOpen ? 'true' : 'false'"
+          @click="emit('toggle-contributors', $event)"
+        >
+          {{ contributorsLabel }}
+        </button>
+      </li>
+    </ul>
+  </section>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import ExpandingSidebar from './ExpandingSidebar.vue'
-import AuthorshipSection from './AuthorshipSection.vue'
 
 const props = defineProps({
   inEnglish: {
@@ -125,13 +138,21 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
+  contributorsPanelId: {
+    type: String,
+    required: true
+  },
+  isContributorsOpen: {
+    type: Boolean,
+    required: true
+  },
   descriptionSummaryLabel: {
     type: String,
     required: true
   }
 })
 
-const emit = defineEmits(['zoom-in', 'zoom-out', 'set-language', 'toggle-description'])
+const emit = defineEmits(['zoom-in', 'zoom-out', 'set-language', 'toggle-description', 'toggle-contributors'])
 
 const languageValue = computed({
   get: () => props.selectedLanguage,
@@ -140,7 +161,9 @@ const languageValue = computed({
   }
 })
 
-const quickControlsNavLabel = computed(() => (props.inEnglish ? 'Primary diagram controls' : 'Controles principales del diagrama'))
+const quickControlsHeadingId = 'quick-controls-heading'
+const quickControlsSectionLabel = computed(() => (props.inEnglish ? 'Diagram controls' : 'Controles del diagrama'))
+const quickControlsToolbarLabel = computed(() => (props.inEnglish ? 'Primary diagram controls' : 'Controles principales del diagrama'))
 const zoomLabel = computed(() => (props.inEnglish ? 'Zoom:' : 'Acercar:'))
 const downloadLabel = computed(() => (props.inEnglish ? 'Download:' : 'Descargar:'))
 const languageLabel = computed(() => (props.inEnglish ? 'Language:' : 'Idioma:'))
@@ -157,11 +180,12 @@ const zoomOutLabel = computed(() => (props.inEnglish ? 'Zoom out' : 'Alejar'))
   margin-top: 0.5rem;
 }
 
-.download-button {
-  min-width: 2.4rem;
+#quick-controls .button {
+  max-width: none;
 }
 
-.download-button.icon-only {
+.download-button {
+  min-width: 2.4rem;
   min-height: 3rem;
   padding-left: 0.7rem;
   padding-right: 0.7rem;

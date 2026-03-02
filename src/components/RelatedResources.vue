@@ -12,7 +12,7 @@
     </h2>
     <ul class="control-list no-separators">
       <li class="control-item">
-        <span>{{ relatedResourcesHeading }}:</span>
+        <span class="control-prefix">{{ relatedResourcesHeading }}:</span>
       </li>
       <li class="control-item">
         <a

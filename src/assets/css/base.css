@@ -125,6 +125,9 @@ h3{
   font-weight: 400;
   padding: 0.1em 0;
 }
+.control-prefix {
+  font-weight: 600;
+}
 .control-item + .control-item {
   border-left: 1px solid #949494;
   margin-left: 0.5rem;
@@ -159,6 +162,9 @@ a:hover {
   -webkit-user-select: none; 
   user-select: none; 
 }
+.button.control-small {
+  min-width: 3rem;
+}
 select.button {
   height: auto;
   line-height: normal;
@@ -167,6 +173,12 @@ select.button {
 .button:hover {
   background-color: var(--color-link);
   color: white;
+}
+.button:focus-visible,
+select.button:focus-visible,
+a.button:focus-visible {
+  outline: 3px solid var(--color-link);
+  outline-offset: 2px;
 }
 .control-action {
   display: inline-flex;

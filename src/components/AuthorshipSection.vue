@@ -12,8 +12,8 @@
       <br>
       <br>
       Cite as: Corson-Dosch, H., Nell, C., Volentine, R., Archer, A., Bechtel, E., Bruce, J., Felts, N., Gross, T., Lopez-Trujilio, D., Riggs, C., and Read, E. October 13, 2022. The Water Cycle. U.S. Geological Survey General Information Product 221.
-      <br/>
-      <br/>
+      <br>
+      <br>
       To learn more about the team and the design process, read the Water Data for the Nation blog post 
       <a
         class="blog_title"
