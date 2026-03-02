@@ -5,24 +5,21 @@
   >
     <div class="sidebarContent">
       <div class="titleAndExit">
-        <h3>
-          <button
-            class="button reveal"
-            @click="toggle"
-          >
-            <slot name="sidebarTitle">
-              Reveal
-            </slot>
-          </button>
-        </h3>
-        <div
-          class="exit hidden"
+        <button
+          class="button control-action"
           @click="toggle"
         >
-          <h3>
-            X
-          </h3>
-        </div>
+          <slot name="sidebarTitle">
+            Reveal
+          </slot>
+        </button>
+        <button
+          class="button control-action exit hidden"
+          type="button"
+          @click="toggle"
+        >
+          X
+        </button>
       </div>
       <div class="messageArea">
         <div class="message">
@@ -57,11 +54,9 @@ const toggle = () => {
   if (!sidebar) return
 
   const exit = sidebar.querySelector('.exit')
-  const sidebarButton = sidebar.querySelector('.reveal')
 
-  if (exit && sidebarButton) {
+  if (exit) {
     exit.classList.toggle('hidden')
-    sidebarButton.classList.toggle('button')
 
     if (sidebar.classList.contains('expanded')) {
       sidebar.classList.remove('expanded')
@@ -102,10 +97,6 @@ $diagramBlue: #016699;
   background: $diagramBlue;
   margin: 0 5px 0 0 ;
 }
-.expanded h3 {
-  color: #fff;
-  padding: 5px 10px;
-}
 .opacity{
   opacity: 0;
 }
@@ -118,16 +109,8 @@ $diagramBlue: #016699;
     align-items: center;
     justify-content: center;
     font-size: 1em;
-    padding: 5px;
+    padding: 5px 8px;
     border-radius: 5px;
-}
-.exit h3 {
-  border-radius: 5px;
-  line-height: 0.8em;
-  cursor: pointer;
-    &:hover{
-        font-weight: 700;
-    }
 }
 .messageArea{
     padding:0 10px 10px 10px;
