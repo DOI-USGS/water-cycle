@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div id="app">
     <WindowSize v-if="typeOfEnv === '-test build-'" />
     <!-- <ShutdownBanner/> -->
     <HeaderUSWDSBanner v-if="typeOfEnv !== '-test build-'" />
     <HeaderUSGS />
-    <WorkInProgressWarning v-if="typeOfEnv !== ''" />
-    <RouterView />
+<!--     <WorkInProgressWarning v-if="typeOfEnv !== ''" /> -->
+    <main id="main-content">
+      <RouterView />
+    </main>
     <PreFooterCodeLinks />
     <FooterUSGS />
   </div>
