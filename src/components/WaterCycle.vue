@@ -62,7 +62,7 @@
       <h3 class="optionsBar notButton">
         |
       </h3>
-      <ExpandingSidebar class="optionsBar" >
+      <ExpandingSidebar class="optionsBar">
         <template #sidebarTitle>
           Contributors
         </template>
@@ -71,6 +71,36 @@
         </template>
       </ExpandingSidebar>
     </div>
+    <details class="long-description">
+      <summary>
+        {{ activeLongDescription.summaryLabel }}
+      </summary>
+      <div
+        class="long-description-content"
+        :lang="inEnglish ? 'en' : 'es'"
+      >
+        <template v-if="activeLongDescription.sections.length > 0">
+          <section
+            v-for="(section, sectionIndex) in activeLongDescription.sections"
+            :key="`long-description-section-${sectionIndex}`"
+            class="long-description-section"
+          >
+            <h4 class="long-description-heading">
+              {{ section.heading }}
+            </h4>
+            <p
+              v-for="(paragraph, paragraphIndex) in section.paragraphs"
+              :key="`long-description-paragraph-${sectionIndex}-${paragraphIndex}`"
+            >
+              {{ paragraph }}
+            </p>
+          </section>
+        </template>
+        <p v-else-if="!inEnglish">
+          La descripcion extensa en espanol estara disponible pronto.
+        </p>
+      </div>
+    </details>
     <div
       id="image-zoomer"
       ref="zoomContainer"
@@ -132,6 +162,7 @@
 import { ref, computed, onMounted } from 'vue'
 import ExpandingSidebar from './ExpandingSidebar.vue'
 import AuthorshipSection from './AuthorshipSection.vue'
+import diagramDescription from '@/assets/text/diagramDescription.json'
 
 // zooom logic
 const zoom = ref(1)
@@ -165,6 +196,9 @@ const imageSrcSpanish = ref(null)
 const imageSrcWebpSpanish = ref(null)
 const downloadSite = ref(null)
 const currentLanguageDownloadText = ref(null)
+const englishLongDescription = diagramDescription.en
+const spanishLongDescription = diagramDescription.es
+const activeLongDescription = computed(() => (inEnglish.value ? englishLongDescription : spanishLongDescription))
 
 onMounted(() => {
   downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf'
@@ -275,6 +309,29 @@ $diagramBlue: #016699;
   .notButton {
     margin-top: 7.5px;
     margin-bottom: 5px;
+  }
+  .long-description {
+    margin: 0.5rem;
+  }
+  .long-description summary {
+    color: $diagramBlue;
+    cursor: pointer;
+    width: fit-content;
+  }
+  .long-description-content {
+    margin-top: 0.5rem;
+    max-width: 70rem;
+  }
+  .long-description-section {
+    margin-bottom: 1rem;
+  }
+  .long-description-heading {
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .long-description-content p {
+    margin-bottom: 0.5rem;
   }
   a {
     color: $diagramBlue;
