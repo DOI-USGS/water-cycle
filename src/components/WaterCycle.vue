@@ -12,9 +12,9 @@
       :download-site="downloadSite"
       :download-aria-label="downloadAriaLabel"
       :current-language-download-text="currentLanguageDownloadText"
-      :description-panel-id="descriptionPanelId"
+      description-panel-id="diagram-description-panel"
       :is-description-open="isDescriptionOpen"
-      :contributors-panel-id="contributorsPanelId"
+      contributors-panel-id="diagram-contributors-panel"
       :is-contributors-open="isContributorsOpen"
       :description-summary-label="activeLongDescription.summaryLabel"
       @zoom-in="zoomIn"
@@ -79,20 +79,18 @@
       >
         <section
           v-if="isDescriptionOpen"
-          :id="descriptionPanelId"
+          id="diagram-description-panel"
           ref="descriptionDialogRef"
           class="info-overlay-panel"
           role="dialog"
           aria-modal="true"
-          :aria-labelledby="descriptionPanelTitleId"
+          aria-labelledby="diagram-description-panel-title"
           :lang="inEnglish ? 'en' : 'es'"
           tabindex="-1"
           @wheel.stop
         >
           <header>
-            <h3
-              :id="descriptionPanelTitleId"
-            >
+            <h3 id="diagram-description-panel-title">
               {{ activeLongDescription.summaryLabel }}
             </h3>
             <button
@@ -127,20 +125,18 @@
         </section>
         <section
           v-else-if="isContributorsOpen"
-          :id="contributorsPanelId"
+          id="diagram-contributors-panel"
           ref="contributorsDialogRef"
           class="info-overlay-panel"
           role="dialog"
           aria-modal="true"
-          :aria-labelledby="contributorsPanelTitleId"
+          aria-labelledby="diagram-contributors-panel-title"
           :lang="inEnglish ? 'en' : 'es'"
           tabindex="-1"
           @wheel.stop
         >
           <header>
-            <h3
-              :id="contributorsPanelTitleId"
-            >
+            <h3 id="diagram-contributors-panel-title">
               {{ contributorsLabel }}
             </h3>
             <button
@@ -199,7 +195,7 @@ function zoomOut() {
   zoom.value = Math.max(zoom.value - ZOOM_STEP, MIN_ZOOM)
 }
 
-
+// handle languages and text
 const loadSpanish = ref(false)
 const inEnglish = ref(true)
 const selectedLanguage = ref('en')
@@ -207,16 +203,14 @@ const imageSrcEnglish = ref(null)
 const imageSrcWebpEnglish = ref(null)
 const imageSrcSpanish = ref(null)
 const imageSrcWebpSpanish = ref(null)
-const downloadSite = ref(null)
 const currentLanguageDownloadText = ref(null)
 const englishLongDescription = diagramDescription.en
 const spanishLongDescription = diagramDescription.es
 const activeLongDescription = computed(() => (inEnglish.value ? englishLongDescription : spanishLongDescription))
+
+// diagram controls 
+const downloadSite = ref(null)
 const activeInfoPanel = ref(null)
-const descriptionPanelId = 'diagram-description-panel'
-const contributorsPanelId = 'diagram-contributors-panel'
-const descriptionPanelTitleId = 'diagram-description-panel-title'
-const contributorsPanelTitleId = 'diagram-contributors-panel-title'
 const isDescriptionOpen = computed(() => activeInfoPanel.value === 'description')
 const isContributorsOpen = computed(() => activeInfoPanel.value === 'contributors')
 const contributorsLabel = computed(() => (inEnglish.value ? 'Contributors' : 'Colaboradores'))
@@ -229,28 +223,31 @@ const downloadAriaLabel = computed(() => {
   return 'Descargar el diagrama, se abre en una nueva pestana'
 })
 
-const FOCUSABLE_SELECTOR = [
-  'a[href]',
-  'button:not([disabled])',
-  'input:not([disabled]):not([type="hidden"])',
-  'select:not([disabled])',
-  'textarea:not([disabled])',
-  '[tabindex]:not([tabindex="-1"])'
-].join(', ')
+// designing for screen readers and tab navigation
 
+// add keyboard focus to all selectable elements in dialogs (links, buttons, inputs)
+// https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog/ 
+// this applies focus to elements within the dialog box and adds a tab loop within the dialog
+// when dialog closes, returns to original focus opening button 
+const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+
+// select the open dialog box
 function getActiveDialogElement() {
-  if (isDescriptionOpen.value) return descriptionDialogRef.value
-  if (isContributorsOpen.value) return contributorsDialogRef.value
-  return null
+  return isDescriptionOpen.value
+    ? descriptionDialogRef.value
+    : isContributorsOpen.value
+      ? contributorsDialogRef.value
+      : null
 }
 
+// return a list of focusable elements (links, buttons, inputs)
 function getFocusableElements(container) {
   if (!container) return []
   return [...container.querySelectorAll(FOCUSABLE_SELECTOR)]
-    .filter((element) => !element.hasAttribute('disabled'))
     .filter((element) => element.getClientRects().length > 0)
 }
 
+// when dialog opens apply focus to first element
 function focusActiveDialog() {
   const dialog = getActiveDialogElement()
   if (!dialog) return
@@ -262,51 +259,38 @@ function focusActiveDialog() {
   dialog.focus()
 }
 
-function restoreFocusToTrigger() {
-  if (!lastInfoTriggerRef.value) return
-  lastInfoTriggerRef.value.focus()
-}
-
-function handleDialogKeydown(e) {
+// handle keyboard nav within dialog boxes (contributors and description)
+// when dialog is open create list of focusable items and allow tab nav through them
+function handleDialogKeydown(element) {
   if (!activeInfoPanel.value) return
 
   const dialog = getActiveDialogElement()
   if (!dialog) return
 
-  if (e.key === 'Escape') {
-    e.preventDefault()
+  // escape closes dialog
+  if (element.key === 'Escape') {
+    element.preventDefault()
     closeInfoPanel()
     return
   }
 
-  if (e.key !== 'Tab') return
-
+  // list of tabbed elements
   const focusable = getFocusableElements(dialog)
   if (focusable.length === 0) {
-    e.preventDefault()
+    element.preventDefault()
     dialog.focus()
     return
   }
 
+  // start with first element and cycle through
   const first = focusable[0]
   const last = focusable[focusable.length - 1]
   const activeElement = document.activeElement
   const focusInsideDialog = dialog.contains(activeElement)
 
-  if (!focusInsideDialog) {
-    e.preventDefault()
-    first.focus()
-    return
-  }
-
-  if (e.shiftKey && activeElement === first) {
-    e.preventDefault()
-    last.focus()
-    return
-  }
-
-  if (!e.shiftKey && activeElement === last) {
-    e.preventDefault()
+  // on last element lop back to the first element when tabbed
+  if (activeElement === last) {
+    element.preventDefault()
     first.focus()
   }
 }
@@ -331,7 +315,7 @@ watch(activeInfoPanel, async (panel) => {
   }
 
   await nextTick()
-  restoreFocusToTrigger()
+  lastInfoTriggerRef.value?.focus()
 })
 
 onBeforeUnmount(() => {
