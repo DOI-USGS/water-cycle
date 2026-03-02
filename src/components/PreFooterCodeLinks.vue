@@ -42,11 +42,12 @@
   font-family: 'Noto Sans', sans-serif;
   font-size: 1.5rem;
   color: #1e1e1e;
+  width: 100%; // make full width to match page appearance
 
   &__divider {
     border-top: 1px solid #d4d8dd;
     margin: 0 auto 1.5rem;
-    width: min(90%, 700px);
+    width: 100%; // addded for full width
   }
 
   &__content {
@@ -56,6 +57,7 @@
     gap: 0.75rem;
     width: min(90%, 700px);
     margin: 0 auto;
+    width: 100%; // added for full width
   }
 
   &__item {
