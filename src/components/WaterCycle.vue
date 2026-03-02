@@ -97,6 +97,7 @@
           <img
             id="diagramEnglish"
             :src="imageSrcWebpEnglish"
+            alt="Illustrated diagram of the water cycle showing the major pools and fluxes of water on Earth. The diagram depicts an idealized landscape with bright blue used to highlight key pools and fluxes and how they are connected."
             style="width: 100%; height: auto;"
             @load="onImageLoad"
           >
@@ -117,6 +118,7 @@
           <img
             id="diagramSpanish"
             :src="imageSrcWebpSpanish"
+            alt="Diagrama ilustrado del ciclo del agua que muestra los principales reservorios y flujos de agua en la Tierra. El diagrama representa un paisaje idealizado en el que se usa azul brillante para destacar los reservorios y flujos clave y cómo están conectados."
             style="width: 100%; height: auto;"
             @load="onImageLoad"
           >
