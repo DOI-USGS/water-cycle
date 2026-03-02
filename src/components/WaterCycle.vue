@@ -6,132 +6,20 @@
     >
       {{ activeLongDescription.title }}
     </h1>
-    <nav
-      id="quick-controls"
-      :aria-label="quickControlsNavLabel"
-    >
-      <ul class="control-list no-separators">
-        <li class="control-item control-action zoom-controls">
-          <span>Zoom:</span>
-          <button
-            class="button control-action"
-            :aria-label="zoomInLabel"
-            @click="zoomIn"
-          >
-            +
-          </button>
-          <button
-            class="button control-action"
-            :aria-label="zoomOutLabel"
-            @click="zoomOut"
-          >
-            -
-          </button>
-        </li>
-        <li class="control-item">
-          <span>Download:</span>
-          <a
-            class="button control-action download-button icon-only"
-            :href="downloadSite"
-            target="_blank"
-            rel="noopener noreferrer"
-            :aria-label="downloadAriaLabel"
-            :title="currentLanguageDownloadText"
-          >
-            <FontAwesomeIcon
-              :icon="['fas', 'download']"
-              class="control-icon"
-              aria-hidden="true"
-            />
-          </a>
-        </li>
-        <li class="control-item">
-          <span>Language:</span>
-          <label
-            for="language-select"
-            class="only"
-          >
-            {{ languageSelectLabel }}
-          </label>
-          <select
-            id="language-select"
-            v-model="selectedLanguage"
-            class="button"
-            :aria-label="languageSelectLabel"
-            @change="setLanguage(selectedLanguage)"
-          >
-            <option value="en">
-              English
-            </option>
-            <option value="es">
-              Espanol
-            </option>
-          </select>
-        </li>
-        <li class="control-item">
-          <span>More info:</span>
-        </li>
-        <li class="control-item">
-          <ExpandingSidebar>
-            <template #sidebarTitle>
-              Contributors
-            </template>
-            <template #sidebarMessage>
-              <AuthorshipSection class="hidden" />
-            </template>
-          </ExpandingSidebar>
-        </li>
-        <li class="control-item">
-          <button
-            class="button control-action"
-            :aria-controls="descriptionPanelId"
-            :aria-expanded="isDescriptionOpen ? 'true' : 'false'"
-            @click="toggleDescription"
-          >
-            {{ activeLongDescription.summaryLabel }}
-          </button>
-        </li>
-      </ul>
-    </nav>
-    <section
-      id="related-resources"
-      :aria-labelledby="relatedResourcesHeadingId"
-      :lang="inEnglish ? 'en' : 'es'"
-    >
-      <h2
-        :id="relatedResourcesHeadingId"
-        class="only"
-      >
-        {{ relatedResourcesHeading }}
-      </h2>
-      <ul class="control-list no-separators">
-        <li class="control-item">
-          <span>{{ relatedResourcesHeading }}:</span>
-        </li>
-        <li class="control-item">
-          <a
-            class="button control-action"
-            href="https://www.usgs.gov/special-topics/water-science-school/science/water-cycle"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {{ waterScienceSchoolLabel }}
-            <span class="only">{{ opensInNewTabText }}</span>
-          </a>
-        </li>
-        <li class="control-item">
-          <a
-            class="button control-action"
-            href="https://labs.waterdata.usgs.gov/visualizations/pools-and-fluxes/index.html#/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {{ poolsAndFluxesLabel }}
-            <span class="only">{{ opensInNewTabText }}</span>
-          </a>
-        </li>
-      </ul>
-    </section>
+    <DiagramControls
+      :in-english="inEnglish"
+      :selected-language="selectedLanguage"
+      :download-site="downloadSite"
+      :download-aria-label="downloadAriaLabel"
+      :current-language-download-text="currentLanguageDownloadText"
+      :description-panel-id="descriptionPanelId"
+      :is-description-open="isDescriptionOpen"
+      :description-summary-label="activeLongDescription.summaryLabel"
+      @zoom-in="zoomIn"
+      @zoom-out="zoomOut"
+      @set-language="setLanguage"
+      @toggle-description="toggleDescription"
+    />
     <section
       v-if="isDescriptionOpen"
       :id="descriptionPanelId"
@@ -213,13 +101,14 @@
         </picture>
       </div>
     </div>
+    <RelatedResources :in-english="inEnglish" />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import ExpandingSidebar from './ExpandingSidebar.vue'
-import AuthorshipSection from './AuthorshipSection.vue'
+import DiagramControls from './DiagramControls.vue'
+import RelatedResources from './RelatedResources.vue'
 import diagramDescription from '@/assets/text/diagramDescription.json'
 
 // zooom logic
@@ -267,15 +156,6 @@ const spanishLongDescription = diagramDescription.es
 const activeLongDescription = computed(() => (inEnglish.value ? englishLongDescription : spanishLongDescription))
 const isDescriptionOpen = ref(false)
 const descriptionPanelId = 'long-description-panel'
-const quickControlsNavLabel = computed(() => (inEnglish.value ? 'Primary diagram controls' : 'Controles principales del diagrama'))
-const relatedResourcesHeadingId = 'related-resources-heading'
-const relatedResourcesHeading = computed(() => (inEnglish.value ? 'Related resources' : 'Recursos relacionados'))
-const waterScienceSchoolLabel = computed(() => (inEnglish.value ? 'USGS Water Science School' : 'La Escuela de Ciencias del Agua'))
-const poolsAndFluxesLabel = computed(() => (inEnglish.value ? 'Pools and fluxes visualization' : 'Los reservorios y flujos'))
-const opensInNewTabText = computed(() => (inEnglish.value ? 'opens in new tab' : 'se abre en una nueva pestana'))
-const languageSelectLabel = computed(() => (inEnglish.value ? 'Change language' : 'Cambiar idioma'))
-const zoomInLabel = computed(() => (inEnglish.value ? 'Zoom in' : 'Acercar'))
-const zoomOutLabel = computed(() => (inEnglish.value ? 'Zoom out' : 'Alejar'))
 const downloadAriaLabel = computed(() => {
   if (inEnglish.value) {
     return 'Download the diagram, opens in new tab'
@@ -349,25 +229,6 @@ function toggleDescription() {
 .diagram-image {
   width: 100%;
   height: auto;
-}
-#quick-controls {
-  padding: 0 1.5rem;
-  margin-top: 0.5rem;
-}
-#related-resources {
-  padding: 0 1.5rem;
-  margin-top: 0.35rem;
-}
-#related-resources .button {
-  max-width: none;
-}
-.download-button {
-  min-width: 2.4rem;
-}
-.download-button.icon-only {
-  min-height: 3rem;
-  padding-left: 0.7rem;
-  padding-right: 0.7rem;
 }
 .long-description-panel {
   margin-top: 0.5rem;
