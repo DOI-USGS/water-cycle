@@ -8,12 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  
 Here we track upcoming changes.
  
-### Added
-- Added a change log
- 
+## [1.5.0] - 2024-03-01 
 ### Changed
- 
-### Fixed
+- Improved navigation capabilities to be able to pan and zoom diagram. 
  
 ## [1.4.1] - 2024-03-01
  
