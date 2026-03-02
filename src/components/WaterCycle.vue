@@ -48,12 +48,14 @@
         Zoom:
         <button
           class="zoom button"
+          aria-label="Zoom in"
           @click="zoom.value = Math.min(zoom.value + 0.1, 5)"
         >
           +
         </button>
         <button
           class="zoom button out"
+          aria-label="Zoom out"
           @click="zoom.value = Math.max(zoom.value - 0.1, 1)"
         >
           -
