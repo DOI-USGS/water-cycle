@@ -1,5 +1,6 @@
 {
   "en": {
+    "title": "The Water Cycle",
     "summaryLabel": "Read diagram description",
     "sections": [
       {
@@ -35,6 +36,7 @@
     ]
   },
   "es": {
+    "title": "El Ciclo del Agua",
     "summaryLabel": "Leer la descripcion del diagrama",
     "sections": [
       {
