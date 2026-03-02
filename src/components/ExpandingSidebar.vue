@@ -87,12 +87,6 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 $diagramBlue: #016699;
-button, input, select, textarea {
-    background-color: transparent;
-    border-style: none;
-    cursor: pointer;
-    color: inherit;
-}
 .sidebar{
     display: flex;
     flex-direction: row;
@@ -112,30 +106,6 @@ button, input, select, textarea {
   color: #fff;
   padding: 5px 10px;
 }
-.button {
-    border-radius: 0.25rem;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 2.5px 5px 2.5px 5px;
-    max-width: 24rem;
-    background-color: white;
-    border: 0.5px solid #949494;
-    border-radius: 0.25rem;
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
-    @media screen and (max-width: 600px) {
-      border: 1px solid #949494;
-    }
-  }
-  .button:hover {
-    background-color: $diagramBlue;
-    color: white;
-    @media screen and (max-width: 600px) {
-      background-color: white;
-      color: black;
-    }
-  }
 .opacity{
   opacity: 0;
 }

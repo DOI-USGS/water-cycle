@@ -1,121 +1,118 @@
 <template>
   <div id="content-container">
-    <div
-      id="button-container"
+    <h1
+      class="diagram-title"
+      :lang="inEnglish ? 'en' : 'es'"
     >
-      <h3 class="optionsBar notButton">
-        <a
-          href="https://www.usgs.gov/special-topics/water-science-school/science/water-cycle"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Visit the Water Science School
-        </a>
-      </h3>
-      <h3 class="optionsBar notButton">
-        |
-      </h3>
-      <h3 class="optionsBar notButton">
-        <a
-          href="https://labs.waterdata.usgs.gov/visualizations/pools-and-fluxes/index.html#/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Explore the size of pools and fluxes
-        </a>
-      </h3>
-      <h3 class="optionsBar notButton">
-        |
-      </h3>
-      <h3 class="optionsBar notButton">
-        <a
-          :href="downloadSite"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {{ currentLanguageDownloadText }}
-          <span class="only">
-            {{ inEnglish ? 'opens in new tab' : 'se abre en una nueva pestana' }}
-          </span>
-        </a>
-      </h3>
-      <h3 class="optionsBar notButton">
-        |
-      </h3>
-      <h3 class="optionsBar">
-        Language: 
-        <button
-          class="button"
-          @click="toggleLanguage"
-        >
-          {{ currentLanguageStatus }}
-        </button>
-      </h3>
-      <h3 class="optionsBar notButton">
-        |
-      </h3>
-      <h3 class="optionsBar">
-        Zoom:
-        <button
-          class="zoom button"
-          aria-label="Zoom in"
-          @click="zoom.value = Math.min(zoom.value + 0.1, 5)"
-        >
-          +
-        </button>
-        <button
-          class="zoom button out"
-          aria-label="Zoom out"
-          @click="zoom.value = Math.max(zoom.value - 0.1, 1)"
-        >
-          -
-        </button>
-      </h3>
-      <h3 class="optionsBar notButton">
-        |
-      </h3>
-      <ExpandingSidebar class="optionsBar">
-        <template #sidebarTitle>
-          Contributors
-        </template>
-        <template #sidebarMessage>
-          <AuthorshipSection class="hidden" />
-        </template>
-      </ExpandingSidebar>
-      <h3 class="optionsBar notButton">
-        |
-      </h3>
-      <details class="long-description optionsBar">
-        <summary class="button long-description-toggle">
-          {{ activeLongDescription.summaryLabel }}
-        </summary>
-        <div
-          class="long-description-content"
-          :lang="inEnglish ? 'en' : 'es'"
-        >
-          <template v-if="activeLongDescription.sections.length > 0">
-            <section
-              v-for="(section, sectionIndex) in activeLongDescription.sections"
-              :key="`long-description-section-${sectionIndex}`"
-              class="long-description-section"
+      {{ activeLongDescription.title }}
+    </h1>
+    <nav
+      id="button-container"
+      aria-label="Diagram controls"
+    >
+      <ul class="control-list">
+        <li class="control-item">
+          <a
+            href="https://www.usgs.gov/special-topics/water-science-school/science/water-cycle"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit the Water Science School
+            <span class="only">opens in new tab</span>
+          </a>
+        </li>
+        <li class="control-item">
+          <a
+            href="https://labs.waterdata.usgs.gov/visualizations/pools-and-fluxes/index.html#/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Explore the size of pools and fluxes
+            <span class="only">opens in new tab</span>
+          </a>
+        </li>
+        <li class="control-item">
+          <a
+            :href="downloadSite"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ currentLanguageDownloadText }}
+            <span class="only">
+              {{ inEnglish ? 'opens in new tab' : 'se abre en una nueva pestana' }}
+            </span>
+          </a>
+        </li>
+        <li class="control-item">
+          <span class="control-label">Language:</span>
+          <button
+            class="button"
+            @click="toggleLanguage"
+          >
+            {{ currentLanguageStatus }}
+          </button>
+        </li>
+        <li class="control-item">
+          <span class="control-label">Zoom:</span>
+          <button
+            class="zoom button"
+            aria-label="Zoom in"
+            @click="zoom.value = Math.min(zoom.value + 0.1, 5)"
+          >
+            +
+          </button>
+          <button
+            class="zoom button out"
+            aria-label="Zoom out"
+            @click="zoom.value = Math.max(zoom.value - 0.1, 1)"
+          >
+            -
+          </button>
+        </li>
+        <li class="control-item">
+          <ExpandingSidebar>
+            <template #sidebarTitle>
+              Contributors
+            </template>
+            <template #sidebarMessage>
+              <AuthorshipSection class="hidden" />
+            </template>
+          </ExpandingSidebar>
+        </li>
+        <li class="control-item">
+          <details class="long-description">
+            <summary class="button long-description-toggle">
+              {{ activeLongDescription.summaryLabel }}
+            </summary>
+            <div
+              class="long-description-content"
+              :lang="inEnglish ? 'en' : 'es'"
             >
-              <h4 class="long-description-heading">
-                {{ section.heading }}
-              </h4>
-              <p
-                v-for="(paragraph, paragraphIndex) in section.paragraphs"
-                :key="`long-description-paragraph-${sectionIndex}-${paragraphIndex}`"
-              >
-                {{ paragraph }}
+              <template v-if="activeLongDescription.sections.length > 0">
+                <section
+                  v-for="(section, sectionIndex) in activeLongDescription.sections"
+                  :key="`long-description-section-${sectionIndex}`"
+                  class="long-description-section"
+                >
+                  <h4 class="long-description-heading">
+                    {{ section.heading }}
+                  </h4>
+                  <p
+                    v-for="(paragraph, paragraphIndex) in section.paragraphs"
+                    :key="`long-description-paragraph-${sectionIndex}-${paragraphIndex}`"
+                  >
+                    {{ paragraph }}
+                  </p>
+                </section>
+              </template>
+              <p v-else-if="!inEnglish">
+                La descripcion extensa en espanol estara disponible pronto.
               </p>
-            </section>
-          </template>
-          <p v-else-if="!inEnglish">
-            La descripcion extensa en espanol estara disponible pronto.
-          </p>
-        </div>
-      </details>
-    </div>
+            </div>
+          </details>
+        </li>
+      </ul>
+    </nav>
     <div
       id="image-zoomer"
       ref="zoomContainer"
@@ -143,7 +140,7 @@
             id="diagramEnglish"
             :src="imageSrcWebpEnglish"
             alt="Illustrated diagram of the water cycle showing the major pools and fluxes of water on Earth. The diagram depicts an idealized landscape with bright blue used to highlight key pools and fluxes and how they are connected."
-            style="width: 100%; height: auto;"
+            class="diagram-image"
             @load="onImageLoad"
           >
         </picture>
@@ -164,7 +161,7 @@
             id="diagramSpanish"
             :src="imageSrcWebpSpanish"
             alt="Diagrama ilustrado del ciclo del agua que muestra los principales reservorios y flujos de agua en la Tierra. El diagrama representa un paisaje idealizado en el que se usa azul brillante para destacar los reservorios y flujos clave y cómo están conectados."
-            style="width: 100%; height: auto;"
+            class="diagram-image"
             @load="onImageLoad"
           >
         </picture>
@@ -252,10 +249,6 @@ function toggleLanguage() {
 </script>
 
 <style scoped lang="scss">
-$diagramBlue: #016699;
-#content-container h3 {
-  font-weight: 300;
-}
 #image-zoomer {
   height: 88vh;
   overflow: hidden;
@@ -282,115 +275,56 @@ $diagramBlue: #016699;
 .image-wrapper {
   display: inline-block;
 }
-.optionsBar {
-  padding: 0.1em 0 0.1em 0;
-  margin-left: 0.5rem;
+.diagram-image {
+  width: 100%;
+  height: auto;
 }
 #button-container {
   padding-left: 0.25em;
-  display: flex;
-  flex-wrap: wrap;
 }
-.button {
-    border-radius: 0.25rem;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 2.5px 5px 2.5px 5px;
-    max-width: 24rem;
-    background-color: white;
-    border: 0.5px solid #949494;
-    border-radius: 0.25rem;
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
-    @media screen and (max-width: 600px) {
-      border: 1px solid #949494;
-    }
-  }
-  .button:hover {
-    background-color: $diagramBlue;
-    color: white;
-    @media screen and (max-width: 600px) {
-      background-color: white;
-      color: black;
-    }
-  }
-  .button.zoom {
-    padding: 2.5px 10px 2.5px 10px;
-  }
-  .button.zoom.out {
-    margin-left: 0.5rem;
-  }
-  .notButton {
-    margin-top: 7.5px;
-    margin-bottom: 5px;
-  }
-  .long-description {
-    margin-left: 0.5rem;
-    align-self: center;
-  }
-  .long-description[open] {
-    flex-basis: 100%;
-    align-self: stretch;
-    margin-right: 0.5rem;
-  }
-  .long-description-toggle {
-    display: inline-block;
-    list-style: none;
-    cursor: pointer;
-    font-family: var(--style-font);
-    font-size: 1.3em;
-    font-weight: 300;
-  }
-  .long-description-toggle::marker {
-    content: "";
-  }
-  .long-description-toggle::-webkit-details-marker {
-    display: none;
-  }
-  .long-description-toggle::before {
-    content: "▸";
-    display: inline-block;
-    margin-right: 0.4rem;
-    transition: transform 0.15s ease-out;
-  }
-  .long-description[open] .long-description-toggle::before {
-    transform: rotate(90deg);
-  }
-  @media screen and (max-height: 770px) {
-    .long-description-toggle {
-      font-size: 1.2em;
-    }
-  }
-  @media screen and (max-width: 700px) {
-    .long-description-toggle {
-      font-size: 0.9em;
-    }
-  }
-  @media screen and (max-height: 500px) {
-    .long-description-toggle {
-      font-size: 0.9em;
-    }
-  }
-  .long-description-content {
-    margin-top: 0.5rem;
-    max-width: 70rem;
-  }
-  .long-description-section {
-    margin-bottom: 1rem;
-  }
-  .long-description-heading {
-    font-size: 1.1em;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-  .long-description-content p {
-    margin-bottom: 0.5rem;
-  }
-  a {
-    color: $diagramBlue;
-  }
-  a:hover {
-    font-weight: 700;
-  }
+.long-description {
+  margin: 0;
+}
+.control-item:has(.long-description[open]) {
+  align-items: flex-start;
+  flex-basis: 100%;
+  border-left: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+.long-description-toggle {
+  display: inline-block;
+  list-style: none;
+  cursor: pointer;
+}
+.long-description-toggle::marker {
+  content: "";
+}
+.long-description-toggle::-webkit-details-marker {
+  display: none;
+}
+.long-description-toggle::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.4rem;
+  transition: transform 0.15s ease-out;
+}
+.long-description[open] .long-description-toggle::before {
+  transform: rotate(90deg);
+}
+.long-description-content {
+  margin-top: 0.5rem;
+  max-width: 70rem;
+}
+.long-description-section {
+  margin-bottom: 1rem;
+}
+.long-description-heading {
+  font-size: 1.1em;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.long-description-content p {
+  margin-bottom: 0.5rem;
+}
 </style>
