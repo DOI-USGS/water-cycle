@@ -62,7 +62,7 @@
       <h3 class="optionsBar notButton">
         |
       </h3>
-      <ExpandingSidebar class="optionsBar" >
+      <ExpandingSidebar class="optionsBar">
         <template #sidebarTitle>
           Contributors
         </template>
@@ -101,9 +101,9 @@
           <img
             id="diagramEnglish"
             :src="imageSrcWebpEnglish"
-            style="width: 100%; max-height: 100%; height: auto;"
+            class="diagram-image"
             draggable="false"
-          />
+          >
         </picture>
 
         <picture
@@ -121,7 +121,7 @@
           <img
             id="diagramSpanish"
             :src="imageSrcWebpSpanish"
-            style="width: 100%; max-height: 100%; height: auto;"
+            class="diagram-image"
             @load="onImageLoad"
           >
         </picture>
@@ -375,34 +375,28 @@ $diagramBlue: #016699;
   flex-direction: column;
   flex-grow: 1;
   height: 100%;
+  min-height: 0;
 }
 
 #image-zoomer {
   display: flex;
-  flex-grow: 1;
-  overflow: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  align-items: center;
   justify-content: center;
-  padding-bottom: 3rem;
-
-  @media screen and (max-height: 900px) {
-    height: 84vh;
-  }
-  @media screen and (max-height: 770px) {
-    height: 80vh;
-  }
-  @media screen and (max-height: 700px) {
-    height: 85vh;
-  }
-  @media screen and (max-height: 500px) {
-    height: 50vh;
-  }
-  @media screen and (max-width: 400px) {
-    height: 65vh;
-  }
 }
 .image-wrapper {
   display: inline-block;
-  min-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+.diagram-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
 }
 .optionsBar {
   padding: 0.1em 0 0.1em 0;
