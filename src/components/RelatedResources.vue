@@ -1,11 +1,11 @@
 <template>
   <section
     id="related-resources"
-    :aria-labelledby="relatedResourcesHeadingId"
+    aria-labelledby="related-resources-heading"
     :lang="inEnglish ? 'en' : 'es'"
   >
     <h2
-      :id="relatedResourcesHeadingId"
+      id="related-resources-heading"
       class="only"
     >
       {{ relatedResourcesHeading }}
@@ -50,7 +50,6 @@ const props = defineProps({
   }
 })
 
-const relatedResourcesHeadingId = 'related-resources-heading'
 const relatedResourcesHeading = computed(() => (props.inEnglish ? 'Related resources' : 'Recursos relacionados'))
 const waterScienceSchoolLabel = computed(() => (props.inEnglish ? 'USGS Water Science School' : 'La Escuela de Ciencias del Agua'))
 const poolsAndFluxesLabel = computed(() => (props.inEnglish ? 'Pools and fluxes visualization' : 'Los reservorios y flujos'))

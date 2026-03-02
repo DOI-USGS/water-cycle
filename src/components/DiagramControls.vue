@@ -1,10 +1,10 @@
 <template>
   <section
     id="quick-controls"
-    :aria-labelledby="quickControlsHeadingId"
+    aria-labelledby="quick-controls-heading"
   >
     <h2
-      :id="quickControlsHeadingId"
+      id="quick-controls-heading"
       class="only"
     >
       {{ quickControlsSectionLabel }}
@@ -12,8 +12,7 @@
     <ul
       class="control-list no-separators"
       role="toolbar"
-      :aria-label="quickControlsToolbarLabel"
-      aria-orientation="horizontal"
+      aria-labelledby="quick-controls-heading"
     >
       <li class="control-item">
         <span class="control-prefix">{{ zoomLabel }}</span>
@@ -84,7 +83,7 @@
         <button
           id="description-toggle"
           class="button control-action"
-          :aria-controls="descriptionPanelId"
+          aria-controls="diagram-description-panel"
           :aria-expanded="isDescriptionOpen ? 'true' : 'false'"
           @click="emit('toggle-description')"
         >
@@ -94,7 +93,7 @@
       <li class="control-item">
         <button
           class="button control-action"
-          :aria-controls="contributorsPanelId"
+          aria-controls="diagram-contributors-panel"
           :aria-expanded="isContributorsOpen ? 'true' : 'false'"
           @click="emit('toggle-contributors')"
         >
@@ -131,16 +130,8 @@ const props = defineProps({
     required: false,
     default: ''
   },
-  descriptionPanelId: {
-    type: String,
-    required: true
-  },
   isDescriptionOpen: {
     type: Boolean,
-    required: true
-  },
-  contributorsPanelId: {
-    type: String,
     required: true
   },
   isContributorsOpen: {
@@ -153,6 +144,7 @@ const props = defineProps({
   }
 })
 
+// send state back to WaterCycle
 const emit = defineEmits(['zoom-in', 'zoom-out', 'set-language', 'toggle-description', 'toggle-contributors'])
 
 const languageValue = computed({
@@ -162,9 +154,7 @@ const languageValue = computed({
   }
 })
 
-const quickControlsHeadingId = 'quick-controls-heading'
 const quickControlsSectionLabel = computed(() => (props.inEnglish ? 'Diagram controls' : 'Controles del diagrama'))
-const quickControlsToolbarLabel = computed(() => (props.inEnglish ? 'Primary diagram controls' : 'Controles principales del diagrama'))
 const zoomLabel = computed(() => (props.inEnglish ? 'Zoom:' : 'Acercar:'))
 const downloadLabel = computed(() => (props.inEnglish ? 'Download:' : 'Descargar:'))
 const languageLabel = computed(() => (props.inEnglish ? 'Language:' : 'Idioma:'))
