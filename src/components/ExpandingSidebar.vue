@@ -1,5 +1,8 @@
 <template>
-  <div ref="sidebarRef" class="sidebar collapsed opacity">
+  <div
+    ref="sidebarRef"
+    class="sidebar collapsed opacity"
+  >
     <div class="sidebarContent">
       <div class="titleAndExit">
         <h3>

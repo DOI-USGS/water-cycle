@@ -1,6 +1,6 @@
 {
   "en": {
-    "summaryLabel": "Read long description of the diagram",
+    "summaryLabel": "Read diagram description",
     "sections": [
       {
         "heading": "Introduction",
@@ -35,7 +35,7 @@
     ]
   },
   "es": {
-    "summaryLabel": "Leer la descripcion extensa del diagrama",
+    "summaryLabel": "Leer la descripcion del diagrama",
     "sections": [
       {
         "heading": "Introducción",

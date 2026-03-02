@@ -70,37 +70,40 @@
           <AuthorshipSection class="hidden" />
         </template>
       </ExpandingSidebar>
-    </div>
-    <details class="long-description">
-      <summary>
-        {{ activeLongDescription.summaryLabel }}
-      </summary>
-      <div
-        class="long-description-content"
-        :lang="inEnglish ? 'en' : 'es'"
-      >
-        <template v-if="activeLongDescription.sections.length > 0">
-          <section
-            v-for="(section, sectionIndex) in activeLongDescription.sections"
-            :key="`long-description-section-${sectionIndex}`"
-            class="long-description-section"
-          >
-            <h4 class="long-description-heading">
-              {{ section.heading }}
-            </h4>
-            <p
-              v-for="(paragraph, paragraphIndex) in section.paragraphs"
-              :key="`long-description-paragraph-${sectionIndex}-${paragraphIndex}`"
+      <h3 class="optionsBar notButton">
+        |
+      </h3>
+      <details class="long-description optionsBar">
+        <summary class="button long-description-toggle">
+          {{ activeLongDescription.summaryLabel }}
+        </summary>
+        <div
+          class="long-description-content"
+          :lang="inEnglish ? 'en' : 'es'"
+        >
+          <template v-if="activeLongDescription.sections.length > 0">
+            <section
+              v-for="(section, sectionIndex) in activeLongDescription.sections"
+              :key="`long-description-section-${sectionIndex}`"
+              class="long-description-section"
             >
-              {{ paragraph }}
-            </p>
-          </section>
-        </template>
-        <p v-else-if="!inEnglish">
-          La descripcion extensa en espanol estara disponible pronto.
-        </p>
-      </div>
-    </details>
+              <h4 class="long-description-heading">
+                {{ section.heading }}
+              </h4>
+              <p
+                v-for="(paragraph, paragraphIndex) in section.paragraphs"
+                :key="`long-description-paragraph-${sectionIndex}-${paragraphIndex}`"
+              >
+                {{ paragraph }}
+              </p>
+            </section>
+          </template>
+          <p v-else-if="!inEnglish">
+            La descripcion extensa en espanol estara disponible pronto.
+          </p>
+        </div>
+      </details>
+    </div>
     <div
       id="image-zoomer"
       ref="zoomContainer"
@@ -311,12 +314,51 @@ $diagramBlue: #016699;
     margin-bottom: 5px;
   }
   .long-description {
-    margin: 0.5rem;
+    margin-left: 0.5rem;
+    align-self: center;
   }
-  .long-description summary {
-    color: $diagramBlue;
+  .long-description[open] {
+    flex-basis: 100%;
+    align-self: stretch;
+    margin-right: 0.5rem;
+  }
+  .long-description-toggle {
+    display: inline-block;
+    list-style: none;
     cursor: pointer;
-    width: fit-content;
+    font-family: var(--style-font);
+    font-size: 1.3em;
+    font-weight: 300;
+  }
+  .long-description-toggle::marker {
+    content: "";
+  }
+  .long-description-toggle::-webkit-details-marker {
+    display: none;
+  }
+  .long-description-toggle::before {
+    content: "▸";
+    display: inline-block;
+    margin-right: 0.4rem;
+    transition: transform 0.15s ease-out;
+  }
+  .long-description[open] .long-description-toggle::before {
+    transform: rotate(90deg);
+  }
+  @media screen and (max-height: 770px) {
+    .long-description-toggle {
+      font-size: 1.2em;
+    }
+  }
+  @media screen and (max-width: 700px) {
+    .long-description-toggle {
+      font-size: 0.9em;
+    }
+  }
+  @media screen and (max-height: 500px) {
+    .long-description-toggle {
+      font-size: 0.9em;
+    }
   }
   .long-description-content {
     margin-top: 0.5rem;
