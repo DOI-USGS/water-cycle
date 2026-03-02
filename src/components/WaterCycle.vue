@@ -33,14 +33,17 @@
         </li>
         <li class="control-item">
           <a
+            class="button download-button icon-only"
             :href="downloadSite"
             target="_blank"
             rel="noopener noreferrer"
+            :aria-label="downloadAriaLabel"
           >
-            {{ currentLanguageDownloadText }}
-            <span class="only">
-              {{ inEnglish ? 'opens in new tab' : 'se abre en una nueva pestana' }}
-            </span>
+            <FontAwesomeIcon
+              :icon="faDownload"
+              class="download-icon"
+              aria-hidden="true"
+            />
           </a>
         </li>
         <li class="control-item">
@@ -207,14 +210,30 @@ const imageSrcWebpEnglish = ref(null)
 const imageSrcSpanish = ref(null)
 const imageSrcWebpSpanish = ref(null)
 const downloadSite = ref(null)
-const currentLanguageDownloadText = ref(null)
 const englishLongDescription = diagramDescription.en
 const spanishLongDescription = diagramDescription.es
 const activeLongDescription = computed(() => (inEnglish.value ? englishLongDescription : spanishLongDescription))
+const downloadAriaLabel = computed(() => {
+  if (inEnglish.value) {
+    return 'Download the diagram, opens in new tab'
+  }
+  return 'Descargar el diagrama, se abre en una nueva pestana'
+})
+
+const faDownload = {
+  prefix: 'fas',
+  iconName: 'download',
+  icon: [
+    512,
+    512,
+    [],
+    'f019',
+    'M480 352h-85.8c-16.8 0-32.8 7.5-43.5 20.5L320 416H192l-30.7-43.5c-10.7-13-26.7-20.5-43.5-20.5H32c-17.7 0-32 14.3-32 32v96c0 17.7 14.3 32 32 32h448c17.7 0 32-14.3 32-32v-96c0-17.7-14.3-32-32-32zm-246.6-8.5c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 243.9V32c0-17.7-14.3-32-32-32s-32 14.3-32 32v211.9l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128z'
+  ]
+}
 
 onMounted(() => {
   downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf'
-  currentLanguageDownloadText.value = 'Download the diagram'
   currentLanguageStatus.value = 'cambiar a español'
 
   imageSrcEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png'
@@ -238,11 +257,9 @@ function toggleLanguage() {
 
   if (inEnglish.value) {
     currentLanguageStatus.value = 'cambiar a español'
-    currentLanguageDownloadText.value = 'Download the diagram'
     downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf'
   } else {
     currentLanguageStatus.value = 'switch to English'
-    currentLanguageDownloadText.value = 'Descargar el diagrama'
     downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_spanish.pdf'
   }
 }
@@ -281,6 +298,25 @@ function toggleLanguage() {
 }
 #button-container {
   padding-left: 0.25em;
+}
+.download-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  text-decoration: none;
+}
+.download-button.icon-only {
+  min-width: 2.4rem;
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+}
+.download-button:hover {
+  font-weight: inherit;
+}
+.download-icon {
+  line-height: 1;
+  font-size: 0.95em;
 }
 .long-description {
   margin: 0;
