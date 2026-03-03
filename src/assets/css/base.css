@@ -226,6 +226,9 @@ a.button:focus-visible {
   #quick-controls .control-item {
     gap: 0.3rem;
   }
+  #quick-controls .download-prefix {
+    display: none;
+  }
   #quick-controls {
     padding: 0 1rem;
     margin-top: 0.25rem;

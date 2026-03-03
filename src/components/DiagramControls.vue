@@ -60,7 +60,7 @@
         </select>
       </li>
       <li class="control-item">
-        <span class="control-prefix">{{ downloadLabel }}</span>
+        <span class="control-prefix download-prefix">{{ downloadLabel }}</span>
         <a
           class="button control-action download-button"
           :href="downloadSite"
@@ -76,10 +76,8 @@
           />
         </a>
       </li>
-      <li class="control-item">
+      <li class="control-item more-info-group">
         <span class="control-prefix">{{ moreInfoLabel }}</span>
-      </li>
-      <li class="control-item">
         <button
           id="description-toggle"
           class="button control-action"
@@ -89,8 +87,6 @@
         >
           {{ descriptionSummaryLabel }}
         </button>
-      </li>
-      <li class="control-item">
         <button
           class="button control-action"
           aria-controls="diagram-contributors-panel"
