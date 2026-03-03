@@ -1,7 +1,6 @@
 <template>
   <div id="content-container">
     <h1
-      class="diagram-title"
       :lang="inEnglish ? 'en' : 'es'"
     >
       {{ activeLongDescription.title }}

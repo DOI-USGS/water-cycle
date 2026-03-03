@@ -65,7 +65,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;
   @media screen and (max-width: 600px) {
-    font-size: 16px;
+    font-size: 20px;
   }
 }
 
@@ -78,9 +78,6 @@ h1 {
   text-align: left;
   padding: 1rem 1.5rem 0.5rem ;
   text-shadow: 1px 1px 100px rgba(0,0,0,.8);
-  @media screen and (max-width: 600px) {
-    font-size: 2.5em;
-  }
 }
 h2 {
   font-size: 1.3rem;
@@ -214,9 +211,6 @@ a.button:focus-visible {
   font-size: 0.95em;
 }
 @media screen and (max-width: 600px) {
-  .diagram-title {
-    font-size: 2.2rem;
-  }
   .control-list.no-separators {
     gap: 0.55rem;
   }
@@ -236,6 +230,9 @@ a.button:focus-visible {
   #related-resources {
     padding: 0 1rem 0.35rem;
     margin-top: 0.2rem;
+  }
+  #content-container > #related-resources {
+    margin-top: auto;
   }
   #related-resources .control-list {
     flex-direction: column;
