@@ -21,6 +21,15 @@
   overflow: hidden;
 }
 
+@media screen and (max-width: 600px) {
+  #main-content > * {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    flex-direction: column;
+  }
+}
+
 /* css styles specific to page content exclusive of header and footer*/
 /* NOT component-specific */
 #visualization-container {
