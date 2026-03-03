@@ -164,21 +164,3 @@ const contributorsLabel = computed(() => (props.inEnglish ? 'Contributors' : 'Co
 const zoomInLabel = computed(() => (props.inEnglish ? 'Zoom in' : 'Acercar'))
 const zoomOutLabel = computed(() => (props.inEnglish ? 'Zoom out' : 'Alejar'))
 </script>
-
-<style scoped lang="scss">
-#quick-controls {
-  padding: 0 1.5rem;
-  margin-top: 0.5rem;
-}
-
-#quick-controls .button {
-  max-width: none;
-}
-
-.download-button {
-  min-width: 2.4rem;
-  min-height: 3rem;
-  padding-left: 0.7rem;
-  padding-right: 0.7rem;
-}
-</style>

@@ -55,14 +55,3 @@ const waterScienceSchoolLabel = computed(() => (props.inEnglish ? 'USGS Water Sc
 const poolsAndFluxesLabel = computed(() => (props.inEnglish ? 'Pools and fluxes visualization' : 'Los reservorios y flujos'))
 const opensInNewTabText = computed(() => (props.inEnglish ? 'opens in new tab' : 'se abre en una nueva pestana'))
 </script>
-
-<style scoped lang="scss">
-#related-resources {
-  padding: 0 1.5rem 0.5rem;
-  margin-top: 0.35rem;
-}
-
-#related-resources .button {
-  max-width: none;
-}
-</style>

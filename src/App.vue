@@ -4,7 +4,7 @@
     <!-- <ShutdownBanner/> -->
     <HeaderUSWDSBanner v-if="typeOfEnv !== '-test build-'" />
     <HeaderUSGS />
-<!--     <WorkInProgressWarning v-if="typeOfEnv !== ''" /> -->
+    <!--     <WorkInProgressWarning v-if="typeOfEnv !== ''" /> -->
     <main id="main-content">
       <RouterView />
     </main>
