@@ -32,23 +32,6 @@
         </button>
       </li>
       <li class="control-item">
-        <span class="control-prefix">{{ downloadLabel }}</span>
-        <a
-          class="button control-action download-button"
-          :href="downloadSite"
-          target="_blank"
-          rel="noopener noreferrer"
-          :aria-label="downloadAriaLabel"
-          :title="currentLanguageDownloadText"
-        >
-          <FontAwesomeIcon
-            :icon="['fas', 'download']"
-            class="control-icon"
-            aria-hidden="true"
-          />
-        </a>
-      </li>
-      <li class="control-item">
         <span class="control-prefix">{{ languageLabel }}</span>
         <label
           for="language-select"
@@ -75,6 +58,23 @@
             Espanol
           </option>
         </select>
+      </li>
+      <li class="control-item">
+        <span class="control-prefix">{{ downloadLabel }}</span>
+        <a
+          class="button control-action download-button"
+          :href="downloadSite"
+          target="_blank"
+          rel="noopener noreferrer"
+          :aria-label="downloadAriaLabel"
+          :title="currentLanguageDownloadText"
+        >
+          <FontAwesomeIcon
+            :icon="['fas', 'download']"
+            class="control-icon"
+            aria-hidden="true"
+          />
+        </a>
       </li>
       <li class="control-item">
         <span class="control-prefix">{{ moreInfoLabel }}</span>

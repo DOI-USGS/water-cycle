@@ -234,6 +234,14 @@ a.button:focus-visible {
     padding: 0 1rem 0.35rem;
     margin-top: 0.2rem;
   }
+  #related-resources .control-list {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+  #related-resources .control-item {
+    width: 100%;
+  }
   #quick-controls .button,
   #related-resources .button {
     margin-top: 2px;
