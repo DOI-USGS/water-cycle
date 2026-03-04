@@ -209,7 +209,7 @@ const zoomStyle = computed(() => ({
   transform: `translate(${pan.value.x}px, ${pan.value.y}px) scale(${zoom.value})`,
   transformOrigin: transformOrigin.value,
   transition: isDragging.value ? 'none' : 'transform 0.1s ease-out',
-  cursor: zoom.value > 1 ? (isDragging.value ? 'grabbing' : 'grab') : 'default',
+  cursor: isDragging.value ? 'grabbing' : 'grab',
   userSelect: 'none',
 }))
 
@@ -229,8 +229,7 @@ const handleWheel = (e) => {
 
   // reset zoom center when at 1
   if (zoom.value === 1) {
-    stopDragging()
-    pan.value = clampPan(pan.value.x, pan.value.y)
+    pan.value = { x: 0, y: 0 }
     transformOrigin.value = 'center center'
   }
 }
@@ -238,7 +237,6 @@ const handleWheel = (e) => {
 // pointer handlers to allow desktop drag-pan
 const handlePointerDown = (e) => {
   if (e.pointerType !== 'mouse' || e.button !== 0) return
-  if (zoom.value <= 1) return
 
   e.preventDefault()
   stopDragging()
@@ -287,8 +285,12 @@ function clampPan(panX, panY) {
   const scaledWidth = imageWrapper.value.offsetWidth * scale
   const scaledHeight = imageWrapper.value.offsetHeight * scale
 
-  const maxX = Math.max((scaledWidth - container.width) / 2, 0)
-  const maxY = Math.max((scaledHeight - container.height) / 2, 0)
+  const overflowX = Math.abs(scaledWidth - container.width) / 2
+  const overflowY = Math.abs(scaledHeight - container.height) / 2
+  const minPanRangeX = scale <= 1 ? container.width * 0.25 : 0
+  const minPanRangeY = scale <= 1 ? container.height * 0.25 : 0
+  const maxX = Math.max(overflowX, minPanRangeX)
+  const maxY = Math.max(overflowY, minPanRangeY)
 
   return {
     x: Math.max(Math.min(panX, maxX), -maxX),
@@ -331,7 +333,7 @@ const handleTouchStart = (e) => {
     transformOrigin.value = `${percentX}% ${percentY}%`
 
      // if just one finger, allow drag effect
-  } else if (e.touches.length === 1 && zoom.value > 1) {
+  } else if (e.touches.length === 1) {
     isTouchDragging.value = true
     touchStart.value = {
       x: e.touches[0].clientX - pan.value.x,
