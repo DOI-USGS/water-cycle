@@ -20,6 +20,12 @@
       @toggle-description="toggleDescription"
       @toggle-contributors="toggleContributors"
     />
+    <p
+      class="zoom-instruction"
+      :lang="inEnglish ? 'en' : 'es'"
+    >
+      {{ wheelZoomInstruction }}
+    </p>
     <div
       id="image-zoomer"
       ref="zoomContainer"
@@ -172,6 +178,8 @@ import diagramDescription from '@/assets/text/diagramDescription.json'
 
 // zooom logic
 const zoom = ref(1)
+const MIN_ZOOM = 0.7
+const MAX_ZOOM = 5
 const zoomContainer = ref(null)
 const imageWrapper = ref(null)
 const transformOrigin = ref('center center')
@@ -193,13 +201,13 @@ const touchStart = ref({ x: 0, y: 0 })
 
 // button zoom
 function zoomIn() {
-  zoom.value = Math.min(zoom.value + 0.1, 5)
+  zoom.value = Math.min(zoom.value + 0.1, MAX_ZOOM)
   pan.value = clampPan(pan.value.x, pan.value.y)
 
 }
 
 function zoomOut() {
-  zoom.value = Math.max(zoom.value - 0.1, 0.5)
+  zoom.value = Math.max(zoom.value - 0.1, MIN_ZOOM)
   pan.value = clampPan(pan.value.x, pan.value.y)
 
 }
@@ -216,6 +224,11 @@ const zoomStyle = computed(() => ({
 
 // center zoom on cursor
 const handleWheel = (e) => {
+  const isModifiedWheel = e.ctrlKey || e.metaKey
+  if (!isModifiedWheel) return
+
+  e.preventDefault()
+
   const rect = e.currentTarget.getBoundingClientRect()
   const offsetX = e.clientX - rect.left
   const offsetY = e.clientY - rect.top
@@ -225,7 +238,7 @@ const handleWheel = (e) => {
   transformOrigin.value = `${percentX}% ${percentY}%`
 
   const delta = e.deltaY > 0 ? -0.1 : 0.1
-  zoom.value = Math.min(Math.max(zoom.value + delta, 1), 5)
+  zoom.value = Math.min(Math.max(zoom.value + delta, MIN_ZOOM), MAX_ZOOM)
 
   // reset zoom center when at 1
   if (zoom.value === 1) {
@@ -348,7 +361,7 @@ const handleTouchMove = (e) => {
     e.preventDefault() // prevent scrolling
     const newDistance = getTouchDistance(e.touches)
     const scaleChange = newDistance / initialPinchDistance.value
-    zoom.value = Math.min(Math.max(initialZoom.value * scaleChange, 1), 5)
+    zoom.value = Math.min(Math.max(initialZoom.value * scaleChange, MIN_ZOOM), MAX_ZOOM)
 
     // clamp pan after zoom
     pan.value = clampPan(pan.value.x, pan.value.y)
@@ -389,6 +402,11 @@ const isContributorsOpen = computed(() => activeInfoPanel.value === 'contributor
 const contributorsLabel = computed(() => (inEnglish.value ? 'Contributors' : 'Colaboradores'))
 const closePanelText = computed(() => (inEnglish.value ? 'Close' : 'Cerrar'))
 const closePanelLabel = computed(() => (inEnglish.value ? 'Close panel' : 'Cerrar panel'))
+const wheelZoomInstruction = computed(() => (
+  inEnglish.value
+    ? 'Hold Ctrl or Cmd and scroll to zoom the diagram'
+    : 'Mantenga presionada la tecla Ctrl o Cmd y desplacese para acercar.'
+))
 const downloadAriaLabel = computed(() => {
   if (inEnglish.value) {
     return 'Download the diagram, opens in new tab'
@@ -552,6 +570,12 @@ function closeInfoPanel() {
   min-height: 0;
 }
 
+.zoom-instruction {
+  margin: 0.5rem 0 0.75rem 0;
+  padding: 0 1.5rem;
+  font-style: italic;
+}
+
 #image-zoomer {
   position: relative;
   display: flex;
@@ -620,5 +644,11 @@ function closeInfoPanel() {
 }
 .info-overlay-panel > header + div p {
   margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 600px) {
+  .zoom-instruction {
+    padding: 0 1rem;
+  }
 }
 </style>
