@@ -1,3 +1,4 @@
+@import '../../../node_modules/@uswds/uswds/dist/css/uswds.min.css';
 @import './base.css';
 @import './common.css'; /* USGS Viz ID Stylesheet */
 @import './custom.css'; /* USGS Viz ID Stylesheet */

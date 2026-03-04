@@ -29,7 +29,8 @@
         ref="imageWrapper"
         :style="zoomStyle"
         class="image-wrapper"
-        @mousedown="handleMouseDown"
+        @pointerdown="handlePointerDown"
+        @dragstart.prevent
         @touchstart.passive="handleTouchStart"
         @touchmove.prevent="handleTouchMove"
         @touchend="handleTouchEnd"
@@ -50,6 +51,7 @@
             :src="imageSrcWebpEnglish"
             alt="Illustrated diagram of the water cycle showing the major pools and fluxes of water on Earth. The diagram depicts an idealized landscape with bright blue used to highlight key pools and fluxes and how they are connected."
             class="diagram-image"
+            draggable="false"
             @load="onEnglishImageLoad"
           >
         </picture>
@@ -71,6 +73,7 @@
             :src="imageSrcWebpSpanish"
             alt="Diagrama ilustrado del ciclo del agua que muestra los principales reservorios y flujos de agua en la Tierra. El diagrama representa un paisaje idealizado en el que se usa azul brillante para destacar los reservorios y flujos clave y cómo están conectados."
             class="diagram-image"
+            draggable="false"
           >
         </picture>
       </div>
@@ -183,7 +186,6 @@ const dragStart = ref({ x: 0, y: 0 })
 // mobile pinch zoom tracking
 const initialPinchDistance = ref(null)
 const initialZoom = ref(zoom.value)
-const touchMidpoint = ref({ x: 0, y: 0 })
 
 // mbile single finer drag
 const isTouchDragging = ref(false)
@@ -227,35 +229,51 @@ const handleWheel = (e) => {
 
   // reset zoom center when at 1
   if (zoom.value === 1) {
+    stopDragging()
     pan.value = clampPan(pan.value.x, pan.value.y)
     transformOrigin.value = 'center center'
   }
 }
 
-// mouse event handlers to allow pan effect
-const handleMouseDown = (e) => {
-  //if (zoom.value <= 1) return // only pan when zoomed in
+// pointer handlers to allow desktop drag-pan
+const handlePointerDown = (e) => {
+  if (e.pointerType !== 'mouse' || e.button !== 0) return
+  if (zoom.value <= 1) return
+
+  e.preventDefault()
+  stopDragging()
+
   isDragging.value = true
   dragStart.value = {
     x: e.clientX - pan.value.x,
     y: e.clientY - pan.value.y
   }
-  // listeners for mouseup
-  window.addEventListener('mousemove', handleMouseMove)
-  window.addEventListener('mouseup', handleMouseUp)
+  imageWrapper.value?.setPointerCapture?.(e.pointerId)
+
+  window.addEventListener('pointermove', handlePointerMove)
+  window.addEventListener('pointerup', handlePointerUp)
+  window.addEventListener('pointercancel', handlePointerUp)
+  window.addEventListener('blur', handlePointerUp)
 }
 
-const handleMouseMove = (e) => {
-  if (!isDragging.value) return
+const handlePointerMove = (e) => {
+  if (!isDragging.value || e.pointerType !== 'mouse') return
   const rawX = e.clientX - dragStart.value.x
   const rawY = e.clientY - dragStart.value.y
   pan.value = clampPan(rawX, rawY)
 }
 
-const handleMouseUp = () => {
+function stopDragging() {
   isDragging.value = false
-  window.removeEventListener('mousemove', handleMouseMove)
-  window.removeEventListener('mouseup', handleMouseUp)
+  window.removeEventListener('pointermove', handlePointerMove)
+  window.removeEventListener('pointerup', handlePointerUp)
+  window.removeEventListener('pointercancel', handlePointerUp)
+  window.removeEventListener('blur', handlePointerUp)
+}
+
+const handlePointerUp = (e) => {
+  if (e && e.pointerType && e.pointerType !== 'mouse') return
+  stopDragging()
 }
 
 // dont' scroll beyond the edges of the diagram...
@@ -263,12 +281,11 @@ function clampPan(panX, panY) {
   if (!zoomContainer.value || !imageWrapper.value) return { x: panX, y: panY }
 
   const container = zoomContainer.value.getBoundingClientRect()
-  const image = imageWrapper.value.getBoundingClientRect()
 
   const scale = zoom.value
 
-  const scaledWidth = image.width * scale
-  const scaledHeight = image.height * scale
+  const scaledWidth = imageWrapper.value.offsetWidth * scale
+  const scaledHeight = imageWrapper.value.offsetHeight * scale
 
   const maxX = Math.max((scaledWidth - container.width) / 2, 0)
   const maxY = Math.max((scaledHeight - container.height) / 2, 0)
@@ -487,6 +504,7 @@ watch(activeInfoPanel, async (panel) => {
 })
 
 onBeforeUnmount(() => {
+  stopDragging()
   document.removeEventListener('keydown', handleDialogKeydown, true)
 })
 
