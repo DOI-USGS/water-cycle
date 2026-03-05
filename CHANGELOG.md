@@ -23,6 +23,10 @@ Here we track upcoming changes.
 ## [1.5.0] - 2024-03-01 
 ### Changed
 - Improved navigation capabilities to be able to pan and zoom diagram. 
+
+## [1.4.2] - 2026-03-01
+### Added
+- New pre-footer code links component 
  
 ## [1.4.1] - 2024-03-01
  
