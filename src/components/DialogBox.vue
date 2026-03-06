@@ -69,10 +69,11 @@ defineExpose({
 <style scoped lang="scss">
 .info-overlay-panel {
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   width: min(80rem, 100%, calc(100vw - 3rem));
   max-height: min(100%, calc(100vh - 3rem));
-  overflow: auto;
-  overscroll-behavior: contain;
+  overflow: hidden;
   background: #ffffff;
   border: 1px solid #949494;
   border-radius: 0.4rem;
@@ -96,6 +97,9 @@ defineExpose({
 }
 
 .dialog-content {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
   padding: 0.5rem 1rem 1rem 1rem;
 }
 
