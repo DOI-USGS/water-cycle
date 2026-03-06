@@ -405,7 +405,7 @@ const closePanelLabel = computed(() => (inEnglish.value ? 'Close panel' : 'Cerra
 const wheelZoomInstruction = computed(() => (
   inEnglish.value
     ? 'Hold Ctrl or Cmd and scroll to zoom the diagram'
-    : 'Mantenga presionada la tecla Ctrl o Cmd y desplacese para acercar.'
+    : 'Mantenga presionada la tecla Ctrl o Cmd y desplacese para acercar. English is the official language and authoritative version of all federal information.'
 ))
 const downloadAriaLabel = computed(() => {
   if (inEnglish.value) {
