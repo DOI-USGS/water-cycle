@@ -90,80 +90,50 @@
         @click.self="closeInfoPanel"
         @wheel.prevent
       >
-        <section
+        <DialogBox
           v-if="isDescriptionOpen"
           id="diagram-description-panel"
           ref="descriptionDialogRef"
-          class="info-overlay-panel"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="diagram-description-panel-title"
+          title-id="diagram-description-panel-title"
+          :title="activeLongDescription.summaryLabel"
           :lang="inEnglish ? 'en' : 'es'"
-          tabindex="-1"
-          @wheel.stop
+          :close-label="closePanelLabel"
+          :close-text="closePanelText"
+          @close="closeInfoPanel"
         >
-          <header>
-            <h3 id="diagram-description-panel-title">
-              {{ activeLongDescription.summaryLabel }}
-            </h3>
-            <button
-              class="button control-action"
-              :aria-label="closePanelLabel"
-              @click="closeInfoPanel"
+          <template v-if="activeLongDescription.sections.length > 0">
+            <section
+              v-for="(section, sectionIndex) in activeLongDescription.sections"
+              :key="`long-description-section-${sectionIndex}`"
             >
-              {{ closePanelText }}
-            </button>
-          </header>
-          <div>
-            <template v-if="activeLongDescription.sections.length > 0">
-              <section
-                v-for="(section, sectionIndex) in activeLongDescription.sections"
-                :key="`long-description-section-${sectionIndex}`"
+              <h4>
+                {{ section.heading }}
+              </h4>
+              <p
+                v-for="(paragraph, paragraphIndex) in section.paragraphs"
+                :key="`long-description-paragraph-${sectionIndex}-${paragraphIndex}`"
               >
-                <h4>
-                  {{ section.heading }}
-                </h4>
-                <p
-                  v-for="(paragraph, paragraphIndex) in section.paragraphs"
-                  :key="`long-description-paragraph-${sectionIndex}-${paragraphIndex}`"
-                >
-                  {{ paragraph }}
-                </p>
-              </section>
-            </template>
-            <p v-else-if="!inEnglish">
-              La descripcion extensa en espanol estara disponible pronto.
-            </p>
-          </div>
-        </section>
-        <section
+                {{ paragraph }}
+              </p>
+            </section>
+          </template>
+          <p v-else-if="!inEnglish">
+            La descripcion extensa en espanol estara disponible pronto.
+          </p>
+        </DialogBox>
+        <DialogBox
           v-else-if="isContributorsOpen"
           id="diagram-contributors-panel"
           ref="contributorsDialogRef"
-          class="info-overlay-panel"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="diagram-contributors-panel-title"
+          title-id="diagram-contributors-panel-title"
+          :title="contributorsLabel"
           :lang="inEnglish ? 'en' : 'es'"
-          tabindex="-1"
-          @wheel.stop
+          :close-label="closePanelLabel"
+          :close-text="closePanelText"
+          @close="closeInfoPanel"
         >
-          <header>
-            <h3 id="diagram-contributors-panel-title">
-              {{ contributorsLabel }}
-            </h3>
-            <button
-              class="button control-action"
-              :aria-label="closePanelLabel"
-              @click="closeInfoPanel"
-            >
-              {{ closePanelText }}
-            </button>
-          </header>
-          <div>
-            <AuthorshipSection />
-          </div>
-        </section>
+          <AuthorshipSection />
+        </DialogBox>
       </div>
     </div>
     <RelatedResources :in-english="inEnglish" />
@@ -174,6 +144,7 @@
 import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
 import { isMobile } from 'mobile-device-detect'
 import DiagramControls from './DiagramControls.vue'
+import DialogBox from './DialogBox.vue'
 import RelatedResources from './RelatedResources.vue'
 import AuthorshipSection from './AuthorshipSection.vue'
 import diagramDescription from '@/assets/text/diagramDescription.json'
@@ -427,9 +398,9 @@ const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), input:not([disabled
 // select the open dialog box
 function getActiveDialogElement() {
   return isDescriptionOpen.value
-    ? descriptionDialogRef.value
+    ? descriptionDialogRef.value?.dialogElement ?? null
     : isContributorsOpen.value
-      ? contributorsDialogRef.value
+      ? contributorsDialogRef.value?.dialogElement ?? null
       : null
 }
 
@@ -608,44 +579,6 @@ function closeInfoPanel() {
   justify-content: center;
   padding: 1.5rem;
   background: rgba(0, 0, 0, 0.2);
-}
-.info-overlay-panel {
-  width: min(80rem, 100%);
-  max-height: 100%;
-  overflow: auto;
-  overscroll-behavior: contain;
-  background: #ffffff;
-  border: 1px solid #949494;
-  border-radius: 0.4rem;
-}
-.info-overlay-panel > header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #d8d8d8;
-}
-.info-overlay-panel > header h3 {
-  margin: 0;
-  padding: 0;
-  font-family: var(--style-font);
-  font-size: 1.1em;
-  font-weight: 600;
-}
-.info-overlay-panel > header + div {
-  padding: 0.5rem 1rem 1rem 1rem;
-}
-.info-overlay-panel section {
-  margin-bottom: 1rem;
-}
-.info-overlay-panel h4 {
-  font-size: 1.1em;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.info-overlay-panel > header + div p {
-  margin-bottom: 0.5rem;
 }
 
 @media screen and (max-width: 600px) {
