@@ -4,7 +4,10 @@
     aria-label="Official website of the United States government"
   >
     <div class="usa-accordion">
-      <header class="usa-banner__header">
+      <header
+        class="usa-banner__header"
+        :class="{ 'usa-banner__header--expanded': isOpen }"
+      >
         <div class="usa-banner__inner">
           <div class="grid-col-auto">
             <img
@@ -28,8 +31,9 @@
           <button
             type="button"
             class="usa-accordion__button usa-banner__button"
-            aria-expanded="false"
+            :aria-expanded="isOpen.toString()"
             aria-controls="gov-banner-default"
+            @click="toggleBanner"
           >
             <span class="usa-banner__button-text">Here’s how you know</span>
           </button>
@@ -38,6 +42,7 @@
       <div
         id="gov-banner-default"
         class="usa-banner__content usa-accordion__content"
+        :hidden="!isOpen"
       >
         <div class="grid-row grid-gap-lg">
           <div class="usa-banner__guidance tablet:grid-col-6">
@@ -99,10 +104,16 @@
 </template>
 
 <script setup>
+  import { ref } from 'vue'
+
+  const isOpen = ref(false)
+
+  function toggleBanner() {
+    isOpen.value = !isOpen.value
+  }
 </script>
 
 <style scoped lang="scss">
-  @import '../../node_modules/@uswds/uswds/dist/css/uswds.css';
   .usa-banner {
     background-color: #00264c;
   }

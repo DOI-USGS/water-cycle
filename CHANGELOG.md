@@ -8,11 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  
 Here we track upcoming changes.
  
-### Added
- 
-### Changed
- 
+## [1.6.0] - 2026-03-01
+
 ### Fixed
+- Added alt text 
+- Included expandable text description that duplicates inaccessible text on the image
+
+### Changed 
+- Improved tabbed naviagtion
+- Moved related resources to below diagram 
+- Updated control panel at top of diagram. 
+
 
 ## [1.5.0] - 2024-03-01 
 ### Changed

@@ -8,8 +8,7 @@ export default {
         fullName: 'Hayley Corson-Dosch',
         initials: 'HCD',
         profile_link: 'https://www.usgs.gov/staff-profiles/hayley-corson-dosch',
-        role: 'lead designer',
-        contribution: '(she/her) led the design effort throughout the iterative design process and diagram review and contributed to social media development. She also developed this website'
+        role: 'lead designer'
       },
       {
         firstName: 'Cee',
@@ -17,8 +16,7 @@ export default {
         fullName: 'Cee Nell',
         initials: 'CN',
         profile_link: 'https://www.usgs.gov/staff-profiles/cee-nell',
-        role: 'designer',
-        contribution: '(they/them), as the Vizlab team lead, contributed to the design work, provided oversight, and coordinated the formal scientific review of the diagram'
+        role: 'project lead'
       },
       {
         firstName: 'Althea',
@@ -26,8 +24,7 @@ export default {
         fullName: 'Althea Archer',
         initials: 'AA',
         profile_link: 'https://www.usgs.gov/staff-profiles/althea-archer',
-        role: 'designer',
-        contribution: '(she/her) contributed design work during the review stage'
+        role: 'designer'
       },
       {
         firstName: 'Ellen',
@@ -36,16 +33,14 @@ export default {
         initials: 'EB',
         profile_link: null,
         role: 'designer',
-        contribution: '(she/her), a former Vizlab team member, contributed key graphic design work during the initial design and planning stages'
-      },
-            {
+        },
+        {
         firstName: 'Rachel',
         lastName: 'Bryan',
         fullName: 'Rachel Bryan',
         initials: 'RB',
         profile_link: null,
-        role: 'contributor',
-        contribution: '(she/her) led usability testing'
+        role: 'usability specialist'
       },
       {
         firstName: 'Jen',
@@ -53,8 +48,7 @@ export default {
         fullName: 'Jen Bruce',
         initials: 'JB',
         profile_link: 'https://www.usgs.gov/staff-profiles/jennifer-l-bruce',
-        role: 'contributor',
-        contribution: '(she/her) contributed to the product planning and design'
+        role: 'contributor'
       },
       {
         firstName: 'Nicole',
@@ -62,17 +56,15 @@ export default {
         fullName: 'Nicole Felts',
         initials: 'NF',
         profile_link: null,
-        role: 'contributor',
-        contribution: '(she/her) contributed to Water Science School web development and designed and led communications'
-      },
+        role: 'contributor'
+       },
       {
         firstName: 'Rebekah',
         lastName: 'Redwine',
         fullName: 'Rebekah Redwine',
         initials: 'RR',
         profile_link: null,
-        role: 'contributor',
-        contribution: '(she/her) contributed to social media development and other communications'
+        role: 'contributor'
       },
       {
         firstName: 'Charlotte',
@@ -80,8 +72,7 @@ export default {
         fullName: 'Charlotte Riggs',
         initials: 'CR',
         profile_link: 'https://www.usgs.gov/staff-profiles/charlotte-riggs',
-        role: 'contributor',
-        contribution: '(she/her) contributed to usability testing, communications, and Water Science School web development and provided oversight and coordination'
+        role: 'contributor'
       },
       {
         firstName: 'Emily',
@@ -89,9 +80,8 @@ export default {
         fullName: 'Emily Read',
         initials: 'ER',
         profile_link: 'https://www.usgs.gov/staff-profiles/emily-k-read',
-        role: 'contributor',
-        contribution: '(she/her) contributed to product planning and provided oversight'
-      }
+        role: 'contributor'
+       }
     ],
     // do not delete section. delete any or all individuals as needed. modify content as needed
     // currently only 'fullName', 'firstName', 'initials', 'profile_link', and 'contribution' are used
