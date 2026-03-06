@@ -21,6 +21,7 @@
       @toggle-contributors="toggleContributors"
     />
     <p
+      v-if="!isMobile"
       class="zoom-instruction"
       :lang="inEnglish ? 'en' : 'es'"
     >
@@ -171,6 +172,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
+import { isMobile } from 'mobile-device-detect'
 import DiagramControls from './DiagramControls.vue'
 import RelatedResources from './RelatedResources.vue'
 import AuthorshipSection from './AuthorshipSection.vue'
