@@ -88,7 +88,7 @@
         v-if="activeInfoPanel"
         class="info-overlay-backdrop"
         @click.self="closeInfoPanel"
-        @wheel.prevent
+        @wheel="handleBackdropWheel"
       >
         <DialogBox
           v-if="isDescriptionOpen"
@@ -218,6 +218,13 @@ const handleWheel = (e) => {
     pan.value = { x: 0, y: 0 }
     transformOrigin.value = 'center center'
   }
+}
+
+const handleBackdropWheel = (e) => {
+  if (!e.ctrlKey && !e.metaKey) return
+
+  e.preventDefault()
+  e.stopPropagation()
 }
 
 // pointer handlers to allow desktop drag-pan
