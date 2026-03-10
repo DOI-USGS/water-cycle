@@ -22,7 +22,11 @@
         {{ closeText }}
       </button>
     </header>
-    <div class="dialog-content">
+    <div
+      ref="dialogContentElement"
+      class="dialog-content"
+      tabindex="-1"
+    >
       <slot />
     </div>
   </section>
@@ -60,9 +64,11 @@ defineProps({
 
 const emit = defineEmits(['close'])
 const dialogElement = ref(null)
+const dialogContentElement = ref(null)
 
 defineExpose({
-  dialogElement
+  dialogElement,
+  dialogContentElement
 })
 </script>
 

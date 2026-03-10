@@ -422,6 +422,15 @@ function getFocusableElements(container) {
 function focusActiveDialog() {
   const dialog = getActiveDialogElement()
   if (!dialog) return
+
+  if (isDescriptionOpen.value) {
+    const descriptionContent = descriptionDialogRef.value?.dialogContentElement ?? null
+    if (descriptionContent) {
+      descriptionContent.focus()
+      return
+    }
+  }
+
   const focusable = getFocusableElements(dialog)
   if (focusable.length > 0) {
     focusable[0].focus()
