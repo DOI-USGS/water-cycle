@@ -1,0 +1,74 @@
+{
+  "en": {
+    "title": "The Water Cycle",
+    "summaryLabel": "Description of diagram",
+    "sections": [
+      {
+        "heading": "Introduction",
+        "paragraphs": [
+          "The water cycle describes where water is on Earth and how it moves. Water is stored in the atmosphere, on the land surface, and below the ground. It can be a liquid, a solid, or a gas. Liquid water can be fresh, saline (salty), or a mix (brackish). Water moves between the places it is stored. Water moves at large scales and at very small scales. Water moves naturally and because of human actions. Human water use affects where water is stored, how it moves, and how clean it is."
+        ]
+      },
+      {
+        "heading": "Pools",
+        "paragraphs": [
+          "Pools store water. Ninety-six percent of all water is stored in oceans and is saline. On land, saline water is stored in saline lakes. Fresh water is stored in liquid form in freshwater lakes, artificial reservoirs, rivers, and wetlands. Water is stored in solid, frozen form in ice sheets and glaciers, and in snowpack at high elevations or near the Earth's poles. Water vapor is a gas and is stored as atmospheric moisture over the ocean and land. In the soil, frozen water is stored as permafrost and liquid water is stored as soil moisture. Deeper below ground, liquid water is stored as groundwater in aquifers, within cracks and pores in the rock."
+        ]
+      },
+      {
+        "heading": "Fluxes",
+        "paragraphs": [
+          "Fluxes move water between pools. As it moves, water can change form between liquid, solid, and gas. Circulation mixes water in the oceans and transports water vapor in the atmosphere. Water moves between the atmosphere and the surface through evaporation, evapotranspiration, and precipitation. Water moves across the surface through snowmelt, runoff, and streamflow. Water moves into the ground through infiltration and groundwater recharge. Underground, groundwater flows within aquifers. It can return to the surface through natural groundwater discharge into rivers, the ocean, and from springs."
+        ]
+      },
+      {
+        "heading": "Human use and water availability",
+        "paragraphs": [
+          "Humans alter the water cycle. People redirect rivers, build dams to store water, and drain water from wetlands for development. People use water from rivers, lakes, reservoirs, and groundwater aquifers. That water is used to supply homes and communities, for agricultural irrigation and livestock grazing, and for industrial activities such as thermoelectric power generation, mining, and aquaculture. The amount of water that is available depends on how much water is in each pool (water quantity). It also depends on when and how fast water moves (water timing), how much water is used (water use), and how clean the water is (water quality)."
+        ]
+      },
+      {
+        "heading": "Water quality",
+        "paragraphs": [
+          "Humans affect water quality. In agricultural and urban areas, irrigation and precipitation wash fertilizers and pesticides into rivers and groundwater. Power plants and factories return heated and contaminated water to rivers. Runoff carries chemicals, sediment, and sewage into rivers and lakes. Downstream from these sources, contaminated water can cause harmful algal blooms, spread diseases, and harm habitats. Climate change is affecting the water cycle. It is affecting water quality, quantity, timing, and use. It is causing ocean acidification, sea level rise, and more extreme weather. By understanding these impacts, people can work toward using water sustainably."
+        ]
+      }
+    ]
+  },
+  "es": {
+    "title": "El Ciclo del Agua",
+    "summaryLabel": "Leer la descripcion del diagrama",
+    "sections": [
+      {
+        "heading": "Introducción",
+        "paragraphs": [
+          "El ciclo del agua describe dónde se encuentra el agua en la Tierra y cómo se mueve. El agua se almacena en la atmósfera, en la superficie terrestre y debajo del suelo. Puede ser un líquido, un sólido o un gas. El agua líquida puede ser dulce, salada o una mezcla (salobre). El agua se mueve entre los lugares donde está almacenada. El agua se mueve a grandes escalas y a muy pequeñas escalas. El agua se mueve de forma natural y debido a las acciones humanas. El uso humano del agua afecta dónde se almacena el agua, cómo se mueve y qué tan limpia es."
+        ]
+      },
+      {
+        "heading": "Reservas",
+        "paragraphs": [
+          "Las reservas almacenan agua. El 96% de toda el agua se almacena en los océanos y es salina. En la tierra, el agua salada se almacena en lagos salinos. El agua dulce se almacena en forma líquida en lagos de agua dulce, embalses artificiales, ríos y humedales. El agua se almacena en forma sólida, congelada, en capas de hielo y glaciares, y en mantos de nieve en elevaciones altas o cerca de los polos de la Tierra. El vapor de agua es un gas y se almacena como humedad atmosférica sobre el océano y la tierra. En el suelo, el agua congelada se almacena como permafrost y el agua líquida se almacena como humedad del suelo. Más profundo bajo tierra, el agua líquida se almacena en acuíferos subterráneos, dentro de las grietas y poros en la roca."
+        ]
+      },
+      {
+        "heading": "Flujos",
+        "paragraphs": [
+          "Los flujos mueven el agua entre las reservas. A medida que se mueve, el agua puede cambiar de forma entre líquido, sólido y gas. La circulación mezcla el agua en los océanos y transporta el vapor de agua en la atmósfera. El agua se mueve entre la atmósfera y la superficie a través de la evaporación, la evapotranspiración y la precipitación. El agua se mueve a través de la superficie a través del deshielo, la escorrentía y el flujo de ríos. El agua se mueve hacia el subsuelo a través de la infiltración y la recarga de agua subterránea. Bajo tierra, el agua subterránea fluye dentro de los acuíferos. Puede regresar a la superficie a través de la descarga natural de agua subterránea a los ríos, al océano y de los manantiales."
+        ]
+      },
+      {
+        "heading": "Uso humano y disponibilidad de agua ",
+        "paragraphs": [
+          "Alteramos el ciclo del agua. Redirigimos ríos. Construimos represas para almacenar agua. Drenamos el agua de los humedales para el desarrollo. Utilizamos el agua de ríos, lagos, embalses y acuíferos subterráneos. Utilizamos esa agua para abastecer nuestros hogares y comunidades. La utilizamos para el riego agrícola y el pastoreo de ganado. La utilizamos en actividades industriales como la generación de energía termoeléctrica, la minería y la acuicultura. La cantidad de agua que está disponible depende de cuánta agua hay en cada reserva (cantidad de agua). También depende de cuándo y qué tan rápido se mueve el agua (temporización del agua), cuánta agua usamos (uso del agua) y qué tan limpia es el agua (calidad del agua)."
+        ]
+      },
+      {
+        "heading": "Calidad del agua",
+        "paragraphs": [
+          "Afectamos la calidad del agua. En áreas agrícolas y urbanas, el riego y la precipitación transportan fertilizantes y pesticidas a los ríos y aguas subterráneas. Las centrales eléctricas y las fábricas devuelven el agua caliente y contaminada a los ríos. La escorrentía transporta a los ríos y los lagos productos químicos, sedimentos y aguas residuales. Aguas abajo de estas fuentes, el agua contaminada puede causar la proliferación de algas nocivas, propagar enfermedades y causar daño a hábitats. El cambio climático está alterando el ciclo del agua. Está afectando la calidad, la cantidad, la temporización y el uso del agua. Está provocando la acidificación de los océanos, el aumento del nivel del mar y un clima más extremo. Al comprender estos impactos, podemos trabajar para usar el agua de manera sostenible."
+        ]
+      }
+    ]
+  }
+}

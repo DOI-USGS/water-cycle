@@ -1,9 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import VisualizationView from '@/views/VisualizationView.vue'
-
-function lazyLoad(view){
-  return() => import(`@/views/${view}.vue`)
-}
+const Error404Page = () => import('@/views/Error404Page.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,7 +18,7 @@ const router = createRouter({
     {
       path: "/404",
       name: "Error404",
-      component: lazyLoad('Error404Page')
+      component: Error404Page
     },
     { 
       path: '/:pathMatch(.*)*', 

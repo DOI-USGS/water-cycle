@@ -1,93 +1,48 @@
 <template>
   <div id="content-container">
-    <div
-      id="button-container"
+    <h1
+      :lang="inEnglish ? 'en' : 'es'"
     >
-      <h3 class="optionsBar notButton">
-        <a
-          href="https://www.usgs.gov/special-topics/water-science-school/science/water-cycle"
-          target="_blank"
-        >Visit the Water Science School</a>
-      </h3>
-      <h3 class="optionsBar notButton">
-        |
-      </h3>
-      <h3 class="optionsBar notButton">
-        <a
-          href="https://labs.waterdata.usgs.gov/visualizations/pools-and-fluxes/index.html#/"
-          target="_blank"
-        >Explore the size of pools and fluxes</a>
-      </h3>
-      <h3 class="optionsBar notButton">
-        |
-      </h3>
-      <h3 class="optionsBar notButton">
-        <a
-          :href="downloadSite"
-          target="_blank"
-        >
-          {{ currentLanguageDownloadText }}
-        </a>
-      </h3>
-      <h3 class="optionsBar notButton">
-        |
-      </h3>
-      <h3 class="optionsBar">
-        Language: 
-        <button
-          class="button"
-          @click="toggleLanguage"
-        >
-          {{ currentLanguageStatus }}
-        </button>
-      </h3>
-      <h3 class="optionsBar notButton">
-        |
-      </h3>
-      <h3 class="optionsBar">
-        Zoom:
-        <button
-          class="zoom button"
-          @click="zoomIn"
-        >
-          +
-        </button>
-        <button
-          class="zoom button out"
-          @click="zoomOut"
-        >
-          -
-        </button>
-      </h3>
-      <h3 class="optionsBar notButton">
-        |
-      </h3>
-      <ExpandingSidebar class="optionsBar">
-        <template #sidebarTitle>
-          Contributors
-        </template>
-        <template #sidebarMessage>
-          <AuthorshipSection class="hidden" />
-        </template>
-      </ExpandingSidebar>
-    </div>
+      {{ activeLongDescription.title }}
+    </h1>
+    <DiagramControls
+      :in-english="inEnglish"
+      :selected-language="selectedLanguage"
+      :download-site="downloadSite"
+      :download-aria-label="downloadAriaLabel"
+      :current-language-download-text="currentLanguageDownloadText"
+      :is-description-open="isDescriptionOpen"
+      :is-contributors-open="isContributorsOpen"
+      :description-summary-label="activeLongDescription.summaryLabel"
+      @zoom-in="zoomIn"
+      @zoom-out="zoomOut"
+      @set-language="setLanguage"
+      @toggle-description="toggleDescription"
+      @toggle-contributors="toggleContributors"
+    />
+    <p
+      v-if="!isMobile"
+      class="zoom-instruction"
+      :lang="inEnglish ? 'en' : 'es'"
+    >
+      {{ wheelZoomInstruction }}
+    </p>
     <div
       id="image-zoomer"
       ref="zoomContainer"
-      class="content"
-      @wheel.prevent="handleWheel"
+      @wheel="handleWheel"
     >
       <div
         ref="imageWrapper"
         :style="zoomStyle"
         class="image-wrapper"
-        @mousedown="handleMouseDown"
+        @pointerdown="handlePointerDown"
+        @dragstart.prevent
         @touchstart.passive="handleTouchStart"
         @touchmove.prevent="handleTouchMove"
         @touchend="handleTouchEnd"
       >
         <picture
-          v-if="loadEnglish"
           v-show="inEnglish"
         >
           <source
@@ -101,8 +56,10 @@
           <img
             id="diagramEnglish"
             :src="imageSrcWebpEnglish"
+            alt="Illustrated diagram of the water cycle showing the major pools and fluxes of water on Earth. The diagram depicts an idealized landscape with bright blue used to highlight key pools and fluxes and how they are connected."
             class="diagram-image"
             draggable="false"
+            @load="onEnglishImageLoad"
           >
         </picture>
 
@@ -121,26 +78,86 @@
           <img
             id="diagramSpanish"
             :src="imageSrcWebpSpanish"
+            alt="Diagrama ilustrado del ciclo del agua que muestra los principales reservorios y flujos de agua en la Tierra. El diagrama representa un paisaje idealizado en el que se usa azul brillante para destacar los reservorios y flujos clave y cómo están conectados."
             class="diagram-image"
-            @load="onImageLoad"
+            draggable="false"
           >
         </picture>
       </div>
+      <div
+        v-if="activeInfoPanel"
+        class="info-overlay-backdrop"
+        @click.self="closeInfoPanel"
+        @wheel="handleBackdropWheel"
+      >
+        <DialogBox
+          v-if="isDescriptionOpen"
+          id="diagram-description-panel"
+          ref="descriptionDialogRef"
+          title-id="diagram-description-panel-title"
+          :title="activeLongDescription.summaryLabel"
+          :lang="inEnglish ? 'en' : 'es'"
+          :close-label="closePanelLabel"
+          :close-text="closePanelText"
+          @close="closeInfoPanel"
+        >
+          <template v-if="activeLongDescription.sections.length > 0">
+            <section
+              v-for="(section, sectionIndex) in activeLongDescription.sections"
+              :key="`long-description-section-${sectionIndex}`"
+            >
+              <h4>
+                {{ section.heading }}
+              </h4>
+              <p
+                v-for="(paragraph, paragraphIndex) in section.paragraphs"
+                :key="`long-description-paragraph-${sectionIndex}-${paragraphIndex}`"
+              >
+                {{ paragraph }}
+              </p>
+            </section>
+          </template>
+          <p v-else-if="!inEnglish">
+            La descripcion extensa en espanol estara disponible pronto.
+          </p>
+        </DialogBox>
+        <DialogBox
+          v-else-if="isContributorsOpen"
+          id="diagram-contributors-panel"
+          ref="contributorsDialogRef"
+          title-id="diagram-contributors-panel-title"
+          :title="contributorsLabel"
+          :lang="inEnglish ? 'en' : 'es'"
+          :close-label="closePanelLabel"
+          :close-text="closePanelText"
+          @close="closeInfoPanel"
+        >
+          <AuthorshipSection />
+        </DialogBox>
+      </div>
     </div>
+    <RelatedResources :in-english="inEnglish" />
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import ExpandingSidebar from './ExpandingSidebar.vue'
+import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
+import { isMobile } from 'mobile-device-detect'
+import DiagramControls from './DiagramControls.vue'
+import DialogBox from './DialogBox.vue'
+import RelatedResources from './RelatedResources.vue'
 import AuthorshipSection from './AuthorshipSection.vue'
+import diagramDescription from '@/assets/text/diagramDescription.json'
 
 // zooom logic
 const zoom = ref(1)
+const MIN_ZOOM = 0.7
+const MAX_ZOOM = 5
 const zoomContainer = ref(null)
 const imageWrapper = ref(null)
-const imageAspectRatio = ref(1)
 const transformOrigin = ref('center center')
+const descriptionDialogRef = ref(null)
+const contributorsDialogRef = ref(null)
 
 // drag to pan
 const pan = ref({ x: 0, y: 0 })
@@ -150,7 +167,6 @@ const dragStart = ref({ x: 0, y: 0 })
 // mobile pinch zoom tracking
 const initialPinchDistance = ref(null)
 const initialZoom = ref(zoom.value)
-const touchMidpoint = ref({ x: 0, y: 0 })
 
 // mbile single finer drag
 const isTouchDragging = ref(false)
@@ -158,30 +174,34 @@ const touchStart = ref({ x: 0, y: 0 })
 
 // button zoom
 function zoomIn() {
-  zoom.value = Math.min(zoom.value + 0.1, 5)
+  zoom.value = Math.min(zoom.value + 0.1, MAX_ZOOM)
   pan.value = clampPan(pan.value.x, pan.value.y)
 
 }
 
 function zoomOut() {
-  zoom.value = Math.max(zoom.value - 0.1, 0.5)
+  zoom.value = Math.max(zoom.value - 0.1, MIN_ZOOM)
   pan.value = clampPan(pan.value.x, pan.value.y)
 
 }
-
 
 // zooming with drag to pan when zoomed in
 const zoomStyle = computed(() => ({
   transform: `translate(${pan.value.x}px, ${pan.value.y}px) scale(${zoom.value})`,
   transformOrigin: transformOrigin.value,
   transition: isDragging.value ? 'none' : 'transform 0.1s ease-out',
-  cursor: zoom.value > 1 ? (isDragging.value ? 'grabbing' : 'grab') : 'default',
+  cursor: isDragging.value ? 'grabbing' : 'grab',
   userSelect: 'none',
 }))
 
 
 // center zoom on cursor
 const handleWheel = (e) => {
+  const isModifiedWheel = e.ctrlKey || e.metaKey
+  if (!isModifiedWheel) return
+
+  e.preventDefault()
+
   const rect = e.currentTarget.getBoundingClientRect()
   const offsetX = e.clientX - rect.left
   const offsetY = e.clientY - rect.top
@@ -191,39 +211,60 @@ const handleWheel = (e) => {
   transformOrigin.value = `${percentX}% ${percentY}%`
 
   const delta = e.deltaY > 0 ? -0.1 : 0.1
-  zoom.value = Math.min(Math.max(zoom.value + delta, 1), 5)
+  zoom.value = Math.min(Math.max(zoom.value + delta, MIN_ZOOM), MAX_ZOOM)
 
   // reset zoom center when at 1
   if (zoom.value === 1) {
-    pan.value = clampPan(pan.value.x, pan.value.y)
+    pan.value = { x: 0, y: 0 }
     transformOrigin.value = 'center center'
   }
 }
 
-// mouse event handlers to allow pan effect
-const handleMouseDown = (e) => {
-  //if (zoom.value <= 1) return // only pan when zoomed in
+const handleBackdropWheel = (e) => {
+  if (!e.ctrlKey && !e.metaKey) return
+
+  e.preventDefault()
+  e.stopPropagation()
+}
+
+// pointer handlers to allow desktop drag-pan
+const handlePointerDown = (e) => {
+  if (e.pointerType !== 'mouse' || e.button !== 0) return
+
+  e.preventDefault()
+  stopDragging()
+
   isDragging.value = true
   dragStart.value = {
     x: e.clientX - pan.value.x,
     y: e.clientY - pan.value.y
   }
-  // listeners for mouseup
-  window.addEventListener('mousemove', handleMouseMove)
-  window.addEventListener('mouseup', handleMouseUp)
+  imageWrapper.value?.setPointerCapture?.(e.pointerId)
+
+  window.addEventListener('pointermove', handlePointerMove)
+  window.addEventListener('pointerup', handlePointerUp)
+  window.addEventListener('pointercancel', handlePointerUp)
+  window.addEventListener('blur', handlePointerUp)
 }
 
-const handleMouseMove = (e) => {
-  if (!isDragging.value) return
+const handlePointerMove = (e) => {
+  if (!isDragging.value || e.pointerType !== 'mouse') return
   const rawX = e.clientX - dragStart.value.x
   const rawY = e.clientY - dragStart.value.y
   pan.value = clampPan(rawX, rawY)
 }
 
-const handleMouseUp = () => {
+function stopDragging() {
   isDragging.value = false
-  window.removeEventListener('mousemove', handleMouseMove)
-  window.removeEventListener('mouseup', handleMouseUp)
+  window.removeEventListener('pointermove', handlePointerMove)
+  window.removeEventListener('pointerup', handlePointerUp)
+  window.removeEventListener('pointercancel', handlePointerUp)
+  window.removeEventListener('blur', handlePointerUp)
+}
+
+const handlePointerUp = (e) => {
+  if (e && e.pointerType && e.pointerType !== 'mouse') return
+  stopDragging()
 }
 
 // dont' scroll beyond the edges of the diagram...
@@ -231,15 +272,18 @@ function clampPan(panX, panY) {
   if (!zoomContainer.value || !imageWrapper.value) return { x: panX, y: panY }
 
   const container = zoomContainer.value.getBoundingClientRect()
-  const image = imageWrapper.value.getBoundingClientRect()
 
   const scale = zoom.value
 
-  const scaledWidth = image.width * scale
-  const scaledHeight = image.height * scale
+  const scaledWidth = imageWrapper.value.offsetWidth * scale
+  const scaledHeight = imageWrapper.value.offsetHeight * scale
 
-  const maxX = Math.max((scaledWidth - container.width) / 2, 0)
-  const maxY = Math.max((scaledHeight - container.height) / 2, 0)
+  const overflowX = Math.abs(scaledWidth - container.width) / 2
+  const overflowY = Math.abs(scaledHeight - container.height) / 2
+  const minPanRangeX = scale <= 1 ? container.width * 0.25 : 0
+  const minPanRangeY = scale <= 1 ? container.height * 0.25 : 0
+  const maxX = Math.max(overflowX, minPanRangeX)
+  const maxY = Math.max(overflowY, minPanRangeY)
 
   return {
     x: Math.max(Math.min(panX, maxX), -maxX),
@@ -282,7 +326,7 @@ const handleTouchStart = (e) => {
     transformOrigin.value = `${percentX}% ${percentY}%`
 
      // if just one finger, allow drag effect
-  } else if (e.touches.length === 1 && zoom.value > 1) {
+  } else if (e.touches.length === 1) {
     isTouchDragging.value = true
     touchStart.value = {
       x: e.touches[0].clientX - pan.value.x,
@@ -297,7 +341,7 @@ const handleTouchMove = (e) => {
     e.preventDefault() // prevent scrolling
     const newDistance = getTouchDistance(e.touches)
     const scaleChange = newDistance / initialPinchDistance.value
-    zoom.value = Math.min(Math.max(initialZoom.value * scaleChange, 1), 5)
+    zoom.value = Math.min(Math.max(initialZoom.value * scaleChange, MIN_ZOOM), MAX_ZOOM)
 
     // clamp pan after zoom
     pan.value = clampPan(pan.value.x, pan.value.y)
@@ -320,18 +364,133 @@ const handleTouchEnd = () => {
 const loadEnglish = ref(true)
 const loadSpanish = ref(false)
 const inEnglish = ref(true)
-const currentLanguageStatus = ref(null)
+const selectedLanguage = ref('en')
 const imageSrcEnglish = ref(null)
 const imageSrcWebpEnglish = ref(null)
 const imageSrcSpanish = ref(null)
 const imageSrcWebpSpanish = ref(null)
-const downloadSite = ref(null)
 const currentLanguageDownloadText = ref(null)
+const englishLongDescription = diagramDescription.en
+const spanishLongDescription = diagramDescription.es
+const activeLongDescription = computed(() => (inEnglish.value ? englishLongDescription : spanishLongDescription))
+
+// diagram controls 
+const downloadSite = ref(null)
+const activeInfoPanel = ref(null)
+const isDescriptionOpen = computed(() => activeInfoPanel.value === 'description')
+const isContributorsOpen = computed(() => activeInfoPanel.value === 'contributors')
+const contributorsLabel = computed(() => (inEnglish.value ? 'Contributors' : 'Colaboradores'))
+const closePanelText = computed(() => (inEnglish.value ? 'Close' : 'Cerrar'))
+const closePanelLabel = computed(() => (inEnglish.value ? 'Close panel' : 'Cerrar panel'))
+const wheelZoomInstruction = computed(() => (
+  inEnglish.value
+    ? 'Hold Ctrl or Cmd and scroll to zoom the diagram'
+    : 'Mantenga presionada la tecla Ctrl o Cmd y desplacese para acercar. English is the official language and authoritative version of all federal information.'
+))
+const downloadAriaLabel = computed(() => {
+  if (inEnglish.value) {
+    return 'Download the diagram, opens in new tab'
+  }
+  return 'Descargar el diagrama, se abre en una nueva pestana'
+})
+
+// designing for screen readers and tab navigation
+
+// add keyboard focus to all selectable elements in dialogs (links, buttons, inputs)
+// https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog/ 
+// this applies focus to elements within the dialog box and adds a tab loop within the dialog
+// when dialog closes, returns to original focus opening button 
+const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+
+// select the open dialog box
+function getActiveDialogElement() {
+  return isDescriptionOpen.value
+    ? descriptionDialogRef.value?.dialogElement ?? null
+    : isContributorsOpen.value
+      ? contributorsDialogRef.value?.dialogElement ?? null
+      : null
+}
+
+// return a list of focusable elements (links, buttons, inputs)
+function getFocusableElements(container) {
+  if (!container) return []
+  return [...container.querySelectorAll(FOCUSABLE_SELECTOR)]
+    .filter((element) => element.getClientRects().length > 0)
+}
+
+// when dialog opens apply focus to first element
+function focusActiveDialog() {
+  const dialog = getActiveDialogElement()
+  if (!dialog) return
+
+  if (isDescriptionOpen.value) {
+    const descriptionContent = descriptionDialogRef.value?.dialogContentElement ?? null
+    if (descriptionContent) {
+      descriptionContent.focus()
+      return
+    }
+  }
+
+  const focusable = getFocusableElements(dialog)
+  if (focusable.length > 0) {
+    focusable[0].focus()
+    return
+  }
+  dialog.focus()
+}
+
+// handle keyboard nav within dialog boxes (contributors and description)
+// when dialog is open create list of focusable items and allow tab nav through them
+function handleDialogKeydown(element) {
+  if (!activeInfoPanel.value) return
+
+  const dialog = getActiveDialogElement()
+  if (!dialog) return
+
+  // escape closes dialog
+  if (element.key === 'Escape') {
+    element.preventDefault()
+    closeInfoPanel()
+    return
+  }
+
+  if (element.key !== 'Tab') return
+
+  // list of tabbed elements
+  const focusable = getFocusableElements(dialog)
+  if (focusable.length === 0) {
+    element.preventDefault()
+    dialog.focus()
+    return
+  }
+
+  // start with first element and cycle through
+  const first = focusable[0]
+  const last = focusable[focusable.length - 1]
+  const activeElement = document.activeElement
+  const focusInsideDialog = dialog.contains(activeElement)
+
+  if (!focusInsideDialog) {
+    element.preventDefault()
+    first.focus()
+    return
+  }
+
+  if (element.shiftKey && activeElement === first) {
+    element.preventDefault()
+    last.focus()
+    return
+  }
+
+  // on last element loop back to the first element when tabbed
+  if (!element.shiftKey && activeElement === last) {
+    element.preventDefault()
+    first.focus()
+  }
+}
 
 onMounted(() => {
-  downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf'
-  currentLanguageDownloadText.value = 'Download the diagram'
-  currentLanguageStatus.value = 'cambiar a español'
+  setLanguage('en')
 
   imageSrcEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png'
   imageSrcWebpEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.webp'
@@ -339,37 +498,59 @@ onMounted(() => {
   imageSrcWebpSpanish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.webp'
 })
 
-// image load handler
-function onImageLoad(e) {
-  const img = e.target
-  imageAspectRatio.value = img.naturalWidth / img.naturalHeight
+watch(activeInfoPanel, async (panel) => {
+  document.removeEventListener('keydown', handleDialogKeydown, true)
 
-  // load spanish diagram after english image is ready
+  if (panel) {
+    await nextTick() // wait for dialog to be added to DOM
+    focusActiveDialog() // move focus to dialog
+    document.addEventListener('keydown', handleDialogKeydown, true) // listen to keys
+    return
+  }
+
+  await nextTick()
+  document.getElementById('description-toggle')?.focus()
+})
+
+onBeforeUnmount(() => {
+  stopDragging()
+  document.removeEventListener('keydown', handleDialogKeydown, true)
+})
+
+function onEnglishImageLoad() {
+  // Load Spanish diagram in background after English image is ready.
   loadSpanish.value = true
 }
 
-// toggle language
-function toggleLanguage() {
-  inEnglish.value = !inEnglish.value
+// switch the app language state and downloadable file
+function setLanguage(languageCode) {
+  selectedLanguage.value = languageCode
+  inEnglish.value = languageCode === 'en'
 
   if (inEnglish.value) {
-    currentLanguageStatus.value = 'cambiar a español'
     currentLanguageDownloadText.value = 'Download the diagram'
     downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_english.pdf'
   } else {
-    currentLanguageStatus.value = 'switch to English'
     currentLanguageDownloadText.value = 'Descargar el diagrama'
     downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_spanish.pdf'
   }
 }
+
+// toggle dialogs
+function toggleDescription() {
+  activeInfoPanel.value = isDescriptionOpen.value ? null : 'description'
+}
+
+function toggleContributors() {
+  activeInfoPanel.value = isContributorsOpen.value ? null : 'contributors'
+}
+
+function closeInfoPanel() {
+  activeInfoPanel.value = null
+}
 </script>
 
 <style scoped lang="scss">
-$diagramBlue: #016699;
-#content-container h3 {
-  font-weight: 300;
-}
-
 #content-container {
   display: flex;
   flex-direction: column;
@@ -378,7 +559,14 @@ $diagramBlue: #016699;
   min-height: 0;
 }
 
+.zoom-instruction {
+  margin: 0.5rem 0 0.75rem 0;
+  padding: 0 1.5rem;
+  font-style: italic;
+}
+
 #image-zoomer {
+  position: relative;
   display: flex;
   flex: 1 1 auto;
   min-height: 0;
@@ -398,54 +586,20 @@ $diagramBlue: #016699;
   max-width: 100%;
   max-height: 100%;
 }
-.optionsBar {
-  padding: 0.1em 0 0.1em 0;
-  margin-left: 0.5rem;
-}
-#button-container {
-  padding-left: 0.25em;
+.info-overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
   display: flex;
-  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
 }
-.button {
-    border-radius: 0.25rem;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 2.5px 5px 2.5px 5px;
-    max-width: 24rem;
-    background-color: white;
-    color: var(--color-text);
-    border: 0.5px solid #949494;
-    border-radius: 0.25rem;
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
-    @media screen and (max-width: 600px) {
-      border: 1px solid #949494;
-    }
+
+@media screen and (max-width: 600px) {
+  .zoom-instruction {
+    padding: 0 1rem;
   }
-  .button:hover {
-    background-color: $diagramBlue;
-    color: white;
-    @media screen and (max-width: 600px) {
-      background-color: white;
-      color: var(--color-text);
-    }
-  }
-  .button.zoom {
-    padding: 2.5px 10px 2.5px 10px;
-  }
-  .button.zoom.out {
-    margin-left: 0.5rem;
-  }
-  .notButton {
-    margin-top: 7.5px;
-    margin-bottom: 5px;
-  }
-  a {
-    color: $diagramBlue;
-  }
-  a:hover {
-    font-weight: 700;
-  }
+}
 </style>
