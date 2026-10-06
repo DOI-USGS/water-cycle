@@ -142,6 +142,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { isMobile } from 'mobile-device-detect'
 import DiagramControls from './DiagramControls.vue'
 import DialogBox from './DialogBox.vue'
@@ -361,6 +362,10 @@ const handleTouchEnd = () => {
 
 
 // handling languages and buttons
+const SUPPORTED_LANGUAGES = ['en', 'es']
+const DEFAULT_LANGUAGE = 'en'
+const route = useRoute()
+const router = useRouter()
 const loadEnglish = ref(true)
 const loadSpanish = ref(false)
 const inEnglish = ref(true)
@@ -490,7 +495,7 @@ function handleDialogKeydown(element) {
 }
 
 onMounted(() => {
-  setLanguage('en')
+  setLanguage(resolveInitialLanguage())
 
   imageSrcEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png'
   imageSrcWebpEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.webp'
@@ -522,10 +527,35 @@ function onEnglishImageLoad() {
   loadSpanish.value = true
 }
 
+// normalize an arbitrary language string to a supported code, or null
+function normalizeLanguage(languageCode) {
+  if (!languageCode) return null
+  // handle values like "es-MX" or "EN" by taking the base subtag
+  const base = String(languageCode).toLowerCase().split('-')[0]
+  return SUPPORTED_LANGUAGES.includes(base) ? base : null
+}
+
+// decide which language to start in based on the path (e.g. /en, /es).
+// The router redirects "/" to the browser-preferred language, so by the time
+// this component mounts the path param is already populated.
+function resolveInitialLanguage() {
+  return normalizeLanguage(route.params.lang) ?? DEFAULT_LANGUAGE
+}
+
+// keep the URL path in sync with the selected language
+function syncLanguageToUrl(languageCode) {
+  if (route.params.lang === languageCode) return
+  router.push({
+    name: 'VisualizationContent',
+    params: { lang: languageCode }
+  })
+}
+
 // switch the app language state and downloadable file
 function setLanguage(languageCode) {
-  selectedLanguage.value = languageCode
-  inEnglish.value = languageCode === 'en'
+  const normalized = normalizeLanguage(languageCode) ?? DEFAULT_LANGUAGE
+  selectedLanguage.value = normalized
+  inEnglish.value = normalized === 'en'
 
   if (inEnglish.value) {
     currentLanguageDownloadText.value = 'Download the diagram'
@@ -534,7 +564,17 @@ function setLanguage(languageCode) {
     currentLanguageDownloadText.value = 'Descargar el diagrama'
     downloadSite.value = 'https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/files/gip221_spanish.pdf'
   }
+
+  syncLanguageToUrl(normalized)
 }
+
+// react to URL changes (e.g. browser back/forward, shared links)
+watch(() => route.params.lang, (newLang) => {
+  const normalized = normalizeLanguage(newLang)
+  if (normalized && normalized !== selectedLanguage.value) {
+    setLanguage(normalized)
+  }
+})
 
 // toggle dialogs
 function toggleDescription() {
