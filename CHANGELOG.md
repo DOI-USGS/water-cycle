@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
  
 Here we track upcoming changes.
+
+### Added
+- URL routing for language selection, prepopulated from browser settings
  
 ## [1.6.0] - 2026-03-01
 
