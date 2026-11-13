@@ -2,10 +2,8 @@
   <div
     ref="root"
     class="wc-diagram-layers"
-    @pointerover="handlePointerOver"
-    @pointerout="handlePointerOut"
-    @focusin="handleFocusIn"
-    @focusout="handleFocusOut"
+    @click="handleClick"
+    @keydown="handleKeydown"
   >
     <!-- Layer 1: background artwork (non-interactive raster, language-neutral) -->
     <img
@@ -26,7 +24,7 @@
     >
 
     <!-- Layer 3: interactive labels. vite-svg-loader renders this inline as
-         real DOM so we can attach hover/focus handlers to [data-term].
+         real DOM so we can attach click/keyboard handlers to [data-term].
          :key forces a re-render (and re-application of a11y attributes) when
          the language changes, once a language-specific SVG is provided. -->
     <component
@@ -38,7 +36,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import LabelsSvgEn from '@/assets/images/WCD_all_labels.svg?component'
 // When the Spanish labels SVG is available, import it here and wire it into
 // `activeLabelsSvg` below:
@@ -58,12 +56,19 @@ const props = defineProps({
   level: {
     type: String,
     default: 'advanced'
+  },
+  // Id of the currently selected term (owned by the parent). Drives which
+  // cluster is highlighted, so selection state and the side panel stay in sync.
+  selectedId: {
+    type: String,
+    default: null
   }
 })
 
-// Emits the active term (with screen-space anchor) so the parent can render a
-// tooltip outside the zoom/pan transform (keeping tooltip text unscaled).
-const emit = defineEmits(['term-enter', 'term-leave'])
+// Emits the selected term so the parent can populate the side panel. A second
+// click on the same label (or a click on empty diagram space) emits a
+// deselect.
+const emit = defineEmits(['term-select', 'term-deselect'])
 
 const root = ref(null)
 
@@ -110,9 +115,9 @@ function labelElFromTarget(target) {
 // One visual label is often several [data-term] elements: a main label and a
 // qualifier on separate lines ("Wetlands" / "fresh"), plus white-halo
 // duplicates stacked underneath. Elements that share a term and sit next to
-// each other are treated as one cluster so they highlight, anchor the tooltip,
-// and take keyboard focus as a single unit. The same term can also appear in
-// distant places (e.g. two "Groundwater" labels); those stay separate clusters.
+// each other are treated as one cluster so they highlight and take keyboard
+// focus as a single unit. The same term can also appear in distant places
+// (e.g. two "Groundwater" labels); those stay separate clusters.
 
 // Two rects are "adjacent" if the gap between them is under ~3/4 of a line.
 function rectsAdjacent(a, b) {
@@ -142,89 +147,66 @@ function clusterFor(labelEl) {
   return candidates.filter((el) => cluster.has(el))
 }
 
-// Screen-space anchor (viewport coords) spanning the whole cluster. Reports
-// both edges so the parent can place the tooltip above or below.
-function anchorFor(cluster) {
-  const rects = cluster.map((el) => el.getBoundingClientRect())
-  const left = Math.min(...rects.map((r) => r.left))
-  const right = Math.max(...rects.map((r) => r.right))
-  return {
-    x: (left + right) / 2,
-    top: Math.min(...rects.map((r) => r.top)),
-    bottom: Math.max(...rects.map((r) => r.bottom))
-  }
+// --- Selection highlight ----------------------------------------------------
+const ACTIVE_CLASS = 'is-active'
+let activeCluster = []
+
+function clearHighlight() {
+  activeCluster.forEach((el) => el.classList.remove(ACTIVE_CLASS))
+  activeCluster = []
 }
 
-// --- Hover / focus state ----------------------------------------------------
-const ACTIVE_CLASS = 'is-active'
-// Grace period before closing, so moving the pointer across the small gap
-// between "Wetlands" and "fresh" doesn't flicker the tooltip closed and open.
-const LEAVE_DELAY_MS = 120
-let activeCluster = []
-let leaveTimer = null
-
-function setActiveCluster(cluster) {
-  activeCluster.forEach((el) => el.classList.remove(ACTIVE_CLASS))
-  activeCluster = cluster
+// Highlight the cluster for a given term id (the first tagged element wins).
+function highlightTerm(termId) {
+  clearHighlight()
+  if (!termId) return
+  const first = root.value?.querySelector(`[data-term="${CSS.escape(termId)}"]`)
+  if (!first) return
+  activeCluster = clusterFor(first)
   activeCluster.forEach((el) => el.classList.add(ACTIVE_CLASS))
 }
 
-function cancelLeave() {
-  clearTimeout(leaveTimer)
-  leaveTimer = null
-}
-
-function leaveNow() {
-  cancelLeave()
-  setActiveCluster([])
-  emit('term-leave')
-}
-
-function enterLabel(labelEl) {
-  cancelLeave()
-  // Already showing this cluster (e.g. moved from "Wetlands" onto "fresh").
-  if (activeCluster.includes(labelEl)) return
-
+// Toggle selection: clicking the already-selected label closes the panel.
+function selectLabel(labelEl) {
   const termId = labelEl.getAttribute('data-term')
-  const definition = definitionFor(termId)
-  if (!definition) {
-    leaveNow()
+  if (!termId) return
+
+  if (termId === props.selectedId) {
+    emit('term-deselect')
     return
   }
-  const cluster = clusterFor(labelEl)
-  setActiveCluster(cluster)
-  emit('term-enter', {
+
+  const definition = definitionFor(termId)
+  if (!definition) {
+    emit('term-deselect')
+    return
+  }
+
+  emit('term-select', {
     id: termId,
     title: titleFor(termId),
     label: labelFor(termId),
     qualifier: qualifierFor(termId),
-    definition,
-    anchor: anchorFor(cluster)
+    definition
   })
 }
 
-function handlePointerOver(event) {
+function handleClick(event) {
   const labelEl = labelElFromTarget(event.target)
-  if (labelEl) enterLabel(labelEl)
+  if (labelEl) {
+    selectLabel(labelEl)
+    return
+  }
+  // Click on empty diagram space clears the current selection.
+  if (props.selectedId) emit('term-deselect')
 }
 
-function handlePointerOut(event) {
-  const fromEl = labelElFromTarget(event.target)
-  if (!fromEl) return
-  const toEl = labelElFromTarget(event.relatedTarget)
-  // Moving within the same cluster: keep the tooltip as is.
-  if (toEl && activeCluster.includes(toEl)) return
-  cancelLeave()
-  leaveTimer = setTimeout(leaveNow, LEAVE_DELAY_MS)
-}
-
-function handleFocusIn(event) {
+function handleKeydown(event) {
+  if (event.key !== 'Enter' && event.key !== ' ' && event.key !== 'Spacebar') return
   const labelEl = labelElFromTarget(event.target)
-  if (labelEl) enterLabel(labelEl)
-}
-
-function handleFocusOut() {
-  leaveNow()
+  if (!labelEl) return
+  event.preventDefault()
+  selectLabel(labelEl)
 }
 
 // Make tagged labels keyboard-focusable and screen-reader friendly without
@@ -252,6 +234,8 @@ function applyLabelAccessibility() {
     el.setAttribute('role', 'button')
     el.setAttribute('aria-label', `${titleFor(termId)}. ${definitionFor(termId)}`)
   })
+  // Re-apply the highlight in case the SVG just re-rendered.
+  highlightTerm(props.selectedId)
 }
 
 function handleBackgroundLoad() {
@@ -259,28 +243,29 @@ function handleBackgroundLoad() {
 }
 
 onMounted(applyLabelAccessibility)
-onBeforeUnmount(cancelLeave)
 
-// Re-apply after the SVG re-renders for a new language, and clear any open
-// tooltip so stale text does not linger across the switch.
+// Keep the highlight in sync when the parent changes the selection (e.g. the
+// panel's X button clears it).
+watch(() => props.selectedId, (id) => highlightTerm(id))
+
+// Re-apply after the SVG re-renders for a new language.
 watch(() => props.language, async () => {
-  leaveNow()
   await nextTick()
   applyLabelAccessibility()
 })
 </script>
 
 <style scoped lang="scss">
-// The background image is in normal flow and drives the component's intrinsic
-// size (mirrors the original diagram <img> rules). The container shrink-wraps
-// that rendered size so the absolutely-positioned arrows/labels overlay it
-// exactly (all three share the same artboard).
+/* The background image is in normal flow and drives the component intrinsic
+   size (mirrors the original diagram img rules). The container shrink-wraps
+   that rendered size so the absolutely-positioned arrows and labels overlay it
+   exactly (all three share the same artboard). */
 .wc-diagram-layers {
   position: relative;
   display: inline-block;
   max-width: 100%;
   max-height: 100%;
-  line-height: 0; // remove inline-block baseline gap under the image
+  line-height: 0; /* remove inline-block baseline gap under the image */
 }
 
 .wc-layer--background {
@@ -318,10 +303,10 @@ watch(() => props.language, async () => {
 
 .wc-layer--labels :deep([data-term]) {
   transition: opacity 0.1s ease-out;
-  // The exported label text uses fill:none + stroke (a white halo), so the
-  // default SVG hit-testing (visiblePainted) only responds on the thin strokes,
-  // leaving dead zones inside letters and between words. Force the whole label
-  // area to be hoverable.
+  /* The exported label text uses fill:none plus stroke (a white halo), so the
+     default SVG hit-testing (visiblePainted) only responds on the thin strokes,
+     leaving dead zones inside letters and between words. Force the whole label
+     area to be clickable. */
   pointer-events: all;
 }
 
@@ -330,9 +315,9 @@ watch(() => props.language, async () => {
   pointer-events: all;
 }
 
-// Highlight is driven by the .is-active class (set on every element in the
-// hovered/focused cluster) rather than :hover, so a label and its qualifier
-// light up together.
+/* Highlight is driven by the .is-active class (set on every element in the
+   selected cluster) rather than the hover state, so a label and its qualifier
+   light up together and stay lit while the panel is open. */
 .wc-layer--labels :deep([data-term].is-active) {
   opacity: 0.7;
 }

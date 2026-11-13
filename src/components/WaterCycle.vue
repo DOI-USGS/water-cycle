@@ -28,92 +28,89 @@
       {{ wheelZoomInstruction }}
     </p>
     <div
-      id="image-zoomer"
-      ref="zoomContainer"
-      @wheel="handleWheel"
+      id="diagram-layout"
     >
       <div
-        ref="imageWrapper"
-        :style="zoomStyle"
-        class="image-wrapper"
-        @pointerdown="handlePointerDown"
-        @dragstart.prevent
-        @touchstart.passive="handleTouchStart"
-        @touchmove.prevent="handleTouchMove"
-        @touchend="handleTouchEnd"
+        id="image-zoomer"
+        ref="zoomContainer"
+        @wheel="handleWheel"
       >
-        <WaterCycleLabels
-          :language="selectedLanguage"
-          @term-enter="onTermEnter"
-          @term-leave="onTermLeave"
-        />
-      </div>
-      <div
-        v-if="activeTerm"
-        ref="tooltipRef"
-        class="term-tooltip"
-        :class="{ 'term-tooltip--flipped': tooltipFlipped }"
-        role="tooltip"
-        :style="tooltipStyle"
-      >
-        <p class="term-tooltip__title">
-          {{ [activeTerm.label, activeTerm.qualifier].filter(Boolean).join(' ') }}
-        </p>
-        <p class="term-tooltip__definition">
-          {{ activeTerm.definition }}
-        </p>
-      </div>
-      <div
-        v-if="activeInfoPanel"
-        class="info-overlay-backdrop"
-        @click.self="closeInfoPanel"
-        @wheel="handleBackdropWheel"
-      >
-        <DialogBox
-          v-if="isDescriptionOpen"
-          id="diagram-description-panel"
-          ref="descriptionDialogRef"
-          title-id="diagram-description-panel-title"
-          :title="activeLongDescription.summaryLabel"
-          :lang="inEnglish ? 'en' : 'es'"
-          :close-label="closePanelLabel"
-          :close-text="closePanelText"
-          @close="closeInfoPanel"
+        <div
+          ref="imageWrapper"
+          :style="zoomStyle"
+          class="image-wrapper"
+          @pointerdown="handlePointerDown"
+          @click.capture="handleWrapperClickCapture"
+          @dragstart.prevent
+          @touchstart.passive="handleTouchStart"
+          @touchmove.prevent="handleTouchMove"
+          @touchend="handleTouchEnd"
         >
-          <template v-if="activeLongDescription.sections.length > 0">
-            <section
-              v-for="(section, sectionIndex) in activeLongDescription.sections"
-              :key="`long-description-section-${sectionIndex}`"
-            >
-              <h4>
-                {{ section.heading }}
-              </h4>
-              <p
-                v-for="(paragraph, paragraphIndex) in section.paragraphs"
-                :key="`long-description-paragraph-${sectionIndex}-${paragraphIndex}`"
+          <WaterCycleLabels
+            :language="selectedLanguage"
+            :selected-id="selectedTerm?.id ?? null"
+            @term-select="onTermSelect"
+            @term-deselect="onTermDeselect"
+          />
+        </div>
+        <div
+          v-if="activeInfoPanel"
+          class="info-overlay-backdrop"
+          @click.self="closeInfoPanel"
+          @wheel="handleBackdropWheel"
+        >
+          <DialogBox
+            v-if="isDescriptionOpen"
+            id="diagram-description-panel"
+            ref="descriptionDialogRef"
+            title-id="diagram-description-panel-title"
+            :title="activeLongDescription.summaryLabel"
+            :lang="inEnglish ? 'en' : 'es'"
+            :close-label="closePanelLabel"
+            :close-text="closePanelText"
+            @close="closeInfoPanel"
+          >
+            <template v-if="activeLongDescription.sections.length > 0">
+              <section
+                v-for="(section, sectionIndex) in activeLongDescription.sections"
+                :key="`long-description-section-${sectionIndex}`"
               >
-                {{ paragraph }}
-              </p>
-            </section>
-          </template>
-          <p v-else-if="!inEnglish">
-            La descripcion extensa en espanol estara disponible pronto.
-          </p>
-        </DialogBox>
-        <DialogBox
-          v-else-if="isContributorsOpen"
-          id="diagram-contributors-panel"
-          ref="contributorsDialogRef"
-          title-id="diagram-contributors-panel-title"
-          :title="contributorsLabel"
-          :lang="inEnglish ? 'en' : 'es'"
-          :close-label="closePanelLabel"
-          :close-text="closePanelText"
-          @close="closeInfoPanel"
-        >
-          <AuthorshipSection />
-        </DialogBox>
+                <h4>
+                  {{ section.heading }}
+                </h4>
+                <p
+                  v-for="(paragraph, paragraphIndex) in section.paragraphs"
+                  :key="`long-description-paragraph-${sectionIndex}-${paragraphIndex}`"
+                >
+                  {{ paragraph }}
+                </p>
+              </section>
+            </template>
+            <p v-else-if="!inEnglish">
+              La descripcion extensa en espanol estara disponible pronto.
+            </p>
+          </DialogBox>
+          <DialogBox
+            v-else-if="isContributorsOpen"
+            id="diagram-contributors-panel"
+            ref="contributorsDialogRef"
+            title-id="diagram-contributors-panel-title"
+            :title="contributorsLabel"
+            :lang="inEnglish ? 'en' : 'es'"
+            :close-label="closePanelLabel"
+            :close-text="closePanelText"
+            @close="closeInfoPanel"
+          >
+            <AuthorshipSection />
+          </DialogBox>
+        </div>
       </div>
+      <TermPanel
+        class="diagram-term-panel"
+        :term="selectedTerm"
+        :language="selectedLanguage"
+        @close="onTermDeselect"
+      />
     </div>
     <RelatedResources :in-english="inEnglish" />
   </div>
@@ -128,6 +125,7 @@ import DialogBox from './DialogBox.vue'
 import RelatedResources from './RelatedResources.vue'
 import AuthorshipSection from './AuthorshipSection.vue'
 import WaterCycleLabels from './WaterCycleLabels.vue'
+import TermPanel from './TermPanel.vue'
 import diagramDescription from '@/assets/text/diagramDescription.json'
 
 // zooom logic
@@ -144,6 +142,13 @@ const contributorsDialogRef = ref(null)
 const pan = ref({ x: 0, y: 0 })
 const isDragging = ref(false)
 const dragStart = ref({ x: 0, y: 0 })
+// Distinguish a click (select a label) from a drag (pan the diagram) on
+// desktop. We only begin panning once the pointer moves past this threshold,
+// so a stationary mouse-down/up still dispatches a native click to the label.
+const DRAG_THRESHOLD_PX = 4
+const pointerDownPos = ref(null)
+const hasDragged = ref(false)
+let activePointerId = null
 
 // mobile pinch zoom tracking
 const initialPinchDistance = ref(null)
@@ -212,15 +217,19 @@ const handleBackdropWheel = (e) => {
 const handlePointerDown = (e) => {
   if (e.pointerType !== 'mouse' || e.button !== 0) return
 
-  e.preventDefault()
+  // Do NOT preventDefault or capture the pointer yet. If this turns out to be a
+  // plain click (no movement), the browser must be free to dispatch a native
+  // click to the label underneath. We only commit to a drag once the pointer
+  // moves past DRAG_THRESHOLD_PX (see handlePointerMove).
   stopDragging()
 
-  isDragging.value = true
+  hasDragged.value = false
+  activePointerId = e.pointerId
+  pointerDownPos.value = { x: e.clientX, y: e.clientY }
   dragStart.value = {
     x: e.clientX - pan.value.x,
     y: e.clientY - pan.value.y
   }
-  imageWrapper.value?.setPointerCapture?.(e.pointerId)
 
   window.addEventListener('pointermove', handlePointerMove)
   window.addEventListener('pointerup', handlePointerUp)
@@ -229,7 +238,19 @@ const handlePointerDown = (e) => {
 }
 
 const handlePointerMove = (e) => {
-  if (!isDragging.value || e.pointerType !== 'mouse') return
+  if (e.pointerType !== 'mouse' || !pointerDownPos.value) return
+
+  // Promote to a real drag the first time movement passes the threshold.
+  if (!isDragging.value) {
+    const dx = e.clientX - pointerDownPos.value.x
+    const dy = e.clientY - pointerDownPos.value.y
+    if (Math.hypot(dx, dy) < DRAG_THRESHOLD_PX) return
+    isDragging.value = true
+    hasDragged.value = true
+    imageWrapper.value?.setPointerCapture?.(activePointerId)
+  }
+
+  e.preventDefault()
   const rawX = e.clientX - dragStart.value.x
   const rawY = e.clientY - dragStart.value.y
   pan.value = clampPan(rawX, rawY)
@@ -237,6 +258,11 @@ const handlePointerMove = (e) => {
 
 function stopDragging() {
   isDragging.value = false
+  pointerDownPos.value = null
+  if (activePointerId !== null) {
+    imageWrapper.value?.releasePointerCapture?.(activePointerId)
+    activePointerId = null
+  }
   window.removeEventListener('pointermove', handlePointerMove)
   window.removeEventListener('pointerup', handlePointerUp)
   window.removeEventListener('pointercancel', handlePointerUp)
@@ -246,6 +272,17 @@ function stopDragging() {
 const handlePointerUp = (e) => {
   if (e && e.pointerType && e.pointerType !== 'mouse') return
   stopDragging()
+}
+
+// A drag release still fires a native `click`; swallow that one in the capture
+// phase so dragging the diagram doesn't select/deselect a label. A plain click
+// (no drag) passes through to WaterCycleLabels untouched.
+const handleWrapperClickCapture = (e) => {
+  if (hasDragged.value) {
+    e.stopPropagation()
+    e.preventDefault()
+    hasDragged.value = false
+  }
 }
 
 // dont' scroll beyond the edges of the diagram...
@@ -491,52 +528,17 @@ onBeforeUnmount(() => {
   document.removeEventListener('keydown', handleDialogKeydown, true)
 })
 
-// Term hover/tooltip state. Rendered by this component (outside the zoom/pan
-// transform) so tooltip text stays unscaled. The anchor is viewport-space.
-const activeTerm = ref(null)
-const tooltipStyle = ref({})
-const tooltipRef = ref(null)
-// When the label is low in the viewport, open the tooltip upward so it is not
-// clipped by #image-zoomer's overflow or hidden behind the footer.
-const tooltipFlipped = ref(false)
+// Selected term state for the side/bottom panel. The panel lives outside the
+// zoom/pan transform (as a sibling of the diagram) so its text stays unscaled
+// and legible regardless of zoom level.
+const selectedTerm = ref(null)
 
-const TOOLTIP_EDGE_PADDING = 8 // px gap from the container edges
-
-function onTermEnter(payload) {
-  activeTerm.value = payload
-  if (!payload.anchor || !zoomContainer.value) return
-
-  const rect = zoomContainer.value.getBoundingClientRect()
-  // Flip to open upward if the label sits in the lower ~45% of the container.
-  const flip = (payload.anchor.bottom - rect.top) > rect.height * 0.55
-  tooltipFlipped.value = flip
-  const anchorY = flip ? payload.anchor.top : payload.anchor.bottom
-
-  // Initial centered position (container-relative).
-  const centerX = payload.anchor.x - rect.left
-  tooltipStyle.value = {
-    left: `${centerX}px`,
-    top: `${anchorY - rect.top}px`
-  }
-
-  // After render, clamp horizontally so the (centered) tooltip stays within
-  // the container on the left/right edges.
-  nextTick(() => {
-    const el = tooltipRef.value
-    if (!el) return
-    const halfWidth = el.offsetWidth / 2
-    const minX = halfWidth + TOOLTIP_EDGE_PADDING
-    const maxX = rect.width - halfWidth - TOOLTIP_EDGE_PADDING
-    const clampedX = Math.min(Math.max(centerX, minX), maxX)
-    tooltipStyle.value = {
-      ...tooltipStyle.value,
-      left: `${clampedX}px`
-    }
-  })
+function onTermSelect(payload) {
+  selectedTerm.value = payload
 }
 
-function onTermLeave() {
-  activeTerm.value = null
+function onTermDeselect() {
+  selectedTerm.value = null
 }
 
 // normalize an arbitrary language string to a supported code, or null
@@ -566,8 +568,13 @@ function syncLanguageToUrl(languageCode) {
 // switch the app language state and downloadable file
 function setLanguage(languageCode) {
   const normalized = normalizeLanguage(languageCode) ?? DEFAULT_LANGUAGE
+  const changed = normalized !== selectedLanguage.value
   selectedLanguage.value = normalized
   inEnglish.value = normalized === 'en'
+
+  // Close the term panel on a language switch so a stale (wrong-language)
+  // definition does not linger.
+  if (changed) selectedTerm.value = null
 
   if (inEnglish.value) {
     currentLanguageDownloadText.value = 'Download the diagram'
@@ -617,10 +624,21 @@ function closeInfoPanel() {
   font-style: italic;
 }
 
+/* Diagram and term panel sit side by side on desktop and stack (panel on the
+   bottom) on narrow screens. */
+#diagram-layout {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 1rem;
+  padding: 0 1.5rem 1rem 1.5rem;
+}
+
 #image-zoomer {
   position: relative;
   display: flex;
   flex: 1 1 auto;
+  min-width: 0;
   min-height: 0;
   overflow: hidden;
   align-items: center;
@@ -631,34 +649,15 @@ function closeInfoPanel() {
   max-width: 100%;
   max-height: 100%;
 }
-.term-tooltip {
-  position: absolute;
-  z-index: 10;
-  max-width: 22rem;
-  margin-top: 0.75rem;
-  padding: 0.6rem 0.8rem;
-  transform: translate(-50%, 0);
-  background: #ffffff;
-  border: 1px solid #949494;
-  border-radius: 0.4rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-  pointer-events: none;
+
+/* Desktop: right-hand sidebar for the selected term. */
+.diagram-term-panel {
+  flex: 0 0 20rem;
+  max-width: 20rem;
+  align-self: stretch;
+  max-height: 100%;
 }
-// Flipped: anchored at the label's top edge, sit fully above it with a gap.
-.term-tooltip--flipped {
-  margin-top: 0;
-  transform: translate(-50%, calc(-100% - 0.75rem));
-}
-.term-tooltip__title {
-  margin: 0 0 0.25rem 0;
-  line-height: 1.2;
-  font-weight: 700;
-}
-.term-tooltip__definition {
-  margin: 0;
-  font-size: 0.875em;
-  line-height: 1.35;
-}
+
 .info-overlay-backdrop {
   position: absolute;
   inset: 0;
@@ -674,5 +673,21 @@ function closeInfoPanel() {
   .zoom-instruction {
     padding: 0 1rem;
   }
+
+  /* Mobile: stack the panel beneath the diagram like a bottom sheet. */
+  #diagram-layout {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 0.5rem 0.5rem 0.5rem;
+  }
+
+  .diagram-term-panel {
+    flex: 0 0 auto;
+    max-width: 100%;
+    align-self: auto;
+    max-height: 45vh;
+  }
 }
 </style>
+
+
