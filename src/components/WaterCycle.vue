@@ -650,10 +650,10 @@ function closeInfoPanel() {
   max-height: 100%;
 }
 
-/* Desktop: right-hand sidebar for the selected term. */
+/* Desktop: right-hand sidebar for the selected term.*/
 .diagram-term-panel {
-  flex: 0 0 20rem;
-  max-width: 20rem;
+  flex: 0 0 26rem;
+  max-width: 26rem;
   align-self: stretch;
   max-height: 100%;
 }

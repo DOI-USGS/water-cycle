@@ -102,6 +102,11 @@ const hintText = computed(() => (
 .term-panel__title {
   margin: 0;
   padding: 0;
+  /* Global base.css h2 rule jumps to font-size:2em below 600px, which the
+     label/qualifier spans then multiply. Pin an explicit rem-based size here
+     (root is 62.5%, so 1rem = 10px) so the panel header stays controlled and
+     independent of the inherited/body font-size. */
+  font-size: 1.6rem;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -164,5 +169,11 @@ const hintText = computed(() => (
   color: #4a4a4a;
   font-style: italic;
   line-height: 1.45;
+}
+
+@media screen and (max-width: 600px) {
+  .term-panel__title {
+    font-size: 1.4rem;
+  }
 }
 </style>
