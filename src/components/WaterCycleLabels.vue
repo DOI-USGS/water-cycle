@@ -2,6 +2,7 @@
   <div
     ref="root"
     class="wc-diagram-layers"
+    :class="{ 'wc-diagram-layers--static': !interactive }"
     @click="handleClick"
     @keydown="handleKeydown"
   >
@@ -62,6 +63,12 @@ const props = defineProps({
   selectedId: {
     type: String,
     default: null
+  },
+  // When false the labels are part of a static image: no click-to-open
+  // definitions, no tab stops, and no pointer cursor.
+  interactive: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -168,6 +175,7 @@ function highlightTerm(termId) {
 
 // Toggle selection: clicking the already-selected label closes the panel.
 function selectLabel(labelEl) {
+  if (!props.interactive) return
   const termId = labelEl.getAttribute('data-term')
   if (!termId) return
 
@@ -217,6 +225,19 @@ function handleKeydown(event) {
 // container, and again whenever the inline SVG re-renders (language switch).
 function applyLabelAccessibility() {
   const labels = [...(root.value?.querySelectorAll('[data-term]') ?? [])]
+  if (!props.interactive) {
+    // Static image: the background <img> alt text describes the diagram, so
+    // hide the label layer from assistive tech and remove the tab stops.
+    labels.forEach((el) => {
+      el.style.cursor = ''
+      el.removeAttribute('tabindex')
+      el.removeAttribute('role')
+      el.removeAttribute('aria-label')
+      el.setAttribute('aria-hidden', 'true')
+    })
+    highlightTerm(null)
+    return
+  }
   const secondary = new Set()
   labels.forEach((el) => {
     el.style.cursor = 'pointer'
@@ -248,8 +269,9 @@ onMounted(applyLabelAccessibility)
 // panel's X button clears it).
 watch(() => props.selectedId, (id) => highlightTerm(id))
 
-// Re-apply after the SVG re-renders for a new language.
-watch(() => props.language, async () => {
+// Re-apply after the SVG re-renders for a new language, or when the version or
+// interactivity changes (aria-labels include the level-specific definition).
+watch(() => [props.language, props.level, props.interactive], async () => {
   await nextTick()
   applyLabelAccessibility()
 })
@@ -324,5 +346,12 @@ watch(() => props.language, async () => {
 
 .wc-layer--labels :deep([data-term]:focus-visible) {
   outline: none;
+}
+
+/* Static mode: let pointer events fall through to the pan/zoom wrapper. */
+.wc-diagram-layers--static .wc-layer--labels :deep([data-term]),
+.wc-diagram-layers--static .wc-layer--labels :deep([data-term] text),
+.wc-diagram-layers--static .wc-layer--labels :deep([data-term] tspan) {
+  pointer-events: none;
 }
 </style>

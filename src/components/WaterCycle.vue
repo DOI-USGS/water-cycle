@@ -8,17 +8,13 @@
     <DiagramControls
       :in-english="inEnglish"
       :selected-language="selectedLanguage"
-      :download-site="downloadSite"
-      :download-aria-label="downloadAriaLabel"
-      :current-language-download-text="currentLanguageDownloadText"
-      :is-description-open="isDescriptionOpen"
-      :is-contributors-open="isContributorsOpen"
-      :description-summary-label="activeLongDescription.summaryLabel"
+      :is-interactive="isInteractive"
+      :selected-level="selectedLevel"
       @zoom-in="zoomIn"
       @zoom-out="zoomOut"
       @set-language="setLanguage"
-      @toggle-description="toggleDescription"
-      @toggle-contributors="toggleContributors"
+      @set-interactive="setInteractive"
+      @set-level="setLevel"
     />
     <p
       v-if="!isMobile"
@@ -48,6 +44,8 @@
         >
           <WaterCycleLabels
             :language="selectedLanguage"
+            :level="selectedLevel"
+            :interactive="labelsInteractive"
             :selected-id="selectedTerm?.id ?? null"
             @term-select="onTermSelect"
             @term-deselect="onTermDeselect"
@@ -106,12 +104,24 @@
         </div>
       </div>
       <TermPanel
+        v-if="labelsInteractive"
         class="diagram-term-panel"
         :term="selectedTerm"
         :language="selectedLanguage"
         @close="onTermDeselect"
       />
     </div>
+    <DiagramInfoControls
+      :in-english="inEnglish"
+      :download-site="downloadSite"
+      :download-aria-label="downloadAriaLabel"
+      :current-language-download-text="currentLanguageDownloadText"
+      :is-description-open="isDescriptionOpen"
+      :is-contributors-open="isContributorsOpen"
+      :description-summary-label="activeLongDescription.summaryLabel"
+      @toggle-description="toggleDescription"
+      @toggle-contributors="toggleContributors"
+    />
     <RelatedResources :in-english="inEnglish" />
   </div>
 </template>
@@ -121,6 +131,7 @@ import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { isMobile } from 'mobile-device-detect'
 import DiagramControls from './DiagramControls.vue'
+import DiagramInfoControls from './DiagramInfoControls.vue'
 import DialogBox from './DialogBox.vue'
 import RelatedResources from './RelatedResources.vue'
 import AuthorshipSection from './AuthorshipSection.vue'
@@ -391,6 +402,26 @@ const spanishLongDescription = diagramDescription.es
 const activeLongDescription = computed(() => (inEnglish.value ? englishLongDescription : spanishLongDescription))
 
 // diagram controls 
+// Interactivity (click a label to open its definition) and version
+// (beginner/advanced definitions) are English-only for now, so Spanish always
+// shows the static diagram.
+const isInteractive = ref(true)
+const selectedLevel = ref('advanced')
+const labelsInteractive = computed(() => inEnglish.value && isInteractive.value)
+
+function setInteractive(value) {
+  isInteractive.value = Boolean(value)
+  if (!isInteractive.value) selectedTerm.value = null
+}
+
+// Close the term panel on a version switch so a definition from the other
+// level does not linger.
+function setLevel(level) {
+  if (!['beginner', 'advanced'].includes(level) || level === selectedLevel.value) return
+  selectedLevel.value = level
+  selectedTerm.value = null
+}
+
 const downloadSite = ref(null)
 const activeInfoPanel = ref(null)
 const isDescriptionOpen = computed(() => activeInfoPanel.value === 'description')
