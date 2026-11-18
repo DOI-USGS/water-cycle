@@ -45,7 +45,7 @@
     "definitions": {
       "en": {
         "beginner": "When the sun warms ocean water and turns it into water vapor that rises into the air.",
-        "advanced": "The conversion of ocean water to water vapor at the interface between the ocean surface and the atmosphere. Ocean evaporation is a water cycle flux."
+        "advanced": "The conversion of ocean water to water vapor at the interface between the ocean surface and the atmosphere. Ocean (evaporation and circulation) is a water cycle flux."
       },
       "es": {
         "beginner": "",
@@ -63,7 +63,7 @@
     "definitions": {
       "en": {
         "beginner": "The way ocean water moves around the world, like big currents.",
-        "advanced": "The movement and mixing of water horizontally between ocean basins and vertically between mixed and deep zones. Ocean circulation is a water cycle flux."
+        "advanced": "The movement and mixing of water horizontally between ocean basins and vertically between mixed and deep zones. Ocean (circulation and evaporation) is a water cycle flux."
       },
       "es": {
         "beginner": "",
@@ -261,7 +261,7 @@
     "definitions": {
       "en": {
         "beginner": "Water used at home for drinking, cooking, bathing, cleaning, and yard care.",
-        "advanced": "Water used by humans in cities, towns, and homes. This includes water we drink and use to prepare food and the water we use to bathe and clean. This includes water used to water lawns and gardens or fill pools. In our communities, we also use water in public parks, to fight fires, and to transport and treat sewage. Municipal and domestic water use is a water cycle flux."
+        "advanced": "Domestic self-supplied water is water used at home that does not come from a public water utility. This can include potable and non-potable water. The most common source of self-supplied water is a well. Other self-supplied water sources include capturing rainwater in a cistern, private surface water diversions (intakes), piping spring water to a home or outdoor faucet, or hauling jugs of water from a store or spring to use in the home. Domestic self-supplied water is used for all home water uses such as watering gardens, drinking water, or household functions. Municipal and domestic water use is a water cycle flux."
       },
       "es": {
         "beginner": "",
@@ -315,7 +315,7 @@
     "definitions": {
       "en": {
         "beginner": "Large bodies of standing water on land.",
-        "advanced": "A lake is formed when water accumulates in a low spot on the landscape as a result of surface-water runoff and groundwater seepage. If the water in the lake is fresh, it is a freshwater lake. Lakes (fresh) are a water cycle pool."
+        "advanced": "A lake is formed when water accumulates in a low spot on the landscape as a result of surface-water runoff and groundwater seepage. If the water in the lake is fresh, it is a freshwater lake. Lakes (fresh and saline) are a water cycle pool."
       },
       "es": {
         "beginner": "",
@@ -333,7 +333,7 @@
     "definitions": {
       "en": {
         "beginner": "",
-        "advanced": "A lake that contains saline water due to the accumulation of salts as water is lost via evaporation. Most saline lakes exist in closed basins and do not have any outlet, meaning they do not release outflow into a river. Lakes (saline) are a water cycle pool."
+        "advanced": "A lake that contains saline water due to the accumulation of salts as water is lost via evaporation. Most saline lakes exist in closed basins and do not have any outlet, meaning they do not release outflow into a river. Lakes (saline and fresh) are a water cycle pool."
       },
       "es": {
         "beginner": "",
@@ -477,7 +477,7 @@
     "definitions": {
       "en": {
         "beginner": "Water vapor in the air above the ocean.",
-        "advanced": "Water that is present as water vapor (water in gaseous form) in the atmosphere above oceans. Water vapor in the atmosphere is invisible to the human eye. Atmospheric moisture (over ocean) is a water cycle pool."
+        "advanced": "Water that is present as water vapor (water in gaseous form) in the atmosphere above oceans. Water vapor in the atmosphere is invisible to the human eye. Atmospheric moisture (over ocean and over land) is a water cycle pool."
       },
       "es": {
         "beginner": "",
@@ -495,7 +495,7 @@
     "definitions": {
       "en": {
         "beginner": "Water vapor in the air above land.",
-        "advanced": "Water that is present as water vapor (water in gaseous form) in the atmosphere above land masses. Water vapor in the atmosphere is invisible to the human eye. Atmospheric moisture (over land) is a water cycle pool."
+        "advanced": "Water that is present as water vapor (water in gaseous form) in the atmosphere above land masses. Water vapor in the atmosphere is invisible to the human eye. Atmospheric moisture (over land and over ocean) is a water cycle pool."
       },
       "es": {
         "beginner": "",
@@ -513,7 +513,7 @@
     "definitions": {
       "en": {
         "beginner": "The top layer of the ocean where waves and wind mix the water.",
-        "advanced": "The upper portion of the ocean that is mixed by wind or because of differences in density that result from cooling/warming, evaporation, or ice formation. This mixing results in near uniform temperature and salinity within this zone. Ocean (mixed zone) is a water cycle pool."
+        "advanced": "The upper portion of the ocean that is mixed by wind or because of differences in density that result from cooling/warming, evaporation, or ice formation. This mixing results in near uniform temperature and salinity within this zone. Ocean (mixed zone and deep water zone) is a water cycle pool."
       },
       "es": {
         "beginner": "",
@@ -531,7 +531,7 @@
     "definitions": {
       "en": {
         "beginner": "Very deep ocean water with little light and colder temperatures.",
-        "advanced": "The lower portion that is far from the surface of the ocean. It is below the mixed zone. Layers of water form in the deep ocean due to differences in water temperature and salinity (and therefore water density). Ocean (deep water zone) is a water cycle pool."
+        "advanced": "The lower portion that is far from the surface of the ocean. It is below the mixed zone. Layers of water form in the deep ocean due to differences in water temperature and salinity (and therefore water density). Ocean (deep water zone and mixed zone) is a water cycle pool."
       },
       "es": {
         "beginner": "",
