@@ -85,8 +85,9 @@
           <span aria-hidden="true">{{ isInteractive ? 'On' : 'Off' }}</span>
         </button>
       </li>
+      <!-- Version only affects definitions, so hide it when interactivity is off. -->
       <li
-        v-if="inEnglish"
+        v-if="inEnglish && isInteractive"
         class="control-item"
       >
         <label
