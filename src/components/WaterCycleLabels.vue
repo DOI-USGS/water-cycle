@@ -15,14 +15,14 @@
       @load="handleBackgroundLoad"
     >
 
-    <!-- Layer 2: arrows (non-interactive, decorative, language-neutral) -->
-    <img
+    <!-- Layer 2: arrows (non-interactive, decorative, language-neutral).
+         Rendered inline so arrows tagged [data-arrow-term] can be hidden per
+         version. -->
+    <ArrowsSvg
       class="wc-layer wc-layer--arrows"
-      :src="arrowsSrc"
-      alt=""
       aria-hidden="true"
-      draggable="false"
-    >
+      focusable="false"
+    />
 
     <!-- Layer 3: interactive labels. vite-svg-loader renders this inline as
          real DOM so we can attach click/keyboard handlers to [data-term].
@@ -43,7 +43,7 @@ import LabelsSvgEn from '@/assets/images/WCD_all_labels.svg?component'
 // `activeLabelsSvg` below:
 //   import LabelsSvgEs from '@/assets/images/WCD_all_labels_es.svg?component'
 import backgroundSrc from '@/assets/images/WCD_image_background.png'
-import arrowsSrc from '@/assets/images/WCD_all_arrows.svg?url'
+import ArrowsSvg from '@/assets/images/WCD_all_arrows.svg?component'
 import terms from '@/assets/text/terms.json'
 
 const props = defineProps({
@@ -53,7 +53,8 @@ const props = defineProps({
     type: String,
     default: 'en'
   },
-  // Audience level ('beginner' | 'advanced'). Current scope: advanced.
+  // Audience level ('beginner' | 'advanced'). Picks the definition text and,
+  // for beginner, hides labels flagged advancedOnly in terms.json.
   level: {
     type: String,
     default: 'advanced'
@@ -112,6 +113,28 @@ function titleFor(termId) {
 function definitionFor(termId) {
   const entry = terms[termId]
   return entry?.definitions?.[props.language]?.[props.level] ?? ''
+}
+
+// --- Version (beginner/advanced) visibility ---------------------------------
+// The beginner version hides terms flagged `advancedOnly` in terms.json, along
+// with their arrows ([data-arrow-term] in the arrows SVG) and pool background
+// boxes ([data-box-term] in the labels SVG). The static (non-interactive)
+// diagram has no Version control, so it always shows the full advanced set.
+const HIDDEN_CLASS = 'is-hidden'
+const showAdvancedLabels = computed(() => !props.interactive || props.level !== 'beginner')
+
+function isTermVisible(termId) {
+  return showAdvancedLabels.value || !terms[termId]?.advancedOnly
+}
+
+// Arrows and boxes carry a space-separated term list (one human-use arrow can
+// serve several uses); they stay visible while any of their terms is visible.
+function applyArtworkVisibility() {
+  const tagged = root.value?.querySelectorAll('[data-arrow-term], [data-box-term]') ?? []
+  tagged.forEach((el) => {
+    const termIds = (el.getAttribute('data-arrow-term') ?? el.getAttribute('data-box-term')).split(/\s+/)
+    el.classList.toggle(HIDDEN_CLASS, !termIds.some(isTermVisible))
+  })
 }
 
 function labelElFromTarget(target) {
@@ -224,7 +247,22 @@ function handleKeydown(event) {
 // real layout, so this re-runs once the background image has sized the
 // container, and again whenever the inline SVG re-renders (language switch).
 function applyLabelAccessibility() {
-  const labels = [...(root.value?.querySelectorAll('[data-term]') ?? [])]
+  applyArtworkVisibility()
+  const allLabels = [...(root.value?.querySelectorAll('[data-term]') ?? [])]
+  // Beginner version: hide labels flagged advancedOnly in terms.json.
+  allLabels.forEach((el) => {
+    el.classList.toggle(HIDDEN_CLASS, !isTermVisible(el.getAttribute('data-term')))
+  })
+  allLabels
+    .filter((el) => el.classList.contains(HIDDEN_CLASS))
+    .forEach((el) => {
+      el.style.cursor = ''
+      el.removeAttribute('tabindex')
+      el.removeAttribute('role')
+      el.removeAttribute('aria-label')
+      el.setAttribute('aria-hidden', 'true')
+    })
+  const labels = allLabels.filter((el) => !el.classList.contains(HIDDEN_CLASS))
   if (!props.interactive) {
     // Static image: the background <img> alt text describes the diagram, so
     // hide the label layer from assistive tech and remove the tab stops.
@@ -342,6 +380,12 @@ watch(() => [props.language, props.level, props.interactive], async () => {
    light up together and stay lit while the panel is open. */
 .wc-layer--labels :deep([data-term].is-active) {
   opacity: 0.7;
+}
+
+.wc-layer--labels :deep([data-term].is-hidden),
+.wc-layer--labels :deep([data-box-term].is-hidden),
+.wc-layer--arrows :deep([data-arrow-term].is-hidden) {
+  display: none;
 }
 
 .wc-layer--labels :deep([data-term]:focus-visible) {

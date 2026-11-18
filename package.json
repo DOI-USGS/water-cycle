@@ -14,7 +14,8 @@
     "build-prod": "vite build --mode prod_tier",
     "preview": "vite preview",
     "lint": "eslint --ext .vue,.js,.jsx,.cjs,.mjs --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "prepare-svgs": "node scripts/tag-arrows.mjs --write && node scripts/strip-svg-hidden-layers.mjs"
   },
   "dependencies": {
     "@eslint/compat": "1.2.7",
@@ -38,6 +39,7 @@
     "mobile-device-detect": "^0.4.3",
     "prettier": "^3.5.2",
     "sass": "1.85.1",
+    "svgo": "^3.3.2",
     "vite": "^6.2.0",
     "vite-plugin-ejs": "^1.7.0",
     "vite-svg-loader": "^5.1.0"
