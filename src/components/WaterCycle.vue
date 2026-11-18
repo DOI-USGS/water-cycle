@@ -138,6 +138,7 @@ import AuthorshipSection from './AuthorshipSection.vue'
 import WaterCycleLabels from './WaterCycleLabels.vue'
 import TermPanel from './TermPanel.vue'
 import diagramDescription from '@/assets/text/diagramDescription.json'
+import terms from '@/assets/text/terms.json'
 
 // zooom logic
 const zoom = ref(1)
@@ -414,12 +415,17 @@ function setInteractive(value) {
   if (!isInteractive.value) selectedTerm.value = null
 }
 
-// Close the term panel on a version switch so a definition from the other
-// level does not linger.
+// A version switch keeps the zoom, pan, and selected term. The open panel swaps
+// to the new version's definition, or closes if the term is hidden in that
+// version (advancedOnly in beginner) or has no definition there yet.
 function setLevel(level) {
   if (!['beginner', 'advanced'].includes(level) || level === selectedLevel.value) return
   selectedLevel.value = level
-  selectedTerm.value = null
+  if (!selectedTerm.value) return
+  const entry = terms[selectedTerm.value.id]
+  const definition = entry?.definitions?.[selectedLanguage.value]?.[level] ?? ''
+  const hidden = level === 'beginner' && entry?.advancedOnly
+  selectedTerm.value = hidden || !definition ? null : { ...selectedTerm.value, definition }
 }
 
 const downloadSite = ref(null)
