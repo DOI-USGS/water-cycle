@@ -707,8 +707,9 @@ function closeInfoPanel() {
 }
 
 @media screen and (max-width: 600px) {
+  /* Ctrl/Cmd + scroll doesn't apply on small screens; save the space. */
   .zoom-instruction {
-    padding: 0 1rem;
+    display: none;
   }
 
   /* Mobile: stack the panel beneath the diagram like a bottom sheet. */
