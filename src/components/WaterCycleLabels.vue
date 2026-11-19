@@ -5,6 +5,8 @@
     :class="{ 'wc-diagram-layers--static': !interactive }"
     @click="handleClick"
     @keydown="handleKeydown"
+    @focusin="handleFocusIn"
+    @focusout="handleFocusOut"
   >
     <!-- Layer 1: background artwork (non-interactive raster, language-neutral) -->
     <img
@@ -32,6 +34,17 @@
       :is="activeLabelsSvg"
       :key="language"
       class="wc-layer wc-layer--labels"
+    />
+
+    <!-- Keyboard focus ring for the focused label cluster. Drawn as an overlay
+         because browsers don't reliably outline SVG groups, and one label can
+         be several elements. Positioned in % of the diagram so it follows
+         zoom and resize. -->
+    <div
+      v-if="focusRing"
+      class="wc-focus-ring"
+      aria-hidden="true"
+      :style="focusRing"
     />
   </div>
 </template>
@@ -233,11 +246,100 @@ function handleClick(event) {
 }
 
 function handleKeydown(event) {
+  if (event.key === 'Tab') {
+    moveFocusInReadingOrder(event)
+    return
+  }
   if (event.key !== 'Enter' && event.key !== ' ' && event.key !== 'Spacebar') return
   const labelEl = labelElFromTarget(event.target)
   if (!labelEl) return
   event.preventDefault()
   selectLabel(labelEl)
+}
+
+// --- Tab order -----------------------------------------------------------------
+// The SVG's element order follows Illustrator's layers, not screen position, so
+// labels are tabbed in reading order instead: rows top to bottom, then left to
+// right. Only one label is a Tab stop at a time (roving tabindex), so Tab enters
+// the diagram once, steps through the labels, and leaves after the last one.
+// Positive tabindex values would reorder the rest of the page too.
+let tabOrder = []
+// Tops within this fraction of the diagram width (about one line of label text)
+// count as the same row.
+const ROW_TOLERANCE = 0.015
+
+function clusterBox(el) {
+  const rects = clusterFor(el).map((member) => member.getBoundingClientRect())
+  return {
+    left: Math.min(...rects.map((r) => r.left)),
+    top: Math.min(...rects.map((r) => r.top)),
+    right: Math.max(...rects.map((r) => r.right)),
+    bottom: Math.max(...rects.map((r) => r.bottom))
+  }
+}
+
+function readingOrder(elements) {
+  const tolerance = (root.value?.getBoundingClientRect().width ?? 0) * ROW_TOLERANCE
+  const rows = []
+  elements
+    .map((el) => ({ el, box: clusterBox(el) }))
+    .sort((a, b) => a.box.top - b.box.top)
+    .forEach((item) => {
+      const row = rows.find((r) => Math.abs(r[0].box.top - item.box.top) <= tolerance)
+      row ? row.push(item) : rows.push([item])
+    })
+  return rows.flatMap((row) => row.sort((a, b) => a.box.left - b.box.left).map((item) => item.el))
+}
+
+function setTabStop(target) {
+  tabOrder.forEach((el) => el.setAttribute('tabindex', el === target ? '0' : '-1'))
+}
+
+// Past either end, the browser's default Tab moves focus out of the diagram.
+function moveFocusInReadingOrder(event) {
+  const index = tabOrder.indexOf(labelElFromTarget(event.target))
+  const next = index < 0 ? null : tabOrder[index + (event.shiftKey ? -1 : 1)]
+  if (!next) return
+  event.preventDefault()
+  setTabStop(next)
+  next.focus()
+}
+
+// --- Keyboard focus ring -----------------------------------------------------
+// Covers the focused label's whole cluster (main line, qualifier, halo). Only
+// shown for keyboard focus (:focus-visible), not when a label is clicked.
+const focusRing = ref(null)
+
+function clearFocusRing() {
+  focusRing.value = null
+}
+
+// Leaving the diagram resets the Tab stop so the next Tab in starts at the top.
+function handleFocusOut(event) {
+  clearFocusRing()
+  if (!root.value?.contains(event.relatedTarget)) setTabStop(tabOrder[0])
+}
+
+function handleFocusIn(event) {
+  const labelEl = labelElFromTarget(event.target)
+  const box = root.value?.getBoundingClientRect()
+  if (!labelEl?.matches(':focus-visible') || !box?.width) {
+    clearFocusRing()
+    return
+  }
+  const { left, top, right, bottom } = clusterBox(labelEl)
+  const pct = (value, size) => `${(value / size) * 100}%`
+  // The ring sits inside the zoom transform; divide by the current scale so
+  // it stays 3px on screen at any zoom level.
+  const scale = box.width / (root.value.offsetWidth || box.width)
+  focusRing.value = {
+    left: pct(left - box.left, box.width),
+    top: pct(top - box.top, box.height),
+    width: pct(right - left, box.width),
+    height: pct(bottom - top, box.height),
+    outlineWidth: `${3 / scale}px`,
+    outlineOffset: `${2 / scale}px`
+  }
 }
 
 // Make tagged labels keyboard-focusable and screen-reader friendly without
@@ -247,6 +349,10 @@ function handleKeydown(event) {
 // real layout, so this re-runs once the background image has sized the
 // container, and again whenever the inline SVG re-renders (language switch).
 function applyLabelAccessibility() {
+  // A version, language, or interactivity change can hide or replace the
+  // focused label without a focusout event.
+  clearFocusRing()
+  tabOrder = []
   applyArtworkVisibility()
   const allLabels = [...(root.value?.querySelectorAll('[data-term]') ?? [])]
   // Beginner version: hide labels flagged advancedOnly in terms.json.
@@ -277,6 +383,7 @@ function applyLabelAccessibility() {
     return
   }
   const secondary = new Set()
+  const primaries = []
   labels.forEach((el) => {
     el.style.cursor = 'pointer'
     if (secondary.has(el)) {
@@ -289,10 +396,13 @@ function applyLabelAccessibility() {
     clusterFor(el).forEach((member) => member !== el && secondary.add(member))
     const termId = el.getAttribute('data-term')
     el.removeAttribute('aria-hidden')
-    el.setAttribute('tabindex', '0')
+    el.setAttribute('tabindex', '-1')
     el.setAttribute('role', 'button')
     el.setAttribute('aria-label', `${titleFor(termId)}. ${definitionFor(termId)}`)
+    primaries.push(el)
   })
+  tabOrder = readingOrder(primaries)
+  setTabStop(tabOrder[0])
   // Re-apply the highlight in case the SVG just re-rendered.
   highlightTerm(props.selectedId)
 }
@@ -390,6 +500,17 @@ watch(() => [props.language, props.level, props.interactive], async () => {
 
 .wc-layer--labels :deep([data-term]:focus-visible) {
   outline: none;
+}
+
+/* Matches the controls' focus style (base.css .button:focus-visible). Width and
+   offset are set inline to cancel out the diagram zoom. */
+.wc-focus-ring {
+  position: absolute;
+  z-index: 4;
+  outline: 3px solid var(--color-link);
+  outline-offset: 2px;
+  border-radius: 2px;
+  pointer-events: none;
 }
 
 /* Static mode: let pointer events fall through to the pan/zoom wrapper. */
