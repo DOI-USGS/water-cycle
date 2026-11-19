@@ -7,6 +7,7 @@
     @keydown="handleKeydown"
     @focusin="handleFocusIn"
     @focusout="handleFocusOut"
+    @pointerdown="handlePointerDown"
   >
     <!-- Layer 1: background artwork (non-interactive raster, language-neutral) -->
     <img
@@ -192,21 +193,30 @@ function clusterFor(labelEl) {
 
 // --- Selection highlight ----------------------------------------------------
 const ACTIVE_CLASS = 'is-active'
+// id of the definition panel in TermPanel.vue, for aria-controls on labels
+const TERM_PANEL_ID = 'term-panel'
 let activeCluster = []
+// The label copy the user picked. Some terms appear twice on the diagram
+// (e.g. Groundwater), and only the copy that was clicked should be highlighted.
+let selectedLabelEl = null
 
 function clearHighlight() {
   activeCluster.forEach((el) => el.classList.remove(ACTIVE_CLASS))
   activeCluster = []
 }
 
-// Highlight the cluster for a given term id (the first tagged element wins).
+// Highlight the selected label: the copy the user picked if it's still on the
+// page, otherwise the first copy of the term. Also marks which label's
+// definition is open for screen readers.
 function highlightTerm(termId) {
   clearHighlight()
-  if (!termId) return
-  const first = root.value?.querySelector(`[data-term="${CSS.escape(termId)}"]`)
-  if (!first) return
-  activeCluster = clusterFor(first)
-  activeCluster.forEach((el) => el.classList.add(ACTIVE_CLASS))
+  const picked = selectedLabelEl?.isConnected && selectedLabelEl.getAttribute('data-term') === termId
+  const anchor = picked ? selectedLabelEl : termId && root.value?.querySelector(`[data-term="${CSS.escape(termId)}"]`)
+  if (anchor) {
+    activeCluster = clusterFor(anchor)
+    activeCluster.forEach((el) => el.classList.add(ACTIVE_CLASS))
+  }
+  tabOrder.forEach((el) => el.setAttribute('aria-expanded', String(activeCluster.includes(el))))
 }
 
 // Toggle selection: clicking the already-selected label closes the panel.
@@ -216,6 +226,13 @@ function selectLabel(labelEl) {
   if (!termId) return
 
   if (termId === props.selectedId) {
+    // The other copy of an already-selected term moves the highlight to it;
+    // the highlighted copy itself closes the panel.
+    if (!activeCluster.includes(labelEl)) {
+      selectedLabelEl = labelEl
+      highlightTerm(termId)
+      return
+    }
     emit('term-deselect')
     return
   }
@@ -226,6 +243,7 @@ function selectLabel(labelEl) {
     return
   }
 
+  selectedLabelEl = labelEl
   emit('term-select', {
     id: termId,
     title: titleFor(termId),
@@ -320,25 +338,42 @@ function handleFocusOut(event) {
   if (!root.value?.contains(event.relatedTarget)) setTabStop(tabOrder[0])
 }
 
+// Focus that happens during a mouse/touch press never shows the ring. Browsers
+// disagree on whether clicking a focusable SVG element matches :focus-visible,
+// so this doesn't rely on that check alone. The flag clears after the press.
+let pointerPressed = false
+
+function handlePointerDown() {
+  pointerPressed = true
+  window.addEventListener('pointerup', () => setTimeout(() => { pointerPressed = false }), { once: true })
+}
+
 function handleFocusIn(event) {
   const labelEl = labelElFromTarget(event.target)
-  const box = root.value?.getBoundingClientRect()
-  if (!labelEl?.matches(':focus-visible') || !box?.width) {
+  const box = overlayBox(labelEl)
+  if (pointerPressed || !labelEl?.matches(':focus-visible') || !box) {
     clearFocusRing()
     return
   }
-  const { left, top, right, bottom } = clusterBox(labelEl)
-  const pct = (value, size) => `${(value / size) * 100}%`
   // The ring sits inside the zoom transform; divide by the current scale so
   // it stays 3px on screen at any zoom level.
-  const scale = box.width / (root.value.offsetWidth || box.width)
-  focusRing.value = {
+  const rootBox = root.value.getBoundingClientRect()
+  const scale = rootBox.width / (root.value.offsetWidth || rootBox.width)
+  focusRing.value = { ...box, outlineWidth: `${3 / scale}px`, outlineOffset: `${2 / scale}px` }
+}
+
+// Position of a label cluster as % of the diagram, so the overlay follows zoom
+// and resize.
+function overlayBox(labelEl) {
+  const box = root.value?.getBoundingClientRect()
+  if (!labelEl || !box?.width) return null
+  const { left, top, right, bottom } = clusterBox(labelEl)
+  const pct = (value, size) => `${(value / size) * 100}%`
+  return {
     left: pct(left - box.left, box.width),
     top: pct(top - box.top, box.height),
     width: pct(right - left, box.width),
-    height: pct(bottom - top, box.height),
-    outlineWidth: `${3 / scale}px`,
-    outlineOffset: `${2 / scale}px`
+    height: pct(bottom - top, box.height)
   }
 }
 
@@ -366,6 +401,8 @@ function applyLabelAccessibility() {
       el.removeAttribute('tabindex')
       el.removeAttribute('role')
       el.removeAttribute('aria-label')
+      el.removeAttribute('aria-expanded')
+      el.removeAttribute('aria-controls')
       el.setAttribute('aria-hidden', 'true')
     })
   const labels = allLabels.filter((el) => !el.classList.contains(HIDDEN_CLASS))
@@ -377,6 +414,8 @@ function applyLabelAccessibility() {
       el.removeAttribute('tabindex')
       el.removeAttribute('role')
       el.removeAttribute('aria-label')
+      el.removeAttribute('aria-expanded')
+      el.removeAttribute('aria-controls')
       el.setAttribute('aria-hidden', 'true')
     })
     highlightTerm(null)
@@ -390,6 +429,8 @@ function applyLabelAccessibility() {
       el.removeAttribute('tabindex')
       el.removeAttribute('role')
       el.removeAttribute('aria-label')
+      el.removeAttribute('aria-expanded')
+      el.removeAttribute('aria-controls')
       el.setAttribute('aria-hidden', 'true')
       return
     }
@@ -399,6 +440,7 @@ function applyLabelAccessibility() {
     el.setAttribute('tabindex', '-1')
     el.setAttribute('role', 'button')
     el.setAttribute('aria-label', `${titleFor(termId)}. ${definitionFor(termId)}`)
+    el.setAttribute('aria-controls', TERM_PANEL_ID)
     primaries.push(el)
   })
   tabOrder = readingOrder(primaries)
@@ -485,12 +527,8 @@ watch(() => [props.language, props.level, props.interactive], async () => {
   pointer-events: all;
 }
 
-/* Highlight is driven by the .is-active class (set on every element in the
-   selected cluster) rather than the hover state, so a label and its qualifier
-   light up together and stay lit while the panel is open. */
-.wc-layer--labels :deep([data-term].is-active) {
-  opacity: 0.7;
-}
+/* The selected label's cluster gets .is-active, but no visual style is applied
+   yet; how to show the selected label is a separate design decision. */
 
 .wc-layer--labels :deep([data-term].is-hidden),
 .wc-layer--labels :deep([data-box-term].is-hidden),
@@ -498,7 +536,11 @@ watch(() => [props.language, props.level, props.interactive], async () => {
   display: none;
 }
 
-.wc-layer--labels :deep([data-term]:focus-visible) {
+/* Turn off the browser's own focus outline on labels for every kind of focus.
+   Browsers disagree on when a clicked SVG label counts as :focus-visible, so
+   some clicks showed it and others didn't. Keyboard focus is shown by the
+   .wc-focus-ring overlay instead. */
+.wc-layer--labels :deep([data-term]:focus) {
   outline: none;
 }
 

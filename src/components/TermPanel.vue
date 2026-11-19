@@ -1,5 +1,6 @@
 <template>
   <aside
+    id="term-panel"
     class="term-panel"
     :class="{ 'term-panel--empty': !term }"
     :lang="lang"
