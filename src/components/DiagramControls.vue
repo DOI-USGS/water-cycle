@@ -32,18 +32,16 @@
         </button>
       </li>
       <li class="control-item">
-        <span class="control-prefix">{{ languageLabel }}</span>
         <label
           for="language-select"
-          class="only"
+          class="control-prefix"
         >
-          {{ languageSelectLabel }}
+          {{ languageLabel }}
         </label>
         <select
           id="language-select"
           v-model="languageValue"
           class="button"
-          :aria-label="languageSelectLabel"
         >
           <option
             value="en"
@@ -59,42 +57,57 @@
           </option>
         </select>
       </li>
-      <li class="control-item">
-        <span class="control-prefix download-prefix">{{ downloadLabel }}</span>
-        <a
-          class="button control-action download-button"
-          :href="downloadSite"
-          target="_blank"
-          rel="noopener noreferrer"
-          :aria-label="downloadAriaLabel"
-          :title="currentLanguageDownloadText"
+      <!-- Interactivity and Version are English-only for now: Spanish term
+           definitions are not written yet, so these controls are removed
+           when Spanish is selected. -->
+      <li
+        v-if="inEnglish"
+        class="control-item"
+      >
+        <span
+          id="interactivity-label"
+          class="control-prefix"
+        >Interactive:</span>
+        <button
+          type="button"
+          class="interactivity-switch"
+          role="switch"
+          aria-labelledby="interactivity-label"
+          :aria-checked="isInteractive ? 'true' : 'false'"
+          @click="emit('set-interactive', !isInteractive)"
         >
-          <FontAwesomeIcon
-            :icon="['fas', 'download']"
-            class="control-icon"
+          <span
+            class="switch-track"
             aria-hidden="true"
-          />
-        </a>
+          >
+            <span class="switch-thumb" />
+          </span>
+          <span aria-hidden="true">{{ isInteractive ? 'On' : 'Off' }}</span>
+        </button>
       </li>
-      <li class="control-item more-info-group">
-        <span class="control-prefix">{{ moreInfoLabel }}</span>
-        <button
-          id="description-toggle"
-          class="button control-action"
-          aria-controls="diagram-description-panel"
-          :aria-expanded="isDescriptionOpen ? 'true' : 'false'"
-          @click="emit('toggle-description')"
+      <!-- Version only affects definitions, so hide it when interactivity is off. -->
+      <li
+        v-if="inEnglish && isInteractive"
+        class="control-item"
+      >
+        <label
+          for="version-select"
+          class="control-prefix"
         >
-          {{ descriptionSummaryLabel }}
-        </button>
-        <button
-          class="button control-action"
-          aria-controls="diagram-contributors-panel"
-          :aria-expanded="isContributorsOpen ? 'true' : 'false'"
-          @click="emit('toggle-contributors')"
+          Version:
+        </label>
+        <select
+          id="version-select"
+          v-model="levelValue"
+          class="button"
         >
-          {{ contributorsLabel }}
-        </button>
+          <option value="beginner">
+            Beginner
+          </option>
+          <option value="advanced">
+            Advanced
+          </option>
+        </select>
       </li>
     </ul>
   </section>
@@ -112,36 +125,18 @@ const props = defineProps({
     type: String,
     required: true
   },
-  downloadSite: {
-    type: String,
-    required: false,
-    default: null
-  },
-  downloadAriaLabel: {
-    type: String,
-    required: true
-  },
-  currentLanguageDownloadText: {
-    type: String,
-    required: false,
-    default: ''
-  },
-  isDescriptionOpen: {
+  isInteractive: {
     type: Boolean,
     required: true
   },
-  isContributorsOpen: {
-    type: Boolean,
-    required: true
-  },
-  descriptionSummaryLabel: {
+  selectedLevel: {
     type: String,
     required: true
   }
 })
 
 // send state back to WaterCycle
-const emit = defineEmits(['zoom-in', 'zoom-out', 'set-language', 'toggle-description', 'toggle-contributors'])
+const emit = defineEmits(['zoom-in', 'zoom-out', 'set-language', 'set-interactive', 'set-level'])
 
 const languageValue = computed({
   get: () => props.selectedLanguage,
@@ -150,13 +145,63 @@ const languageValue = computed({
   }
 })
 
+const levelValue = computed({
+  get: () => props.selectedLevel,
+  set: (value) => {
+    emit('set-level', value)
+  }
+})
+
 const quickControlsSectionLabel = computed(() => (props.inEnglish ? 'Diagram controls' : 'Controles del diagrama'))
 const zoomLabel = computed(() => (props.inEnglish ? 'Zoom:' : 'Acercar:'))
-const downloadLabel = computed(() => (props.inEnglish ? 'Download:' : 'Descargar:'))
 const languageLabel = computed(() => (props.inEnglish ? 'Language:' : 'Idioma:'))
-const languageSelectLabel = computed(() => (props.inEnglish ? 'Change language' : 'Cambiar idioma'))
-const moreInfoLabel = computed(() => (props.inEnglish ? 'More info:' : 'Mas informacion:'))
-const contributorsLabel = computed(() => (props.inEnglish ? 'Contributors' : 'Colaboradores'))
 const zoomInLabel = computed(() => (props.inEnglish ? 'Zoom in' : 'Acercar'))
 const zoomOutLabel = computed(() => (props.inEnglish ? 'Zoom out' : 'Alejar'))
 </script>
+
+<style scoped lang="scss">
+// Plain switch (no button box) so the track can be larger.
+.interactivity-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.25rem;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+.interactivity-switch:focus-visible {
+  outline: 3px solid var(--color-link);
+  outline-offset: 2px;
+}
+.switch-track {
+  position: relative;
+  display: inline-block;
+  width: 3.25rem;
+  height: 1.75rem;
+  border-radius: 0.875rem;
+  background-color: #949494;
+  transition: background-color 0.15s ease-out;
+}
+.switch-thumb {
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease-out;
+}
+.interactivity-switch[aria-checked='true'] .switch-track {
+  background-color: var(--color-link);
+}
+.interactivity-switch[aria-checked='true'] .switch-thumb {
+  transform: translateX(1.5rem);
+}
+</style>

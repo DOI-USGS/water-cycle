@@ -8,17 +8,13 @@
     <DiagramControls
       :in-english="inEnglish"
       :selected-language="selectedLanguage"
-      :download-site="downloadSite"
-      :download-aria-label="downloadAriaLabel"
-      :current-language-download-text="currentLanguageDownloadText"
-      :is-description-open="isDescriptionOpen"
-      :is-contributors-open="isContributorsOpen"
-      :description-summary-label="activeLongDescription.summaryLabel"
+      :is-interactive="isInteractive"
+      :selected-level="selectedLevel"
       @zoom-in="zoomIn"
       @zoom-out="zoomOut"
       @set-language="setLanguage"
-      @toggle-description="toggleDescription"
-      @toggle-contributors="toggleContributors"
+      @set-interactive="setInteractive"
+      @set-level="setLevel"
     />
     <p
       v-if="!isMobile"
@@ -28,114 +24,104 @@
       {{ wheelZoomInstruction }}
     </p>
     <div
-      id="image-zoomer"
-      ref="zoomContainer"
-      @wheel="handleWheel"
+      id="diagram-layout"
     >
       <div
-        ref="imageWrapper"
-        :style="zoomStyle"
-        class="image-wrapper"
-        @pointerdown="handlePointerDown"
-        @dragstart.prevent
-        @touchstart.passive="handleTouchStart"
-        @touchmove.prevent="handleTouchMove"
-        @touchend="handleTouchEnd"
+        id="image-zoomer"
+        ref="zoomContainer"
+        @wheel="handleWheel"
       >
-        <picture
-          v-show="inEnglish"
+        <div
+          ref="imageWrapper"
+          :style="zoomStyle"
+          class="image-wrapper"
+          @pointerdown="handlePointerDown"
+          @click.capture="handleWrapperClickCapture"
+          @dragstart.prevent
+          @touchstart.passive="handleTouchStart"
+          @touchmove.prevent="handleTouchMove"
+          @touchend="handleTouchEnd"
         >
-          <source
-            :srcset="imageSrcWebpEnglish"
-            type="image/webp"
-          >
-          <source
-            :srcset="imageSrcEnglish"
-            type="image/png"
-          >
-          <img
-            id="diagramEnglish"
-            :src="imageSrcWebpEnglish"
-            alt="Illustrated diagram of the water cycle showing the major pools and fluxes of water on Earth. The diagram depicts an idealized landscape with bright blue used to highlight key pools and fluxes and how they are connected."
-            class="diagram-image"
-            draggable="false"
-            @load="onEnglishImageLoad"
-          >
-        </picture>
-
-        <picture
-          v-if="loadSpanish"
-          v-show="!inEnglish"
+          <WaterCycleLabels
+            :language="selectedLanguage"
+            :level="selectedLevel"
+            :interactive="labelsInteractive"
+            :selected-id="selectedTerm?.id ?? null"
+            @term-select="onTermSelect"
+            @term-deselect="onTermDeselect"
+          />
+        </div>
+        <div
+          v-if="activeInfoPanel"
+          class="info-overlay-backdrop"
+          @click.self="closeInfoPanel"
+          @wheel="handleBackdropWheel"
         >
-          <source
-            :srcset="imageSrcWebpSpanish"
-            type="image/webp"
+          <DialogBox
+            v-if="isDescriptionOpen"
+            id="diagram-description-panel"
+            ref="descriptionDialogRef"
+            title-id="diagram-description-panel-title"
+            :title="activeLongDescription.summaryLabel"
+            :lang="inEnglish ? 'en' : 'es'"
+            :close-label="closePanelLabel"
+            :close-text="closePanelText"
+            @close="closeInfoPanel"
           >
-          <source
-            :srcset="imageSrcSpanish"
-            type="image/png"
-          >
-          <img
-            id="diagramSpanish"
-            :src="imageSrcWebpSpanish"
-            alt="Diagrama ilustrado del ciclo del agua que muestra los principales reservorios y flujos de agua en la Tierra. El diagrama representa un paisaje idealizado en el que se usa azul brillante para destacar los reservorios y flujos clave y cómo están conectados."
-            class="diagram-image"
-            draggable="false"
-          >
-        </picture>
-      </div>
-      <div
-        v-if="activeInfoPanel"
-        class="info-overlay-backdrop"
-        @click.self="closeInfoPanel"
-        @wheel="handleBackdropWheel"
-      >
-        <DialogBox
-          v-if="isDescriptionOpen"
-          id="diagram-description-panel"
-          ref="descriptionDialogRef"
-          title-id="diagram-description-panel-title"
-          :title="activeLongDescription.summaryLabel"
-          :lang="inEnglish ? 'en' : 'es'"
-          :close-label="closePanelLabel"
-          :close-text="closePanelText"
-          @close="closeInfoPanel"
-        >
-          <template v-if="activeLongDescription.sections.length > 0">
-            <section
-              v-for="(section, sectionIndex) in activeLongDescription.sections"
-              :key="`long-description-section-${sectionIndex}`"
-            >
-              <h4>
-                {{ section.heading }}
-              </h4>
-              <p
-                v-for="(paragraph, paragraphIndex) in section.paragraphs"
-                :key="`long-description-paragraph-${sectionIndex}-${paragraphIndex}`"
+            <template v-if="activeLongDescription.sections.length > 0">
+              <section
+                v-for="(section, sectionIndex) in activeLongDescription.sections"
+                :key="`long-description-section-${sectionIndex}`"
               >
-                {{ paragraph }}
-              </p>
-            </section>
-          </template>
-          <p v-else-if="!inEnglish">
-            La descripcion extensa en espanol estara disponible pronto.
-          </p>
-        </DialogBox>
-        <DialogBox
-          v-else-if="isContributorsOpen"
-          id="diagram-contributors-panel"
-          ref="contributorsDialogRef"
-          title-id="diagram-contributors-panel-title"
-          :title="contributorsLabel"
-          :lang="inEnglish ? 'en' : 'es'"
-          :close-label="closePanelLabel"
-          :close-text="closePanelText"
-          @close="closeInfoPanel"
-        >
-          <AuthorshipSection />
-        </DialogBox>
+                <h4>
+                  {{ section.heading }}
+                </h4>
+                <p
+                  v-for="(paragraph, paragraphIndex) in section.paragraphs"
+                  :key="`long-description-paragraph-${sectionIndex}-${paragraphIndex}`"
+                >
+                  {{ paragraph }}
+                </p>
+              </section>
+            </template>
+            <p v-else-if="!inEnglish">
+              La descripcion extensa en espanol estara disponible pronto.
+            </p>
+          </DialogBox>
+          <DialogBox
+            v-else-if="isContributorsOpen"
+            id="diagram-contributors-panel"
+            ref="contributorsDialogRef"
+            title-id="diagram-contributors-panel-title"
+            :title="contributorsLabel"
+            :lang="inEnglish ? 'en' : 'es'"
+            :close-label="closePanelLabel"
+            :close-text="closePanelText"
+            @close="closeInfoPanel"
+          >
+            <AuthorshipSection />
+          </DialogBox>
+        </div>
       </div>
+      <TermPanel
+        v-if="labelsInteractive"
+        class="diagram-term-panel"
+        :term="selectedTerm"
+        :language="selectedLanguage"
+        @close="onTermDeselect"
+      />
     </div>
+    <DiagramInfoControls
+      :in-english="inEnglish"
+      :download-site="downloadSite"
+      :download-aria-label="downloadAriaLabel"
+      :current-language-download-text="currentLanguageDownloadText"
+      :is-description-open="isDescriptionOpen"
+      :is-contributors-open="isContributorsOpen"
+      :description-summary-label="activeLongDescription.summaryLabel"
+      @toggle-description="toggleDescription"
+      @toggle-contributors="toggleContributors"
+    />
     <RelatedResources :in-english="inEnglish" />
   </div>
 </template>
@@ -145,10 +131,14 @@ import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { isMobile } from 'mobile-device-detect'
 import DiagramControls from './DiagramControls.vue'
+import DiagramInfoControls from './DiagramInfoControls.vue'
 import DialogBox from './DialogBox.vue'
 import RelatedResources from './RelatedResources.vue'
 import AuthorshipSection from './AuthorshipSection.vue'
+import WaterCycleLabels from './WaterCycleLabels.vue'
+import TermPanel from './TermPanel.vue'
 import diagramDescription from '@/assets/text/diagramDescription.json'
+import terms from '@/assets/text/terms.json'
 
 // zooom logic
 const zoom = ref(1)
@@ -164,6 +154,13 @@ const contributorsDialogRef = ref(null)
 const pan = ref({ x: 0, y: 0 })
 const isDragging = ref(false)
 const dragStart = ref({ x: 0, y: 0 })
+// Distinguish a click (select a label) from a drag (pan the diagram) on
+// desktop. We only begin panning once the pointer moves past this threshold,
+// so a stationary mouse-down/up still dispatches a native click to the label.
+const DRAG_THRESHOLD_PX = 4
+const pointerDownPos = ref(null)
+const hasDragged = ref(false)
+let activePointerId = null
 
 // mobile pinch zoom tracking
 const initialPinchDistance = ref(null)
@@ -232,15 +229,19 @@ const handleBackdropWheel = (e) => {
 const handlePointerDown = (e) => {
   if (e.pointerType !== 'mouse' || e.button !== 0) return
 
-  e.preventDefault()
+  // Do NOT preventDefault or capture the pointer yet. If this turns out to be a
+  // plain click (no movement), the browser must be free to dispatch a native
+  // click to the label underneath. We only commit to a drag once the pointer
+  // moves past DRAG_THRESHOLD_PX (see handlePointerMove).
   stopDragging()
 
-  isDragging.value = true
+  hasDragged.value = false
+  activePointerId = e.pointerId
+  pointerDownPos.value = { x: e.clientX, y: e.clientY }
   dragStart.value = {
     x: e.clientX - pan.value.x,
     y: e.clientY - pan.value.y
   }
-  imageWrapper.value?.setPointerCapture?.(e.pointerId)
 
   window.addEventListener('pointermove', handlePointerMove)
   window.addEventListener('pointerup', handlePointerUp)
@@ -249,7 +250,19 @@ const handlePointerDown = (e) => {
 }
 
 const handlePointerMove = (e) => {
-  if (!isDragging.value || e.pointerType !== 'mouse') return
+  if (e.pointerType !== 'mouse' || !pointerDownPos.value) return
+
+  // Promote to a real drag the first time movement passes the threshold.
+  if (!isDragging.value) {
+    const dx = e.clientX - pointerDownPos.value.x
+    const dy = e.clientY - pointerDownPos.value.y
+    if (Math.hypot(dx, dy) < DRAG_THRESHOLD_PX) return
+    isDragging.value = true
+    hasDragged.value = true
+    imageWrapper.value?.setPointerCapture?.(activePointerId)
+  }
+
+  e.preventDefault()
   const rawX = e.clientX - dragStart.value.x
   const rawY = e.clientY - dragStart.value.y
   pan.value = clampPan(rawX, rawY)
@@ -257,6 +270,11 @@ const handlePointerMove = (e) => {
 
 function stopDragging() {
   isDragging.value = false
+  pointerDownPos.value = null
+  if (activePointerId !== null) {
+    imageWrapper.value?.releasePointerCapture?.(activePointerId)
+    activePointerId = null
+  }
   window.removeEventListener('pointermove', handlePointerMove)
   window.removeEventListener('pointerup', handlePointerUp)
   window.removeEventListener('pointercancel', handlePointerUp)
@@ -266,6 +284,17 @@ function stopDragging() {
 const handlePointerUp = (e) => {
   if (e && e.pointerType && e.pointerType !== 'mouse') return
   stopDragging()
+}
+
+// A drag release still fires a native `click`; swallow that one in the capture
+// phase so dragging the diagram doesn't select/deselect a label. A plain click
+// (no drag) passes through to WaterCycleLabels untouched.
+const handleWrapperClickCapture = (e) => {
+  if (hasDragged.value) {
+    e.stopPropagation()
+    e.preventDefault()
+    hasDragged.value = false
+  }
 }
 
 // dont' scroll beyond the edges of the diagram...
@@ -366,20 +395,39 @@ const SUPPORTED_LANGUAGES = ['en', 'es']
 const DEFAULT_LANGUAGE = 'en'
 const route = useRoute()
 const router = useRouter()
-const loadEnglish = ref(true)
-const loadSpanish = ref(false)
 const inEnglish = ref(true)
 const selectedLanguage = ref('en')
-const imageSrcEnglish = ref(null)
-const imageSrcWebpEnglish = ref(null)
-const imageSrcSpanish = ref(null)
-const imageSrcWebpSpanish = ref(null)
 const currentLanguageDownloadText = ref(null)
 const englishLongDescription = diagramDescription.en
 const spanishLongDescription = diagramDescription.es
 const activeLongDescription = computed(() => (inEnglish.value ? englishLongDescription : spanishLongDescription))
 
 // diagram controls 
+// Interactivity (click a label to open its definition) and version
+// (beginner/advanced definitions) are English-only for now, so Spanish always
+// shows the static diagram.
+const isInteractive = ref(true)
+const selectedLevel = ref('advanced')
+const labelsInteractive = computed(() => inEnglish.value && isInteractive.value)
+
+function setInteractive(value) {
+  isInteractive.value = Boolean(value)
+  if (!isInteractive.value) selectedTerm.value = null
+}
+
+// A version switch keeps the zoom, pan, and selected term. The open panel swaps
+// to the new version's definition, or closes if the term is hidden in that
+// version (advancedOnly in beginner) or has no definition there yet.
+function setLevel(level) {
+  if (!['beginner', 'advanced'].includes(level) || level === selectedLevel.value) return
+  selectedLevel.value = level
+  if (!selectedTerm.value) return
+  const entry = terms[selectedTerm.value.id]
+  const definition = entry?.definitions?.[selectedLanguage.value]?.[level] ?? ''
+  const hidden = level === 'beginner' && entry?.advancedOnly
+  selectedTerm.value = hidden || !definition ? null : { ...selectedTerm.value, definition }
+}
+
 const downloadSite = ref(null)
 const activeInfoPanel = ref(null)
 const isDescriptionOpen = computed(() => activeInfoPanel.value === 'description')
@@ -496,11 +544,6 @@ function handleDialogKeydown(element) {
 
 onMounted(() => {
   setLanguage(resolveInitialLanguage())
-
-  imageSrcEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.png'
-  imageSrcWebpEnglish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_English_ONLINE.webp'
-  imageSrcSpanish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.png'
-  imageSrcWebpSpanish.value = 'https://labs.waterdata.usgs.gov/visualizations/images/USGS_WaterCycle_Spanish_ONLINE.webp'
 })
 
 watch(activeInfoPanel, async (panel) => {
@@ -522,9 +565,17 @@ onBeforeUnmount(() => {
   document.removeEventListener('keydown', handleDialogKeydown, true)
 })
 
-function onEnglishImageLoad() {
-  // Load Spanish diagram in background after English image is ready.
-  loadSpanish.value = true
+// Selected term state for the side/bottom panel. The panel lives outside the
+// zoom/pan transform (as a sibling of the diagram) so its text stays unscaled
+// and legible regardless of zoom level.
+const selectedTerm = ref(null)
+
+function onTermSelect(payload) {
+  selectedTerm.value = payload
+}
+
+function onTermDeselect() {
+  selectedTerm.value = null
 }
 
 // normalize an arbitrary language string to a supported code, or null
@@ -554,8 +605,13 @@ function syncLanguageToUrl(languageCode) {
 // switch the app language state and downloadable file
 function setLanguage(languageCode) {
   const normalized = normalizeLanguage(languageCode) ?? DEFAULT_LANGUAGE
+  const changed = normalized !== selectedLanguage.value
   selectedLanguage.value = normalized
   inEnglish.value = normalized === 'en'
+
+  // Close the term panel on a language switch so a stale (wrong-language)
+  // definition does not linger.
+  if (changed) selectedTerm.value = null
 
   if (inEnglish.value) {
     currentLanguageDownloadText.value = 'Download the diagram'
@@ -605,10 +661,21 @@ function closeInfoPanel() {
   font-style: italic;
 }
 
+/* Diagram and term panel sit side by side on desktop and stack (panel on the
+   bottom) on narrow screens. */
+#diagram-layout {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 1rem;
+  padding: 0 1.5rem 1rem 1.5rem;
+}
+
 #image-zoomer {
   position: relative;
   display: flex;
   flex: 1 1 auto;
+  min-width: 0;
   min-height: 0;
   overflow: hidden;
   align-items: center;
@@ -619,13 +686,15 @@ function closeInfoPanel() {
   max-width: 100%;
   max-height: 100%;
 }
-.diagram-image {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
+
+/* Desktop: right-hand sidebar for the selected term.*/
+.diagram-term-panel {
+  flex: 0 0 26rem;
+  max-width: 26rem;
+  align-self: stretch;
   max-height: 100%;
 }
+
 .info-overlay-backdrop {
   position: absolute;
   inset: 0;
@@ -638,8 +707,25 @@ function closeInfoPanel() {
 }
 
 @media screen and (max-width: 600px) {
+  /* Ctrl/Cmd + scroll doesn't apply on small screens; save the space. */
   .zoom-instruction {
-    padding: 0 1rem;
+    display: none;
+  }
+
+  /* Mobile: stack the panel beneath the diagram like a bottom sheet. */
+  #diagram-layout {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 0.5rem 0.5rem 0.5rem;
+  }
+
+  .diagram-term-panel {
+    flex: 0 0 auto;
+    max-width: 100%;
+    align-self: auto;
+    max-height: 45vh;
   }
 }
 </style>
+
+

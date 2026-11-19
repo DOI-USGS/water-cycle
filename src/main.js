@@ -4,11 +4,11 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faDownload } from '@fortawesome/free-solid-svg-icons'
+import { faDownload, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 // social icons
 import { faSquareXTwitter, faFacebookSquare, faGithub, faFlickr, faYoutubeSquare, faInstagram } from "@fortawesome/free-brands-svg-icons";
-library.add(faSquareXTwitter, faFacebookSquare, faGithub, faFlickr, faYoutubeSquare, faInstagram, faDownload);
+library.add(faSquareXTwitter, faFacebookSquare, faGithub, faFlickr, faYoutubeSquare, faInstagram, faDownload, faXmark);
 
 import App from './App.vue'
 import router from './router'

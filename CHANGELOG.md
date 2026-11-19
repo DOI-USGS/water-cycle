@@ -10,6 +10,15 @@ Here we track upcoming changes.
 
 ### Added
 - URL routing for language selection, prepopulated from browser settings
+- Clickable diagram labels: selecting a label opens a panel with its definition (side panel on desktop, bottom panel on mobile).
+- Interactive on/off toggle in the control panel. Off shows the static diagram with no clickable labels.
+- Version dropdown (Beginner/Advanced) that switches definition text. Beginner hides advanced-only labels along with their arrows and label background boxes. The dropdown is hidden when interactivity is off.
+- Term definitions for beginner and advanced versions (`src/assets/text/terms.json`)
+- `npm run prepare-svgs` script to tag and slim down the diagram SVGs after an Illustrator export (documented in README)
+
+### Changed 
+- "Hold Ctrl or Cmd and scroll to zoom" instruction is hidden on mobile
+- Diagram to be built from separate background, arrow, and label layers so labels and arrows can respond to the selected version
  
 ## [1.6.0] - 2026-03-01
 

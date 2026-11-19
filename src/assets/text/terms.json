@@ -1,0 +1,596 @@
+{
+  "precipitation_over_land": {
+    "label": "precipitation",
+    "qualifier": "over land",
+    "type": "flux",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water that falls from the sky onto land as rain, snow, sleet, or hail.",
+        "advanced": "Water released from clouds in the form of rain, freezing rain, sleet, snow, or hail that falls over the land surface. Precipitation over land is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "precipitation_over_ocean": {
+    "label": "precipitation",
+    "qualifier": "over ocean",
+    "type": "flux",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water that falls from the sky into the ocean as rain or snow.",
+        "advanced": "Water released from clouds in the form of rain, freezing rain, sleet, snow, or hail that falls over the ocean. Precipitation over ocean is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "ocean_evaporation": {
+    "label": "ocean",
+    "qualifier": "evaporation",
+    "type": "flux",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "When the sun warms ocean water and turns it into water vapor that rises into the air.",
+        "advanced": "The conversion of ocean water to water vapor at the interface between the ocean surface and the atmosphere. Ocean (evaporation and circulation) is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "ocean_circulation": {
+    "label": "ocean",
+    "qualifier": "circulation",
+    "type": "flux",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "The way ocean water moves around the world, like big currents.",
+        "advanced": "The movement and mixing of water horizontally between ocean basins and vertically between mixed and deep zones. Ocean (circulation and evaporation) is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "runoff": {
+    "label": "runoff",
+    "qualifier": "",
+    "type": "flux",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "image: not in glossary",
+    "definitions": {
+      "en": {
+        "beginner": "Water that flows over the ground and into streams, rivers, and lakes after rain or snowmelt.",
+        "advanced": "Surface water that travels downhill across landscapes due to gravity, carrying water from precipitation and meltwater into streams, rivers, lakes, and eventually the ocean."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "urban_runoff": {
+    "label": "urban runoff",
+    "qualifier": "",
+    "type": "flux",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "image: no tin glossary",
+    "definitions": {
+      "en": {
+        "beginner": "Water that runs off streets, roofs, and sidewalks after it rains.",
+        "advanced": "Stormwater that flows over hard, paved surfaces in cities, often picking up pollutants as it moves into storm drains and local waterways."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "groundwater_recharge": {
+    "label": "groundwater",
+    "qualifier": "recharge",
+    "type": "flux",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water that soaks into the ground and fills underground water spaces.",
+        "advanced": "The process by which water is added to groundwater aquifers. Groundwater recharge occurs when water stored on or moving across the land surface infiltrates into the soil and then percolates through the soil to the saturated zone. Groundwater recharge is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "groundwater_discharge_to_ocean": {
+    "label": "groundwater",
+    "qualifier": "discharge to ocean",
+    "type": "flux",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "When groundwater flows underground and eventually reaches the ocean.",
+        "advanced": "The flow of fresh or saline water from groundwater aquifers to the ocean in coastal areas. Groundwater discharge to ocean is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "snowmelt": {
+    "label": "snowmelt",
+    "qualifier": "",
+    "type": "flux",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "When snow melts into liquid water as the weather warms.",
+        "advanced": "Water formed by melting snow. Snowmelt can move across the landscape as runoff or infiltrate into the soil. In the spring, melting seasonal snowpack moves snowmelt into rivers, streams, lakes, and groundwater. Snowmelt is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "evapotranspiration": {
+    "label": "evapotranspiration",
+    "qualifier": "",
+    "type": "flux",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water leaves the land and plants and goes into the air",
+        "advanced": "The sum of all processes by which liquid water is converted to water vapor and is released to the atmosphere. This includes evaporation from water bodies and the land surface as well as transpiration by plants. Evapotranspiration is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "streamflow_to_ocean": {
+    "label": "streamflow",
+    "qualifier": "to ocean",
+    "type": "flux",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "River water that eventually reaches the ocean.",
+        "advanced": "The movement of fresh water from rivers into oceans. Streamflow to oceans is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "streamflow_to_closed_basins": {
+    "label": "streamflow",
+    "qualifier": "to closed basins",
+    "type": "flux",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "River water that flows into lakes or low areas with no outlet to the sea.",
+        "advanced": "Closed basins are basins where water flows into, but not out of the basin. Streamflow to closed basins does not flow to the ocean. Instead, that streamflow flows into lakes, into wetlands, is lost to groundwater, or evaporates. The water continues to move through the water cycle by evaporation or via groundwater recharge. Lakes in closed basins may be saline due to the accumulation of transported salts when water evaporates. Streamflow to closed basins is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "industrial": {
+    "label": "industrial",
+    "qualifier": "water use",
+    "type": "flux",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water used by factories and businesses to make things or provide services.",
+        "advanced": "Water that is used in industrial processes, like power generation and material production. Thermoelectric power generation is one of the largest uses of water in the United States. Water taken directly from rivers and streams is used for cooling in industrial processes or may be used to dilute byproducts. Industrial water use can impact water quality through changes in water temperature and chemical contamination. Industrial water use is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "municipal": {
+    "label": "municipal",
+    "qualifier": "water use",
+    "type": "flux",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water provided by a city or town for homes, schools, and public services.",
+        "advanced": "Water used by humans in cities, towns, and homes. This includes water we drink and use to prepare food and the water we use to bathe and clean. This includes water used to water lawns and gardens or fill pools. In our communities, we also use water in public parks, to fight fires, and to transport and treat sewage. Municipal and domestic water use is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "domestic": {
+    "label": "domestic",
+    "qualifier": "water use",
+    "type": "flux",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water used at home for drinking, cooking, bathing, cleaning, and yard care.",
+        "advanced": "Domestic self-supplied water is water used at home that does not come from a public water utility. This can include potable and non-potable water. The most common source of self-supplied water is a well. Other self-supplied water sources include capturing rainwater in a cistern, private surface water diversions (intakes), piping spring water to a home or outdoor faucet, or hauling jugs of water from a store or spring to use in the home. Domestic self-supplied water is used for all home water uses such as watering gardens, drinking water, or household functions. Municipal and domestic water use is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "agricultural": {
+    "label": "agricultural",
+    "qualifier": "water use",
+    "type": "flux",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water used to grow crops and support farm animals.",
+        "advanced": "The use of water to cultivate, irrigate and protect crops. Common types of irrigation include flood, sprinkler, and drip irrigation. Agricultural water use is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "grazing": {
+    "label": "grazing",
+    "qualifier": "water use",
+    "type": "flux",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water used for animals that feed on grasslands and pastures.",
+        "advanced": "Water provided as drinking water for livestock on grazing lands, in feed lots, and in commercial operations like dairies. In these facilities, water is also used for cooling and sanitation. Livestock also indirectly consume water when grazing on vegetation. Grazing water use is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "lakes_fresh": {
+    "label": "lakes",
+    "qualifier": "fresh",
+    "type": "pool",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Large bodies of standing water on land.",
+        "advanced": "A lake is formed when water accumulates in a low spot on the landscape as a result of surface-water runoff and groundwater seepage. If the water in the lake is fresh, it is a freshwater lake. Lakes (fresh and saline) are a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "lakes_saline": {
+    "label": "lakes",
+    "qualifier": "saline",
+    "type": "",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "",
+        "advanced": "A lake that contains saline water due to the accumulation of salts as water is lost via evaporation. Most saline lakes exist in closed basins and do not have any outlet, meaning they do not release outflow into a river. Lakes (saline and fresh) are a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "wetlands_fresh": {
+    "label": "wetlands",
+    "qualifier": "fresh",
+    "type": "pool",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Places where land is soaked with water much of the year, like marshes or swamps.",
+        "advanced": "Wetlands are areas where the soil is saturated or flooded year-round or during the growing season. Wetlands support the growth of aquatic (water) and terrestrial (land) plants that are adapted to grow in soils with low oxygen. They include mangroves, marshes (salt, brackish, intermediate, and fresh), swamps, forested wetlands, bogs, wet prairies, prairie potholes, and vernal pools. Wetlands (fresh and brackish) are a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "wetlands_brackish": {
+    "label": "wetlands",
+    "qualifier": "brackish",
+    "type": "pool",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Wetlands where freshwater and saltwater mix together.",
+        "advanced": "Brackish wetlands are areas where land is covered or saturated with water that is a mix of fresh water and saltwater. The water is saltier than freshwater but not as salty as ocean water. These wetlands are often found near coasts, estuaries, and river mouths."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "river": {
+    "label": "river",
+    "qualifier": "",
+    "type": "pool",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Flowing water in a channel that moves downhill.",
+        "advanced": "A natural body of water that flows from higher to lower elevations as a result of gravity. Also called streams, or creeks, depending on their size, rivers typically flow into lakes or to the ocean but sometimes end due to evaporation, loss of streamflow to groundwater, or due to human intervention. Rivers are a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "groundwater": {
+    "label": "groundwater",
+    "qualifier": "",
+    "type": "pool",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water stored underground in spaces between rocks and soil.",
+        "advanced": "Liquid water stored underground, within cracks in rocks of all kinds and in the pore spaces of sediments and sedimentary rocks. The term \"aquifer\" refers to rocks that can hold substantial amounts of water. Groundwater can be fresh, saline, or brackish. Groundwater is a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "permafrost": {
+    "label": "permafrost",
+    "qualifier": "",
+    "type": "pool",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Ground that stays frozen year-round for many years.",
+        "advanced": "A subsurface layer of soil that contains water and is frozen year-round. Permafrost primarily occurs near the poles of the Earth. Permafrost is a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "ice_sheets_and_glaciers": {
+    "label": "ice sheets and glaciers",
+    "qualifier": "",
+    "type": "pool",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Very large masses of ice that store lots of frozen water.",
+        "advanced": "At high elevations or latitudes where snowpack persists year-round, the weight of the accumulated snow compresses it into ice. When the ice forms in a steep mountain environment, it slowly flows downhill, forming a glacier. Ice sheets are glaciers that have spread outward to cover an area larger than 50,000 square kilometers. Ice sheets and glaciers are a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "snowpack": {
+    "label": "snowpack",
+    "qualifier": "",
+    "type": "pool",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Layers of snow that build up and can later melt into water.",
+        "advanced": "Snow that accumulates and melts seasonally at high elevations or near the poles. Since snowpack accumulates and melts at different times across the globe, scientists quantify the amount of snowpack by estimating the annual maximum snowpack at the peak of winter - February. Snowpack is a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "atmospheric_moisture_over_ocean": {
+    "label": "atmospheric moisture",
+    "qualifier": "over ocean",
+    "type": "pool",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water vapor in the air above the ocean.",
+        "advanced": "Water that is present as water vapor (water in gaseous form) in the atmosphere above oceans. Water vapor in the atmosphere is invisible to the human eye. Atmospheric moisture (over ocean and over land) is a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "atmospheric_moisture_over_land": {
+    "label": "atmospheric moisture",
+    "qualifier": "over land",
+    "type": "pool",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water vapor in the air above land.",
+        "advanced": "Water that is present as water vapor (water in gaseous form) in the atmosphere above land masses. Water vapor in the atmosphere is invisible to the human eye. Atmospheric moisture (over land and over ocean) is a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "ocean_mixed_zone": {
+    "label": "ocean",
+    "qualifier": "mixed zone",
+    "type": "pool",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "The top layer of the ocean where waves and wind mix the water.",
+        "advanced": "The upper portion of the ocean that is mixed by wind or because of differences in density that result from cooling/warming, evaporation, or ice formation. This mixing results in near uniform temperature and salinity within this zone. Ocean (mixed zone and deep water zone) is a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "ocean_deep_water_zone": {
+    "label": "ocean",
+    "qualifier": "deep water zone",
+    "type": "pool",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Very deep ocean water with little light and colder temperatures.",
+        "advanced": "The lower portion that is far from the surface of the ocean. It is below the mixed zone. Layers of water form in the deep ocean due to differences in water temperature and salinity (and therefore water density). Ocean (deep water zone and mixed zone) is a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "reservoir": {
+    "label": "reservoir",
+    "qualifier": "",
+    "type": "pool",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "A human-made lake that stores water.",
+        "advanced": "A reservoir is a human-made lake. Reservoirs form when a dam is built on a river, allowing water to pool behind the dam. Reservoirs are a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "soil_moisture": {
+    "label": "soil moisture",
+    "qualifier": "",
+    "type": "pool",
+    "advancedOnly": true,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "",
+        "advanced": "Water that is present within soil. The amount of water stored within the soil varies based on precipitation, temperature, and soil type. Soil moisture is a water cycle pool."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  },
+  "transport_of_moisture_from_ocean_to_land": {
+    "label": "Transport of moisture from ocean to land",
+    "qualifier": "",
+    "type": "flux",
+    "advancedOnly": false,
+    "imageLink": "",
+    "notes": "",
+    "definitions": {
+      "en": {
+        "beginner": "Water vapor moves through the air from the ocean to the land.",
+        "advanced": "When air over the ocean moves over the land, stored water vapor in the air becomes atmospheric moisture over land. Transport of moisture from ocean to land is a water cycle flux."
+      },
+      "es": {
+        "beginner": "",
+        "advanced": ""
+      }
+    }
+  }
+}

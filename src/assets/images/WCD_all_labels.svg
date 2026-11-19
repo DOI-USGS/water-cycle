@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 2736 1419.19">
+<!--Generator: Adobe Illustrator 30.8.2, SVG Export Plug-In . SVG Version: 2.1.4 Build 7)-->
+  <defs>
+    <style>
+      .st54{opacity:.5}.st115,.st116,.st117,.st118,.st120,.st121,.st86,.st88,.st89,.st98{fill:none}.st159{opacity:.6}.st213{opacity:.7}.st117,.st86,.st88,.st98{stroke-miterlimit:10}.st376,.st378,.st379{font-family:Univers-CondensedLight,&quot;Univers 47 Condensed Light&quot;;font-weight:300}.st376{fill:#eaeaea}.st376,.st378,.st379{font-size:27px}.st115,.st116,.st118,.st120,.st121,.st88,.st89,.st98{stroke:#fff}.st89{stroke-width:2px}.st378,.st390,.st391,.st393{fill:#231f20}.st393,.st396,.st397{font-size:28px;letter-spacing:.02em}.st86{stroke:#85d0d0}.st117,.st120,.st86,.st88,.st98{stroke-width:6px}.st115,.st116,.st117,.st118,.st120,.st121,.st417,.st86,.st89,.st98{font-family:Univers-Condensed,&quot;Univers 57 Condensed&quot;;font-size:24px}.st430,.st431,.st434{opacity:.8}.st437{filter:url(#outer-glow-6)}.st438{filter:url(#outer-glow-7)}.st439{filter:url(#outer-glow-8)}.st440{filter:url(#outer-glow-9)}.st441{filter:url(#outer-glow-2)}.st442{filter:url(#outer-glow-3)}.st443{filter:url(#outer-glow-4)}.st444{filter:url(#outer-glow-5)}.st445{filter:url(#outer-glow-1)}.st116{stroke-width:3px}.st159,.st213,.st396,.st430,.st555,.st557,.st558{fill:#fff}.st555,.st560{opacity:.4}.st557{opacity:.82}.st558,.st561{opacity:.75}.st118{stroke-width:4px}.st581{isolation:isolate}.st612{opacity:.85}.st561,.st612{fill:#dae2e8}.st391{letter-spacing:0}.st121{stroke-width:5px}.st693{opacity:.9}.st722{opacity:.3}.st434{fill:#e8ecee}.st393,.st396,.st397{font-family:Univers-CondensedBold,&quot;Univers 67 Condensed&quot;;font-weight:700}.st115{stroke-width:7px}.st117{stroke:#b2c4d0}.st722{fill:#dbf0f2}.st805{filter:url(#outer-glow-11)}.st806{filter:url(#outer-glow-16)}.st808{filter:url(#outer-glow-13)}.st810{filter:url(#outer-glow-12)}.st811{filter:url(#outer-glow-10)}.st812{filter:url(#outer-glow-15)}.st813{filter:url(#outer-glow-14)}
+    </style>
+    <filter id="outer-glow-1" x="1376.88" y="316.86" width="193.68" height="90.96" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="3.6"/>
+      <feFlood flood-color="#231f20" flood-opacity=".7"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-2" x="1982.88" y="439.74" width="166.08" height="62.88" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur1" stdDeviation="3.6"/>
+      <feFlood flood-color="#231f20" flood-opacity=".7"/>
+      <feComposite in2="blur1" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-3" x="2441.76" y="409.02" width="184.32" height="62.88" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur2" stdDeviation="3.6"/>
+      <feFlood flood-color="#1d1b1c" flood-opacity="1"/>
+      <feComposite in2="blur2" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-4" x="950.64" y="408.54" width="117.36" height="90.96" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur3" stdDeviation="3.6"/>
+      <feFlood flood-color="#231f20" flood-opacity=".7"/>
+      <feComposite in2="blur3" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-5" x="705.84" y="662.46" width="109.44" height="90.96" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur4" stdDeviation="3.6"/>
+      <feFlood flood-color="#231f20" flood-opacity=".7"/>
+      <feComposite in2="blur4" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-6" x="941.04" y="784.14" width="111.6" height="62.88" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur5" stdDeviation="3.6"/>
+      <feFlood flood-color="#1d1b1c" flood-opacity="1"/>
+      <feComposite in2="blur5" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-7" x="1568.64" y="1032.06" width="207.84" height="62.88" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur6" stdDeviation="3.6"/>
+      <feFlood flood-color="#3c5157" flood-opacity=".8"/>
+      <feComposite in2="blur6" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-8" x="2129.28" y="967.98" width="213.84" height="62.88" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur7" stdDeviation="3.6"/>
+      <feFlood flood-color="#3c5157" flood-opacity=".8"/>
+      <feComposite in2="blur7" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-9" x="1239.36" y="1096.86" width="213.84" height="62.88" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur8" stdDeviation="3.6"/>
+      <feFlood flood-color="#3c5157" flood-opacity=".8"/>
+      <feComposite in2="blur8" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-10" x="111.36" y="1258.38" width="223.44" height="91.92" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur9" stdDeviation="3.6"/>
+      <feFlood flood-color="#013333" flood-opacity="1"/>
+      <feComposite in2="blur9" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-11" x="255.84" y="1082.46" width="168.24" height="89.52" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur10" stdDeviation="3.6"/>
+      <feFlood flood-color="#003536" flood-opacity="1"/>
+      <feComposite in2="blur10" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-12" x="361.2" y="741.42" width="155.76" height="90.96" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur11" stdDeviation="3.6"/>
+      <feFlood flood-color="#231f20" flood-opacity=".7"/>
+      <feComposite in2="blur11" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-13" x="1100.64" y="557.58" width="155.76" height="90.96" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur12" stdDeviation="3.6"/>
+      <feFlood flood-color="#231f20" flood-opacity=".7"/>
+      <feComposite in2="blur12" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-14" x="1644.72" y="316.86" width="167.76" height="62.88" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur13" stdDeviation="3.6"/>
+      <feFlood flood-color="#231f20" flood-opacity=".7"/>
+      <feComposite in2="blur13" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-15" x="1115.52" y="102.78" width="322.56" height="90.96" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur14" stdDeviation="3.6"/>
+      <feFlood flood-color="#231f20" flood-opacity=".7"/>
+      <feComposite in2="blur14" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-16" x="31.92" y="35.82" width="322.32" height="90.96" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur15" stdDeviation="3.6"/>
+      <feFlood flood-color="#231f20" flood-opacity=".7"/>
+      <feComposite in2="blur15" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g class="st581">
+    <g id="English-labels">
+      <g id="Pool-background-boxes">
+        <g class="st445">
+          <rect class="st558" x="1387.7" y="327.81" width="171.91" height="69.12" rx="7.07" ry="7.07" data-box-term="ice_sheets_and_glaciers"/>
+        </g>
+        <g class="st441">
+          <rect class="st430" x="1993.7" y="450.55" width="144.29" height="41.04" rx="7.07" ry="7.07" data-box-term="reservoir"/>
+        </g>
+        <g class="st442">
+          <rect class="st555" x="2452.57" y="419.9" width="162.51" height="41.04" rx="7.27" ry="7.27" data-box-term="permafrost"/>
+        </g>
+        <g class="st443">
+          <rect class="st430" x="961.47" y="419.4" width="95.65" height="69.12" rx="7.22" ry="7.22" data-box-term="lakes_saline"/>
+        </g>
+        <g class="st444">
+          <rect class="st213" x="716.68" y="673.49" width="87.64" height="69.12" rx="7.15" ry="7.15" data-box-term="lakes_fresh"/>
+        </g>
+        <g class="st437">
+          <rect class="st555" x="951.87" y="794.95" width="89.9" height="41.04" rx="7.37" ry="7.37" data-box-term="river"/>
+        </g>
+        <g class="st438">
+          <rect class="st434" x="1579.63" y="1042.96" width="185.9" height="41.04" rx="6.99" ry="6.99" data-box-term="soil_moisture"/>
+        </g>
+        <g class="st439">
+          <rect class="st561" x="2140.31" y="978.8" width="191.86" height="41.04" rx="6.99" ry="6.99" data-box-term="groundwater"/>
+        </g>
+        <g class="st440">
+          <rect class="st612" x="1250.32" y="1107.83" width="191.86" height="41.04" rx="6.99" ry="6.99" data-box-term="groundwater"/>
+        </g>
+        <g class="st811">
+          <rect class="st722" x="122.25" y="1269.26" width="201.53" height="70" rx="7.27" ry="7.27" data-box-term="ocean_deep_water_zone"/>
+        </g>
+        <g class="st805">
+          <rect class="st722" x="266.72" y="1093.43" width="146.39" height="67.68" rx="7.05" ry="7.05" data-box-term="ocean_mixed_zone"/>
+        </g>
+        <g class="st810">
+          <rect class="st430" x="372.11" y="752.39" width="133.94" height="69.12" rx="6.94" ry="6.94" data-box-term="wetlands_brackish"/>
+        </g>
+        <g class="st808">
+          <rect class="st558" x="1111.56" y="568.54" width="133.94" height="69.12" rx="6.94" ry="6.94" data-box-term="wetlands_fresh"/>
+        </g>
+        <g class="st813">
+          <rect class="st557" x="1655.76" y="327.81" width="145.74" height="41.04" rx="7.29" ry="7.29" data-box-term="snowpack"/>
+        </g>
+        <g class="st812">
+          <rect class="st159" x="1126.34" y="113.62" width="300.71" height="69.12" rx="6.88" ry="6.88" data-box-term="atmospheric_moisture_over_land"/>
+        </g>
+        <g class="st806">
+          <rect class="st159" x="42.72" y="46.82" width="300.71" height="69.12" rx="7.49" ry="7.49" data-box-term="atmospheric_moisture_over_ocean"/>
+        </g>
+      </g>
+      <g id="Pools">
+        <g id="Pool-sub-group">
+          <g data-term="atmospheric_moisture_over_ocean" class="wc-label">
+            <text class="st378" transform="translate(139.38 104.77)"><tspan x="0" y="0">over ocean</tspan></text>
+          </g>
+          <g data-term="atmospheric_moisture_over_land" class="wc-label">
+            <text class="st378" transform="translate(1230.8102 171.566)"><tspan x="0" y="0">over land</tspan></text>
+          </g>
+          <g data-term="ocean_deep_water_zone" class="wc-label">
+            <text class="st378" transform="translate(142.0737 1323.6816)"><tspan x="0" y="0">deep water zone</tspan></text>
+          </g>
+          <g>
+            <g data-term="ocean_mixed_zone" class="wc-label">
+              <text class="st376" transform="translate(285.2026 1148.7762)"><tspan x="0" y="0">mixed zone</tspan></text>
+            </g>
+            <g data-term="ocean_mixed_zone" class="wc-label">
+              <text class="st379" transform="translate(285.2026 1148.7762)"><tspan x="0" y="0">mixed zone</tspan></text>
+            </g>
+          </g>
+          <g data-term="lakes_saline" class="wc-label">
+            <text class="st378" transform="translate(980.21 477.06)"><tspan x="0" y="0">saline</tspan></text>
+          </g>
+          <g data-term="lakes_fresh" class="wc-label">
+            <text class="st378" transform="translate(735.89 731.61)"><tspan x="0" y="0">fresh</tspan></text>
+          </g>
+          <g data-term="wetlands_brackish" class="wc-label">
+            <text class="st378" transform="translate(399.01 808.28)"><tspan x="0" y="0">brackish</tspan></text>
+          </g>
+          <g data-term="wetlands_fresh" class="wc-label">
+            <text class="st378" transform="translate(1154.4426 627.9096)"><tspan x="0" y="0">fresh</tspan></text>
+          </g>
+        </g>
+        <g id="Pool-group">
+          <g data-term="groundwater" class="wc-label">
+            <text class="st393" transform="translate(2158.4929 1006.9079)"><tspan x="0" y="0">Groundwater</tspan></text>
+          </g>
+          <g data-term="groundwater" class="wc-label">
+            <text class="st393" transform="translate(1268.5123 1135.1111)"><tspan x="0" y="0">Groundwater</tspan></text>
+          </g>
+          <g data-term="atmospheric_moisture_over_land" class="wc-label">
+            <text class="st393" transform="translate(1145.924 145.0368)"><tspan x="0" y="0">Atmospheric moisture</tspan></text>
+          </g>
+          <g>
+            <g data-term="ocean_mixed_zone" class="wc-label">
+              <text class="st396" transform="translate(301.9631 1122.2492)"><tspan x="0" y="0">Ocean</tspan></text>
+            </g>
+            <g data-term="ocean_mixed_zone" class="wc-label">
+              <text class="st397" transform="translate(301.9631 1122.2492)"><tspan x="0" y="0">Ocean</tspan></text>
+            </g>
+          </g>
+          <g data-term="reservoir" class="wc-label">
+            <text class="st393" transform="translate(2002.3984 478.0249)"><tspan x="0" y="0">Reservoirs</tspan></text>
+          </g>
+          <g>
+            <g data-term="permafrost" class="wc-label">
+              <text class="st393" transform="translate(2469.186 449.0268)"><tspan x="0" y="0">Permafrost</tspan></text>
+            </g>
+            <g data-term="permafrost" class="wc-label">
+              <text class="st397" transform="translate(2469.186 449.0268)"><tspan x="0" y="0">Permafrost</tspan></text>
+            </g>
+          </g>
+          <g data-term="snowpack" class="wc-label">
+            <text class="st393" transform="translate(1665.916 355.5015)"><tspan x="0" y="0">Snowpack</tspan></text>
+          </g>
+          <g data-term="ice_sheets_and_glaciers" class="wc-label">
+            <text class="st393" transform="translate(1413.6737 356.9767)"><tspan x="0" y="0" xml:space="preserve">Ice sheets  </tspan><tspan x="-12.46" y="29">and glaciers</tspan></text>
+          </g>
+          <g>
+            <g data-term="ocean_deep_water_zone" class="wc-label">
+              <text class="st396" transform="translate(185.0632 1297.1526)"><tspan x="0" y="0">Ocean</tspan></text>
+            </g>
+            <g data-term="ocean_deep_water_zone" class="wc-label">
+              <text class="st397" transform="translate(185.0632 1297.1526)"><tspan x="0" y="0">Ocean</tspan></text>
+            </g>
+          </g>
+          <g data-term="lakes_fresh" class="wc-label">
+            <text class="st393" transform="translate(725.67 705.08)"><tspan x="0" y="0">Lakes</tspan></text>
+          </g>
+          <g data-term="wetlands_brackish" class="wc-label">
+            <path class="st390" d="M382.3,760.82h4.34l2.63,14.2h.06l3.19-14.2h4.98l3.02,14.2h.06l2.52-14.2h4.14l-4.48,20.22h-4.68l-3.16-14.78h-.06l-3.5,14.78h-4.59l-4.48-20.22Z"/>
+            <path class="st390" d="M412.29,774.6c0,1.68.06,4.2,1.79,4.2,1.4,0,1.68-1.34,1.68-2.52h4c-.06,1.54-.56,2.8-1.51,3.67-.92.87-2.32,1.37-4.17,1.37-5.1,0-5.77-3.11-5.77-7.53,0-3.86.56-7.17,5.77-7.17s5.91,3.44,5.77,7.98h-7.56ZM415.9,772.39c0-1.37.06-3.33-1.82-3.33s-1.79,2.13-1.79,3.33h3.61Z"/>
+            <path class="st390" d="M421.61,766.9h1.6v-2.24l3.95-1.76v4h2.04v2.44h-2.04v7.56c0,1.06-.03,1.76,1.26,1.76.25,0,.5,0,.7-.06v2.44c-.53.06-1.09.14-2.04.14-3.42,0-3.86-2.27-3.86-3.14v-8.71h-1.6v-2.44Z"/>
+            <path class="st390" d="M435.84,760.82v20.22h-3.95v-20.22h3.95Z"/>
+            <path class="st390" d="M450.62,778.41c0,.87.11,1.76.2,2.63h-3.67l-.17-1.88h-.06c-.84,1.46-1.99,2.16-3.7,2.16-2.74,0-3.75-2.04-3.75-4.51,0-4.68,3.61-4.87,7.28-4.82v-1.09c0-1.2-.17-2.07-1.6-2.07s-1.48,1.04-1.48,2.16h-3.86c0-1.71.53-2.8,1.46-3.44.9-.67,2.18-.92,3.7-.92,5.01,0,5.66,2.16,5.66,4.73v7.06ZM443.34,776.64c0,1.01.17,2.24,1.46,2.24,2.32,0,1.96-3.14,1.96-4.68-1.96.08-3.42-.08-3.42,2.44Z"/>
+            <path class="st390" d="M458.4,768.33h.06c.39-.64.87-1.06,1.4-1.32.56-.28,1.2-.39,1.93-.39,1.88,0,3.53,1.12,3.53,3.08v11.34h-3.95v-9.74c0-1.26-.22-2.24-1.48-2.24s-1.48.98-1.48,2.24v9.74h-3.95v-14.14h3.95v1.43Z"/>
+            <path class="st390" d="M476.07,781.04v-1.57h-.06c-.73,1.37-1.82,1.85-3.33,1.85-4.09,0-3.95-4.54-3.95-7.45s-.11-7.25,3.86-7.25c1.43,0,2.41.42,3.22,1.62h.06v-7.42h3.95v20.22h-3.75ZM475.88,773.84c0-2.83.03-4.79-1.6-4.79-1.71,0-1.68,1.96-1.68,4.79,0,3.56.25,5.04,1.68,5.04,1.34,0,1.6-1.48,1.6-5.04Z"/>
+            <path class="st390" d="M486.68,776.5c-.03.64,0,1.26.2,1.71.22.45.64.67,1.43.67s1.46-.5,1.46-1.46c0-3-6.94-2.32-6.94-6.83,0-3.05,3.02-3.98,5.57-3.98,2.69,0,5.12,1.29,4.9,4.34h-3.86c0-.98-.11-1.57-.39-1.82-.25-.25-.59-.31-1.01-.31-.87,0-1.34.56-1.34,1.51,0,2.24,6.94,2.13,6.94,6.66,0,2.46-2.02,4.31-5.29,4.31-3.44,0-5.74-.87-5.52-4.82h3.86Z"/>
+          </g>
+          <g data-term="wetlands_fresh" class="wc-label">
+            <text class="st393" transform="translate(1121.4706 600.5547)"><tspan x="0" y="0">Wetlands</tspan></text>
+          </g>
+          <g data-term="river" class="wc-label">
+            <text class="st393" transform="translate(959.87 823.76)"><tspan x="0" y="0">Rivers</tspan></text>
+          </g>
+          <g data-term="soil_moisture" class="wc-label">
+            <text class="st393" transform="translate(1593.5013 1072.4382)"><tspan x="0" y="0">Soil moisture</tspan></text>
+          </g>
+          <g data-term="lakes_saline" class="wc-label">
+            <text class="st393" transform="translate(974.46 450.53)"><tspan x="0" y="0">Lakes</tspan></text>
+          </g>
+          <g data-term="atmospheric_moisture_over_ocean" class="wc-label">
+            <text class="st393" transform="translate(62.31 78.24)"><tspan x="0" y="0">Atmospheric moisture</tspan></text>
+          </g>
+        </g>
+      </g>
+      <g id="Fluxes-museo-slab-500-italic">
+        <g>
+          <g data-term="precipitation_over_ocean" class="wc-label">
+            <text class="st86" transform="translate(57.45 514)"><tspan x="0" y="0">Precipitation</tspan><tspan x="7.34" y="26">over ocean</tspan></text>
+          </g>
+          <g data-term="precipitation_over_ocean" class="wc-label">
+            <text class="st417" transform="translate(57.45 514)"><tspan x="0" y="0">Precipitation</tspan><tspan x="7.34" y="26">over ocean</tspan></text>
+          </g>
+        </g>
+        <g>
+          <g class="st560">
+            <g data-term="transport_of_moisture_from_ocean_to_land" class="wc-label">
+              <text class="st115" transform="translate(175.69 270.87)"><tspan x="0" y="0">Transport of moisture </tspan><tspan x="15.98" y="26">from ocean to land</tspan></text>
+            </g>
+          </g>
+          <g data-term="transport_of_moisture_from_ocean_to_land" class="wc-label">
+            <text class="st417" transform="translate(175.69 270.87)"><tspan x="0" y="0">Transport of moisture </tspan><tspan x="15.98" y="26">from ocean to land</tspan></text>
+          </g>
+        </g>
+        <g>
+          <g class="st431">
+            <g data-term="snowmelt" class="wc-label">
+              <text class="st98" transform="translate(1841.1035 377.6277)"><tspan x="0" y="0">Snowmelt</tspan></text>
+            </g>
+          </g>
+          <g data-term="snowmelt" class="wc-label">
+            <text class="st417" transform="translate(1841.1035 377.6277)"><tspan x="0" y="0">Snowmelt</tspan></text>
+          </g>
+        </g>
+        <g data-term="ocean_circulation" class="wc-label">
+          <text class="st417" transform="translate(324.61 984.19)"><tspan x="0" y="0">Ocean</tspan><tspan x="-19.99" y="26">circulation</tspan></text>
+        </g>
+        <g>
+          <g class="st54">
+            <g data-term="domestic" class="wc-label">
+              <text class="st120" transform="translate(522.71 706.11)"><tspan x="0" y="0">Domestic</tspan><tspan x="0" y="26">water use</tspan></text>
+            </g>
+          </g>
+          <g data-term="domestic" class="wc-label">
+            <text class="st417" transform="translate(522.71 706.11)"><tspan x="0" y="0">Domestic</tspan><tspan x="0" y="26">water use</tspan></text>
+          </g>
+        </g>
+        <g>
+          <g data-term="municipal" class="wc-label">
+            <text class="st121" transform="translate(891.76 920.98)"><tspan x="0" y="0">Municipal</tspan><tspan x="0" y="26" xml:space="preserve">   water use</tspan></text>
+          </g>
+          <g data-term="municipal" class="wc-label">
+            <text class="st417" transform="translate(891.76 920.98)"><tspan x="0" y="0">Municipal</tspan><tspan x="0" y="26" xml:space="preserve">   water use</tspan></text>
+          </g>
+        </g>
+        <g>
+          <g data-term="industrial" class="wc-label">
+            <text class="st89" transform="translate(1237.128 962.3072)"><tspan x="0" y="0">Industrial</tspan><tspan x="0" y="26">water use</tspan></text>
+          </g>
+          <g data-term="industrial" class="wc-label">
+            <text class="st417" transform="translate(1237.128 962.3072)"><tspan x="0" y="0">Industrial</tspan><tspan x="0" y="26">water use</tspan></text>
+          </g>
+        </g>
+        <g>
+          <g class="st431">
+            <g data-term="agricultural" class="wc-label">
+              <text class="st120" transform="translate(1787.0757 846.6084)"><tspan x="0" y="0">Agricultural</tspan><tspan x="8.66" y="26">water use</tspan></text>
+            </g>
+          </g>
+          <g data-term="agricultural" class="wc-label">
+            <text class="st417" transform="translate(1787.0757 846.6084)"><tspan x="0" y="0">Agricultural</tspan><tspan x="8.66" y="26">water use</tspan></text>
+          </g>
+        </g>
+        <g>
+          <g class="st431">
+            <g data-term="grazing" class="wc-label">
+              <text class="st120" transform="translate(1504.2787 746.9609)"><tspan x="0" y="0">Grazing</tspan><tspan x="-22.66" y="26">water use</tspan></text>
+            </g>
+          </g>
+          <g data-term="grazing" class="wc-label">
+            <text class="st417" transform="translate(1504.2787 746.9609)"><tspan x="0" y="0">Grazing</tspan><tspan x="-22.66" y="26">water use</tspan></text>
+          </g>
+        </g>
+        <g>
+          <g class="st693">
+            <g data-term="evapotranspiration" class="wc-label">
+              <text class="st120" transform="translate(1090.3719 401.6417)"><tspan x="0" y="0">Evapotranspiration</tspan></text>
+            </g>
+          </g>
+          <g data-term="evapotranspiration" class="wc-label">
+            <text class="st417" transform="translate(1090.3719 401.6417)"><tspan x="0" y="0">Evapotranspiration</tspan></text>
+          </g>
+        </g>
+        <g>
+          <g class="st693">
+            <g data-term="evapotranspiration" class="wc-label">
+              <text class="st120" transform="translate(1745.8889 582.4119)"><tspan x="0" y="0">Evapotranspiration</tspan></text>
+            </g>
+          </g>
+          <g data-term="evapotranspiration" class="wc-label">
+            <text class="st417" transform="translate(1745.8889 582.4119)"><tspan x="0" y="0">Evapotranspiration</tspan></text>
+          </g>
+        </g>
+        <g>
+          <g class="st54">
+            <g data-term="runoff" class="wc-label">
+              <text class="st118" transform="translate(596.37 552.98)"><tspan x="0" y="0">Runoff</tspan></text>
+            </g>
+          </g>
+          <g data-term="runoff" class="wc-label">
+            <text class="st417" transform="translate(596.37 552.98)"><tspan x="0" y="0">Runoff</tspan></text>
+          </g>
+        </g>
+        <g>
+          <g class="st54">
+            <g data-term="urban_runoff" class="wc-label">
+              <text class="st120" transform="translate(755.42 854.08)"><tspan x="0" y="0">Urban</tspan><tspan x="0" y="26">runoff</tspan></text>
+            </g>
+          </g>
+          <g data-term="urban_runoff" class="wc-label">
+            <text class="st417" transform="translate(755.42 854.08)"><tspan x="0" y="0">Urban</tspan><tspan x="0" y="26">runoff</tspan></text>
+          </g>
+        </g>
+        <g data-term="ocean_evaporation" class="wc-label">
+          <text class="st417" transform="translate(85.45 891.1)"><tspan x="0" y="0">Ocean</tspan><tspan x="-25.99" y="26">evaporation</tspan></text>
+        </g>
+        <g>
+          <g class="st693">
+            <g data-term="streamflow_to_ocean" class="wc-label">
+              <text class="st116" transform="translate(970.4344 1028.2071)"><tspan x="0" y="0">Streamflow</tspan><tspan x="0" y="26">to ocean</tspan></text>
+            </g>
+          </g>
+          <g data-term="streamflow_to_ocean" class="wc-label">
+            <text class="st417" transform="translate(970.4344 1028.2071)"><tspan x="0" y="0">Streamflow</tspan><tspan x="0" y="26">to ocean</tspan></text>
+          </g>
+        </g>
+        <g>
+          <g class="st693">
+            <g data-term="streamflow_to_closed_basins" class="wc-label">
+              <text class="st120" transform="translate(784.59 441.18)"><tspan x="0" y="0">Streamflow to </tspan><tspan x="4.02" y="26">closed basins</tspan></text>
+            </g>
+          </g>
+          <g data-term="streamflow_to_closed_basins" class="wc-label">
+            <text class="st417" transform="translate(784.59 441.18)"><tspan x="0" y="0">Streamflow to </tspan><tspan x="4.02" y="26">closed basins</tspan></text>
+          </g>
+        </g>
+        <g>
+          <g data-term="groundwater_recharge" class="wc-label">
+            <text class="st120" transform="translate(2309.8214 544.7572)"><tspan x="0" y="0">Groundwater</tspan><tspan x="17.35" y="26" xml:space="preserve">recharge    </tspan></text>
+          </g>
+          <g data-term="groundwater_recharge" class="wc-label">
+            <text class="st417" transform="translate(2309.8214 544.7572)"><tspan x="0" y="0">Groundwater</tspan><tspan x="17.35" y="26">recharge</tspan><tspan class="st391" x="105.34" y="26" xml:space="preserve">    </tspan></text>
+          </g>
+        </g>
+        <g>
+          <g class="st431">
+            <g data-term="precipitation_over_land" class="wc-label">
+              <text class="st98" transform="translate(475.25 332.64)"><tspan x="0" y="0">Precipitation over land</tspan></text>
+            </g>
+          </g>
+          <g data-term="precipitation_over_land" class="wc-label">
+            <text class="st417" transform="translate(475.25 332.64)"><tspan x="0" y="0">Precipitation over land</tspan></text>
+          </g>
+        </g>
+        <g data-term="precipitation_over_land" class="wc-label">
+          <g>
+            <g class="st431">
+              <g>
+                <path class="st88" d="M1734.69,184.12h4.69c3.01,0,5.16,1.13,5.16,4,0,4.12-3.08,5.82-7.06,5.82h-2.18l-1.16,5.88h-2.59l3.14-15.7ZM1737.7,191.88c2.77,0,4.28-1.16,4.28-3.39,0-1.61-1.1-2.3-3.08-2.3h-2.04l-1.11,5.69h1.96Z"/>
+                <path class="st88" d="M1747.27,188.03h2.1l-.21,2.28h.1c.93-1.46,2.23-2.56,3.63-2.56.52,0,.88.08,1.18.22l-.86,2.26c-.28-.15-.69-.19-1.09-.19-1.1,0-2.24.87-3.21,2.67l-1.39,7.12h-2.57l2.33-11.79Z"/>
+                <path class="st88" d="M1760.09,187.74c2.74,0,3.75,1.91,3.75,4.35,0,1.03-.35,2.1-.52,2.5h-7.17c-.25,2.49,1.12,3.54,2.92,3.54.83,0,1.74-.44,2.4-.92l.94,1.65c-.94.67-2.34,1.25-4.02,1.25-2.81,0-4.72-1.83-4.72-4.99,0-4.4,3.32-7.37,6.42-7.37ZM1761.59,192.96c.07-.31.12-.65.12-1.04,0-1.14-.49-2.17-1.92-2.17s-2.83,1.19-3.4,3.21h5.2Z"/>
+                <path class="st88" d="M1765.38,195.31c0-4.22,3.09-7.57,6.76-7.57,1.44,0,2.46.67,3.11,1.45l-1.46,1.54c-.55-.6-1.03-.9-1.81-.9-2.11,0-3.96,2.46-3.96,5.39,0,1.78.79,2.79,2.38,2.79.91,0,1.62-.43,2.23-.9l1.11,1.62c-.88.65-2.08,1.37-3.87,1.37-2.59,0-4.47-1.75-4.47-4.8Z"/>
+                <path class="st88" d="M1778.02,188.03h2.57l-2.36,11.79h-2.57l2.36-11.79ZM1778.45,184.6c0-.92.78-1.68,1.73-1.68.76,0,1.48.49,1.48,1.35,0,.96-.78,1.66-1.73,1.66-.76,0-1.48-.46-1.48-1.33Z"/>
+                <path class="st88" d="M1783.99,200.97l-.67,3.51h-2.57l3.3-16.46h2.1l-.06,1.45h.07c1.13-.98,2.49-1.74,3.83-1.74,2.07,0,3.36,1.54,3.36,4.3,0,4.5-3.07,8.07-6.33,8.07-1.1,0-2.04-.62-2.6-1.55h-.05l-.38,2.41ZM1785.92,191.57l-1.01,5.02c.51.99,1.21,1.39,1.96,1.39,1.99,0,3.82-2.56,3.82-5.6,0-1.72-.68-2.52-1.76-2.52-.91,0-2.11.56-3.01,1.71Z"/>
+                <path class="st88" d="M1797.1,188.03h2.57l-2.36,11.79h-2.57l2.36-11.79ZM1797.53,184.6c0-.92.78-1.68,1.73-1.68.76,0,1.48.49,1.48,1.35,0,.96-.78,1.66-1.73,1.66-.76,0-1.48-.46-1.48-1.33Z"/>
+                <path class="st88" d="M1801.8,197.23c0-.49.08-.92.15-1.39l1.2-5.77h-1.65l.38-1.91,1.79-.12.94-3.17h2.16l-.62,3.17h2.82l-.4,2.04h-2.88l-1.2,5.88c-.05.29-.07.55-.07.83,0,.87.38,1.31,1.36,1.31.4,0,.77-.15,1.1-.32l.5,1.82c-.58.24-1.43.53-2.51.53-2.22,0-3.08-1.24-3.08-2.88Z"/>
+                <path class="st88" d="M1809.09,195.81c0-4.5,3.07-8.06,6.33-8.06,1.16,0,2.2.65,2.71,1.66h.07l.49-1.37h2.07l-2.36,11.79h-2.1l.12-1.64h-.07c-1.11,1.16-2.54,1.93-3.89,1.93-2.07,0-3.36-1.53-3.36-4.3ZM1816.59,196l.96-4.7c-.54-1.01-1.27-1.43-1.99-1.43-1.99,0-3.82,2.56-3.82,5.6,0,1.73.68,2.53,1.76,2.53,1.01,0,2.14-.56,3.09-1.99Z"/>
+                <path class="st88" d="M1822.87,197.23c0-.49.08-.92.15-1.39l1.2-5.77h-1.65l.38-1.91,1.79-.12.94-3.17h2.16l-.61,3.17h2.82l-.4,2.04h-2.88l-1.2,5.88c-.05.29-.07.55-.07.83,0,.87.38,1.31,1.36,1.31.4,0,.77-.15,1.09-.32l.5,1.82c-.58.24-1.43.53-2.51.53-2.22,0-3.08-1.24-3.08-2.88Z"/>
+                <path class="st88" d="M1832.5,188.03h2.57l-2.36,11.79h-2.57l2.36-11.79ZM1832.93,184.6c0-.92.78-1.68,1.73-1.68.76,0,1.48.49,1.48,1.35,0,.96-.78,1.66-1.73,1.66-.76,0-1.48-.46-1.48-1.33Z"/>
+                <path class="st88" d="M1836.44,195.31c0-4.5,3.25-7.57,6.49-7.57,2.65,0,4.4,1.86,4.4,4.8,0,4.5-3.25,7.57-6.49,7.57-2.65,0-4.4-1.86-4.4-4.8ZM1844.73,192.63c0-1.78-.72-2.79-2.07-2.79-1.87,0-3.61,2.37-3.61,5.39,0,1.78.72,2.79,2.07,2.79,1.87,0,3.61-2.37,3.61-5.39Z"/>
+                <path class="st88" d="M1851.07,188.03h2.1l-.12,1.67h.1c1.24-1.08,2.56-1.96,4.04-1.96,1.97,0,2.79,1.09,2.79,2.99,0,.55-.06,1.04-.19,1.65l-1.49,7.44h-2.57l1.43-7.11c.12-.55.19-.88.19-1.25,0-1-.48-1.51-1.47-1.51-.83,0-1.75.57-3,1.82l-1.58,8.05h-2.57l2.33-11.79Z"/>
+                <path class="st88" d="M1866.63,195.31c0-4.5,3.25-7.57,6.49-7.57,2.65,0,4.4,1.86,4.4,4.8,0,4.5-3.25,7.57-6.49,7.57-2.65,0-4.4-1.86-4.4-4.8ZM1874.92,192.63c0-1.78-.72-2.79-2.07-2.79-1.87,0-3.61,2.37-3.61,5.39,0,1.78.72,2.79,2.07,2.79,1.87,0,3.61-2.37,3.61-5.39Z"/>
+                <path class="st88" d="M1879.38,188.03h2.57l.62,6.28c.11,1.16.16,2.38.24,3.56h.1c.55-1.19,1.08-2.37,1.65-3.56l3.04-6.28h2.53l-6.13,11.79h-3.01l-1.61-11.79Z"/>
+                <path class="st88" d="M1896.41,187.74c2.74,0,3.75,1.91,3.75,4.35,0,1.03-.35,2.1-.52,2.5h-7.17c-.25,2.49,1.12,3.54,2.92,3.54.83,0,1.74-.44,2.4-.92l.94,1.65c-.94.67-2.34,1.25-4.02,1.25-2.81,0-4.72-1.83-4.72-4.99,0-4.4,3.32-7.37,6.42-7.37ZM1897.91,192.96c.07-.31.11-.65.11-1.04,0-1.14-.49-2.17-1.92-2.17s-2.83,1.19-3.4,3.21h5.21Z"/>
+                <path class="st88" d="M1903.77,188.03h2.1l-.21,2.28h.1c.93-1.46,2.23-2.56,3.63-2.56.52,0,.88.08,1.18.22l-.86,2.26c-.28-.15-.69-.19-1.09-.19-1.1,0-2.24.87-3.21,2.67l-1.39,7.12h-2.57l2.33-11.79Z"/>
+                <path class="st88" d="M1915.26,198.18c0-.35.05-.73.15-1.23l2.81-14.08h2.57l-2.84,14.19c-.05.24-.05.36-.05.47,0,.35.18.49.42.49.12,0,.2,0,.41-.07l-.05,1.93c-.35.12-.82.23-1.45.23-1.37,0-1.99-.72-1.99-1.93Z"/>
+                <path class="st88" d="M1921.43,195.81c0-4.5,3.07-8.06,6.33-8.06,1.16,0,2.2.65,2.71,1.66h.07l.49-1.37h2.07l-2.36,11.79h-2.1l.12-1.64h-.07c-1.11,1.16-2.54,1.93-3.89,1.93-2.07,0-3.36-1.53-3.36-4.3ZM1928.94,196l.96-4.7c-.54-1.01-1.27-1.43-1.99-1.43-1.99,0-3.82,2.56-3.82,5.6,0,1.73.68,2.53,1.76,2.53,1.01,0,2.14-.56,3.09-1.99Z"/>
+                <path class="st88" d="M1936.51,188.03h2.1l-.12,1.67h.1c1.24-1.08,2.56-1.96,4.04-1.96,1.97,0,2.79,1.09,2.79,2.99,0,.55-.06,1.04-.19,1.65l-1.49,7.44h-2.57l1.43-7.11c.12-.55.19-.88.19-1.25,0-1-.48-1.51-1.47-1.51-.83,0-1.75.57-3,1.82l-1.58,8.05h-2.57l2.33-11.79Z"/>
+                <path class="st88" d="M1956.74,187.04l.83-4.18h2.57l-3.42,16.96h-2.1l.12-1.64h-.07c-1.11,1.16-2.54,1.93-3.89,1.93-2.07,0-3.36-1.53-3.36-4.3,0-4.5,3.07-8.06,6.33-8.06,1.16,0,2.08.62,2.59,1.57h.07l.34-2.28ZM1954.93,196l.96-4.7c-.54-1.01-1.27-1.43-1.99-1.43-1.99,0-3.82,2.56-3.82,5.6,0,1.73.68,2.53,1.76,2.53,1.01,0,2.11-.56,3.09-1.99Z"/>
+              </g>
+            </g>
+            <g>
+              <path d="M1734.69,184.12h4.69c3.01,0,5.16,1.13,5.16,4,0,4.12-3.08,5.82-7.06,5.82h-2.18l-1.16,5.88h-2.59l3.14-15.7ZM1737.7,191.88c2.77,0,4.28-1.16,4.28-3.39,0-1.61-1.1-2.3-3.08-2.3h-2.04l-1.11,5.69h1.96Z"/>
+              <path d="M1747.27,188.03h2.1l-.21,2.28h.1c.93-1.46,2.23-2.56,3.63-2.56.52,0,.88.08,1.18.22l-.86,2.26c-.28-.15-.69-.19-1.09-.19-1.1,0-2.24.87-3.21,2.67l-1.39,7.12h-2.57l2.33-11.79Z"/>
+              <path d="M1760.09,187.74c2.74,0,3.75,1.91,3.75,4.35,0,1.03-.35,2.1-.52,2.5h-7.17c-.25,2.49,1.12,3.54,2.92,3.54.83,0,1.74-.44,2.4-.92l.94,1.65c-.94.67-2.34,1.25-4.02,1.25-2.81,0-4.72-1.83-4.72-4.99,0-4.4,3.32-7.37,6.42-7.37ZM1761.59,192.96c.07-.31.12-.65.12-1.04,0-1.14-.49-2.17-1.92-2.17s-2.83,1.19-3.4,3.21h5.2Z"/>
+              <path d="M1765.38,195.31c0-4.22,3.09-7.57,6.76-7.57,1.44,0,2.46.67,3.11,1.45l-1.46,1.54c-.55-.6-1.03-.9-1.81-.9-2.11,0-3.96,2.46-3.96,5.39,0,1.78.79,2.79,2.38,2.79.91,0,1.62-.43,2.23-.9l1.11,1.62c-.88.65-2.08,1.37-3.87,1.37-2.59,0-4.47-1.75-4.47-4.8Z"/>
+              <path d="M1778.02,188.03h2.57l-2.36,11.79h-2.57l2.36-11.79ZM1778.45,184.6c0-.92.78-1.68,1.73-1.68.76,0,1.48.49,1.48,1.35,0,.96-.78,1.66-1.73,1.66-.76,0-1.48-.46-1.48-1.33Z"/>
+              <path d="M1783.99,200.97l-.67,3.51h-2.57l3.3-16.46h2.1l-.06,1.45h.07c1.13-.98,2.49-1.74,3.83-1.74,2.07,0,3.36,1.54,3.36,4.3,0,4.5-3.07,8.07-6.33,8.07-1.1,0-2.04-.62-2.6-1.55h-.05l-.38,2.41ZM1785.92,191.57l-1.01,5.02c.51.99,1.21,1.39,1.96,1.39,1.99,0,3.82-2.56,3.82-5.6,0-1.72-.68-2.52-1.76-2.52-.91,0-2.11.56-3.01,1.71Z"/>
+              <path d="M1797.1,188.03h2.57l-2.36,11.79h-2.57l2.36-11.79ZM1797.53,184.6c0-.92.78-1.68,1.73-1.68.76,0,1.48.49,1.48,1.35,0,.96-.78,1.66-1.73,1.66-.76,0-1.48-.46-1.48-1.33Z"/>
+              <path d="M1801.8,197.23c0-.49.08-.92.15-1.39l1.2-5.77h-1.65l.38-1.91,1.79-.12.94-3.17h2.16l-.62,3.17h2.82l-.4,2.04h-2.88l-1.2,5.88c-.05.29-.07.55-.07.83,0,.87.38,1.31,1.36,1.31.4,0,.77-.15,1.1-.32l.5,1.82c-.58.24-1.43.53-2.51.53-2.22,0-3.08-1.24-3.08-2.88Z"/>
+              <path d="M1809.09,195.81c0-4.5,3.07-8.06,6.33-8.06,1.16,0,2.2.65,2.71,1.66h.07l.49-1.37h2.07l-2.36,11.79h-2.1l.12-1.64h-.07c-1.11,1.16-2.54,1.93-3.89,1.93-2.07,0-3.36-1.53-3.36-4.3ZM1816.59,196l.96-4.7c-.54-1.01-1.27-1.43-1.99-1.43-1.99,0-3.82,2.56-3.82,5.6,0,1.73.68,2.53,1.76,2.53,1.01,0,2.14-.56,3.09-1.99Z"/>
+              <path d="M1822.87,197.23c0-.49.08-.92.15-1.39l1.2-5.77h-1.65l.38-1.91,1.79-.12.94-3.17h2.16l-.61,3.17h2.82l-.4,2.04h-2.88l-1.2,5.88c-.05.29-.07.55-.07.83,0,.87.38,1.31,1.36,1.31.4,0,.77-.15,1.09-.32l.5,1.82c-.58.24-1.43.53-2.51.53-2.22,0-3.08-1.24-3.08-2.88Z"/>
+              <path d="M1832.5,188.03h2.57l-2.36,11.79h-2.57l2.36-11.79ZM1832.93,184.6c0-.92.78-1.68,1.73-1.68.76,0,1.48.49,1.48,1.35,0,.96-.78,1.66-1.73,1.66-.76,0-1.48-.46-1.48-1.33Z"/>
+              <path d="M1836.44,195.31c0-4.5,3.25-7.57,6.49-7.57,2.65,0,4.4,1.86,4.4,4.8,0,4.5-3.25,7.57-6.49,7.57-2.65,0-4.4-1.86-4.4-4.8ZM1844.73,192.63c0-1.78-.72-2.79-2.07-2.79-1.87,0-3.61,2.37-3.61,5.39,0,1.78.72,2.79,2.07,2.79,1.87,0,3.61-2.37,3.61-5.39Z"/>
+              <path d="M1851.07,188.03h2.1l-.12,1.67h.1c1.24-1.08,2.56-1.96,4.04-1.96,1.97,0,2.79,1.09,2.79,2.99,0,.55-.06,1.04-.19,1.65l-1.49,7.44h-2.57l1.43-7.11c.12-.55.19-.88.19-1.25,0-1-.48-1.51-1.47-1.51-.83,0-1.75.57-3,1.82l-1.58,8.05h-2.57l2.33-11.79Z"/>
+              <path d="M1866.63,195.31c0-4.5,3.25-7.57,6.49-7.57,2.65,0,4.4,1.86,4.4,4.8,0,4.5-3.25,7.57-6.49,7.57-2.65,0-4.4-1.86-4.4-4.8ZM1874.92,192.63c0-1.78-.72-2.79-2.07-2.79-1.87,0-3.61,2.37-3.61,5.39,0,1.78.72,2.79,2.07,2.79,1.87,0,3.61-2.37,3.61-5.39Z"/>
+              <path d="M1879.38,188.03h2.57l.62,6.28c.11,1.16.16,2.38.24,3.56h.1c.55-1.19,1.08-2.37,1.65-3.56l3.04-6.28h2.53l-6.13,11.79h-3.01l-1.61-11.79Z"/>
+              <path d="M1896.41,187.74c2.74,0,3.75,1.91,3.75,4.35,0,1.03-.35,2.1-.52,2.5h-7.17c-.25,2.49,1.12,3.54,2.92,3.54.83,0,1.74-.44,2.4-.92l.94,1.65c-.94.67-2.34,1.25-4.02,1.25-2.81,0-4.72-1.83-4.72-4.99,0-4.4,3.32-7.37,6.42-7.37ZM1897.91,192.96c.07-.31.11-.65.11-1.04,0-1.14-.49-2.17-1.92-2.17s-2.83,1.19-3.4,3.21h5.21Z"/>
+              <path d="M1903.77,188.03h2.1l-.21,2.28h.1c.93-1.46,2.23-2.56,3.63-2.56.52,0,.88.08,1.18.22l-.86,2.26c-.28-.15-.69-.19-1.09-.19-1.1,0-2.24.87-3.21,2.67l-1.39,7.12h-2.57l2.33-11.79Z"/>
+              <path d="M1915.26,198.18c0-.35.05-.73.15-1.23l2.81-14.08h2.57l-2.84,14.19c-.05.24-.05.36-.05.47,0,.35.18.49.42.49.12,0,.2,0,.41-.07l-.05,1.93c-.35.12-.82.23-1.45.23-1.37,0-1.99-.72-1.99-1.93Z"/>
+              <path d="M1921.43,195.81c0-4.5,3.07-8.06,6.33-8.06,1.16,0,2.2.65,2.71,1.66h.07l.49-1.37h2.07l-2.36,11.79h-2.1l.12-1.64h-.07c-1.11,1.16-2.54,1.93-3.89,1.93-2.07,0-3.36-1.53-3.36-4.3ZM1928.94,196l.96-4.7c-.54-1.01-1.27-1.43-1.99-1.43-1.99,0-3.82,2.56-3.82,5.6,0,1.73.68,2.53,1.76,2.53,1.01,0,2.14-.56,3.09-1.99Z"/>
+              <path d="M1936.51,188.03h2.1l-.12,1.67h.1c1.24-1.08,2.56-1.96,4.04-1.96,1.97,0,2.79,1.09,2.79,2.99,0,.55-.06,1.04-.19,1.65l-1.49,7.44h-2.57l1.43-7.11c.12-.55.19-.88.19-1.25,0-1-.48-1.51-1.47-1.51-.83,0-1.75.57-3,1.82l-1.58,8.05h-2.57l2.33-11.79Z"/>
+              <path d="M1956.74,187.04l.83-4.18h2.57l-3.42,16.96h-2.1l.12-1.64h-.07c-1.11,1.16-2.54,1.93-3.89,1.93-2.07,0-3.36-1.53-3.36-4.3,0-4.5,3.07-8.06,6.33-8.06,1.16,0,2.08.62,2.59,1.57h.07l.34-2.28ZM1954.93,196l.96-4.7c-.54-1.01-1.27-1.43-1.99-1.43-1.99,0-3.82,2.56-3.82,5.6,0,1.73.68,2.53,1.76,2.53,1.01,0,2.11-.56,3.09-1.99Z"/>
+            </g>
+          </g>
+        </g>
+        <g>
+          <g class="st693">
+            <g data-term="groundwater_discharge_to_ocean" class="wc-label">
+              <text class="st117" transform="translate(504.4112 1324.6252)"><tspan x="0" y="0">Groundwater </tspan><tspan x="0" y="26" xml:space="preserve">    discharge to ocean</tspan></text>
+            </g>
+          </g>
+          <g data-term="groundwater_discharge_to_ocean" class="wc-label">
+            <text class="st417" transform="translate(504.4112 1324.6252)"><tspan x="0" y="0">Groundwater </tspan><tspan x="0" y="26" xml:space="preserve">    discharge to ocean</tspan></text>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
