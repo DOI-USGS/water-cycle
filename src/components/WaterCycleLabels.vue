@@ -42,7 +42,7 @@ import LabelsSvgEn from '@/assets/images/WCD_all_labels.svg?component'
 // When the Spanish labels SVG is available, import it here and wire it into
 // `activeLabelsSvg` below:
 //   import LabelsSvgEs from '@/assets/images/WCD_all_labels_es.svg?component'
-import backgroundSrc from '@/assets/images/WCD_image_background.png'
+const backgroundSrc = 'https://dfi09q69oy2jm.cloudfront.net/visualizations/images/WCD_image_background.png'
 import ArrowsSvg from '@/assets/images/WCD_all_arrows.svg?component'
 import terms from '@/assets/text/terms.json'
 

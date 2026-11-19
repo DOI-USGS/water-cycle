@@ -548,7 +548,7 @@
     "notes": "",
     "definitions": {
       "en": {
-        "beginner": "",
+        "beginner": "A human-made lake that stores water.",
         "advanced": "A reservoir is a human-made lake. Reservoirs form when a dam is built on a river, allowing water to pool behind the dam. Reservoirs are a water cycle pool."
       },
       "es": {
@@ -561,7 +561,7 @@
     "label": "soil moisture",
     "qualifier": "",
     "type": "pool",
-    "advancedOnly": false,
+    "advancedOnly": true,
     "imageLink": "",
     "notes": "",
     "definitions": {
@@ -584,7 +584,7 @@
     "notes": "",
     "definitions": {
       "en": {
-        "beginner": "",
+        "beginner": "Water vapor moves through the air from the ocean to the land.",
         "advanced": "When air over the ocean moves over the land, stored water vapor in the air becomes atmospheric moisture over land. Transport of moisture from ocean to land is a water cycle flux."
       },
       "es": {
